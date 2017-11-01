@@ -8,7 +8,7 @@ import java.util.Locale;
 
 /**
  * Log工具
- * Created by yixuanxuan on 16/6/29.
+ * Created by scrat on 16/6/29.
  */
 public class L {
 

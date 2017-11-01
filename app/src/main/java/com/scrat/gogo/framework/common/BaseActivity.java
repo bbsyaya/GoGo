@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by yixuanxuan on 2017/4/27.
+ * Created by scrat on 2017/4/27.
  */
 
 public abstract class BaseActivity extends AppCompatActivity {

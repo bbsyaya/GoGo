@@ -8,7 +8,7 @@ import com.scrat.gogo.framework.util.L;
 import com.scrat.gogo.module.LoginActivity;
 
 /**
- * Created by yixuanxuan on 2017/6/26.
+ * Created by scrat on 2017/6/26.
  */
 
 public class LoginReceiver extends BroadcastReceiver {

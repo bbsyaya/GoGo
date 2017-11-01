@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Created by yixuanxuan on 2017/4/27.
+ * Created by scrat on 2017/4/27.
  */
 
 public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {

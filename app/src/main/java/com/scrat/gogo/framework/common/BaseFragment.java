@@ -1,6 +1,5 @@
 package com.scrat.gogo.framework.common;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,13 +8,12 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.scrat.gogo.framework.util.L;
 
 /**
- * Created by yixuanxuan on 2017/4/27.
+ * Created by scrat on 2017/4/27.
  */
 
 public abstract class BaseFragment extends Fragment {
