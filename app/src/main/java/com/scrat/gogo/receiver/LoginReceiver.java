@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.scrat.gogo.framework.util.L;
-import com.scrat.gogo.module.LoginActivity;
+import com.scrat.gogo.module.login.LoginActivity;
 
 /**
  * Created by scrat on 2017/6/26.

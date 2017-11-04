@@ -1,5 +1,6 @@
 package com.scrat.gogo.data.callback;
 
+import com.scrat.gogo.data.api.ServerException;
 import com.scrat.gogo.framework.common.BaseNetCallback;
 import com.scrat.gogo.framework.common.BaseResponse;
 import com.scrat.gogo.framework.util.L;
@@ -13,8 +14,6 @@ public abstract class DefaultLoadObjCallback<T, R extends BaseResponse<T>>
 
     protected abstract void onSuccess(T t);
 
-    protected abstract void onFail(String msg);
-
     public abstract void onError(Exception e);
 
     @Override
@@ -22,7 +21,7 @@ public abstract class DefaultLoadObjCallback<T, R extends BaseResponse<T>>
         if (res.isSuccess()) {
             onSuccess(res.getData());
         } else {
-            onFail(res.getMsg());
+            onError(new ServerException(res));
         }
     }
 

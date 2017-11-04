@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 
 import com.scrat.gogo.GoGoApp;
 import com.scrat.gogo.framework.util.L;
-import com.scrat.gogo.module.LoginActivity;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
@@ -19,8 +18,11 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
+    private static IWXAPIEventHandler handler;
+
     public static boolean login() {
         if (!GoGoApp.WX_API.isWXAppInstalled()) {
+            L.e("wechat not install");
             return false;
         }
 
@@ -29,6 +31,14 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         req.state = "none";
         GoGoApp.WX_API.sendReq(req);
         return true;
+    }
+
+    public static void initHandler(IWXAPIEventHandler currHandler) {
+        handler = currHandler;
+    }
+
+    public static void releaseHandler() {
+        handler = null;
     }
 
     @Override
@@ -55,30 +65,18 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onReq(BaseReq baseReq) {
-        L.d(baseReq.transaction);
-        L.d(baseReq.openId);
+        if (handler != null) {
+            handler.onReq(baseReq);
+        }
         finish();
     }
 
     @Override
     public void onResp(BaseResp baseResp) {
-        switch (baseResp.errCode) {
-            case BaseResp.ErrCode.ERR_OK:
-                SendAuth.Resp resp = ((SendAuth.Resp) baseResp);
-                LoginActivity.showWxLoginSuccess(this, resp.code);
-                break;
-            default:
-            case BaseResp.ErrCode.ERR_USER_CANCEL:
-                break;
+        if (handler != null) {
+            handler.onResp(baseResp);
         }
-//        L.d(baseResp.errCode + "");
-//        L.d(baseResp.errStr);
-//        L.d(baseResp.transaction);
-//        L.d(baseResp.openId);
-//        // 获取code
-//        SendAuth.Resp resp = ((SendAuth.Resp) baseResp);
-//        L.e(resp.code);
-//        L.e(resp.state);
         finish();
     }
+
 }

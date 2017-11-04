@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.scrat.gogo.BuildConfig;
+import com.scrat.gogo.data.api.ServerException;
 import com.scrat.gogo.framework.util.L;
 import com.scrat.gogo.framework.util.MainHandlerUtil;
 import com.scrat.gogo.framework.util.OkHttpHelper;
@@ -61,7 +62,7 @@ public abstract class BaseNetCallback<T extends BaseResponse> implements Callbac
                 return;
             }
             L.e("[SERVER CODE] %s", t.getCode());
-
+            notifyFailure(new ServerException(t));
         } catch (Exception e) {
             L.e(e);
             notifyFailure(new IOException("Parse error " + e.getMessage()));

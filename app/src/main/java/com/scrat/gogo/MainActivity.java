@@ -1,5 +1,7 @@
 package com.scrat.gogo;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,16 +11,13 @@ import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.TextView;
 
 import com.scrat.gogo.databinding.ActivityMainBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
 import com.scrat.gogo.module.HomeFragment;
-import com.scrat.gogo.module.LoginActivity;
-import com.scrat.gogo.module.MeFragment;
+import com.scrat.gogo.module.me.MeFragment;
 import com.scrat.gogo.module.RaceFragment;
 import com.scrat.gogo.module.ShopFragment;
-import com.scrat.gogo.wxapi.WXEntryActivity;
 
 public class MainActivity extends BaseActivity {
 
@@ -29,6 +28,12 @@ public class MainActivity extends BaseActivity {
 
     private Fragment currFragment;
     private ActivityMainBinding binding;
+
+    public static void redirect(Activity activity) {
+        Intent i = new Intent(activity, MainActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        activity.startActivity(i);
+    }
 
     @NonNull
     @Override
@@ -79,13 +84,12 @@ public class MainActivity extends BaseActivity {
     }
 
     public void navigateToMe(View view) {
-        LoginActivity.show(this);
-//        switchFragment(meFragment);
-//
-//        binding.home.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
-//        binding.race.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
-//        binding.shop.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
-//        binding.me.setTextColor(ContextCompat.getColor(this, R.color.c01_blue));
+        switchFragment(meFragment);
+
+        binding.home.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
+        binding.race.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
+        binding.shop.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
+        binding.me.setTextColor(ContextCompat.getColor(this, R.color.c01_blue));
     }
 
     private void switchFragment(Fragment target) {

@@ -2,6 +2,7 @@ package com.scrat.gogo;
 
 import android.app.Application;
 
+import com.scrat.gogo.data.local.Preferences;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -17,6 +18,9 @@ public class GoGoApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Preferences.getInstance().init(getApplicationContext());
+
         WX_API = WXAPIFactory.createWXAPI(this, WX_APP_ID);
         WX_API.registerApp(WX_APP_ID);
     }

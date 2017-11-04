@@ -25,14 +25,15 @@
         </activity>
 
         <activity
-            android:name=".module.LoginActivity"
+            android:name=".module.login.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <receiver android:name=".receiver.LoginReceiver">
             <intent-filter>
