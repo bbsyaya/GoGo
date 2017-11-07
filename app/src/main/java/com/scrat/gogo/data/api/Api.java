@@ -38,4 +38,14 @@ public class Api {
             return null;
         }
     }
+
+    public Call getCoinPlanOrder(long coinPlanId, DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
+        String url = String.format(ApiDefine.COIN_PLAN_ORDER, coinPlanId);
+        try {
+            return OkHttpHelper.getInstance().post(url, getHeader(), null, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
 }

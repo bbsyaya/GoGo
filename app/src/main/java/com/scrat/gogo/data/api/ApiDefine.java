@@ -7,6 +7,7 @@ package com.scrat.gogo.data.api;
 public class ApiDefine {
     private static final String HOST = "https://gogo.scrats.cn/api";
     static final String WX_LOGIN = HOST + "/account/wx_login";
+    static final String COIN_PLAN_ORDER = HOST + "/pay/alipay/order/coin_plan/%s";
 
     static final String PT = "pt";
     static final String APP_KEY = "app_key";

@@ -8,6 +8,9 @@ import com.scrat.gogo.framework.common.BaseResponse;
  */
 
 public class Res {
+    public class DefaultStrRes extends BaseResponse<String> {
+    }
+
     public class TokenRes extends BaseResponse<TokenInfo> {
     }
 }

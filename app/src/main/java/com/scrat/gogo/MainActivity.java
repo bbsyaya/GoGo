@@ -15,9 +15,9 @@ import android.view.animation.AnimationUtils;
 import com.scrat.gogo.databinding.ActivityMainBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
 import com.scrat.gogo.module.HomeFragment;
-import com.scrat.gogo.module.me.MeFragment;
 import com.scrat.gogo.module.RaceFragment;
 import com.scrat.gogo.module.ShopFragment;
+import com.scrat.gogo.module.me.MeFragment;
 
 public class MainActivity extends BaseActivity {
 
