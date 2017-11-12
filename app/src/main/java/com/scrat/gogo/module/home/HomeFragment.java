@@ -56,10 +56,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
             @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+        GlideRequests glideRequests = GlideApp.with(this);
+
         binding.list.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.list.setLayoutManager(layoutManager);
-        GlideRequests glideRequests = GlideApp.with(this);
         adapter = new Adapter(glideRequests);
         binding.list.setAdapter(adapter);
 
@@ -123,8 +124,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     private static class Adapter extends BaseRecyclerViewAdapter<News> {
         private final GlideRequest<Bitmap> requestBuilder;
 
-        public Adapter(GlideRequests requestBuilder) {
-            this.requestBuilder = requestBuilder.asBitmap().fitCenter();
+        private Adapter(GlideRequests requestBuilder) {
+            this.requestBuilder = requestBuilder.asBitmap().centerCrop();
         }
 
         @Override
