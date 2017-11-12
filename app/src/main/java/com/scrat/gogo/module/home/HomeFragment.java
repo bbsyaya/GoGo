@@ -1,5 +1,6 @@
 package com.scrat.gogo.module.home;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,9 @@ import com.scrat.gogo.framework.common.BaseFragment;
 import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
 import com.scrat.gogo.framework.common.BaseRecyclerViewHolder;
 import com.scrat.gogo.framework.common.BaseRecyclerViewOnScrollListener;
+import com.scrat.gogo.framework.common.GlideApp;
+import com.scrat.gogo.framework.common.GlideRequest;
+import com.scrat.gogo.framework.common.GlideRequests;
 import com.scrat.gogo.framework.util.L;
 
 import java.util.List;
@@ -55,7 +59,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         binding.list.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.list.setLayoutManager(layoutManager);
-        adapter = new Adapter();
+        GlideRequests glideRequests = GlideApp.with(this);
+        adapter = new Adapter(glideRequests);
         binding.list.setAdapter(adapter);
 
         loadMoreListener = new BaseRecyclerViewOnScrollListener(
@@ -116,6 +121,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     }
 
     private static class Adapter extends BaseRecyclerViewAdapter<News> {
+        private final GlideRequest<Bitmap> requestBuilder;
+
+        public Adapter(GlideRequests requestBuilder) {
+            this.requestBuilder = requestBuilder.asBitmap().fitCenter();
+        }
 
         @Override
         protected void onBindItemViewHolder(
@@ -123,6 +133,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
             holder.setText(R.id.title, news.getTitle())
                     .setText(R.id.tp, news.getTp())
                     .setText(R.id.count, String.valueOf(news.getTotalComment()));
+
+            requestBuilder.load(news.getCover())
+                    .into(holder.getImageView(R.id.img));
         }
 
         @Override

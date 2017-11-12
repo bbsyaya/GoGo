@@ -52,6 +52,10 @@ public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
         return (T) view;
     }
 
+    public ImageView getImageView(int viewId) {
+        return getView(viewId);
+    }
+
     protected Context getContext() {
         return convertView.getContext();
     }

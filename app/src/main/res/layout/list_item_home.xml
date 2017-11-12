@@ -40,7 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
         android:layout_marginLeft="15dp"
+        android:drawableLeft="@drawable/ic_info_12"
         android:drawablePadding="4dp"
+        android:gravity="center_vertical"
         android:text="赛事预告"
         android:textColor="@color/c09_tips"
         android:textSize="12sp" />
@@ -51,7 +53,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
         android:layout_toLeftOf="@id/img"
+        android:drawableLeft="@drawable/ic_comment_12"
         android:drawablePadding="4dp"
+        android:gravity="center_vertical"
         android:text="284"
         android:textColor="@color/c09_tips" />
 
