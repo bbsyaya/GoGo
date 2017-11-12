@@ -126,6 +126,14 @@ public abstract class BaseRecyclerViewAdapter<Item>
         return list.size() > 0;
     }
 
+    public void setData(List<Item> list, boolean replace) {
+        if (replace) {
+            replaceData(list);
+        } else {
+            addList(list);
+        }
+    }
+
     public void replaceData(List<Item> list) {
         this.list.clear();
 

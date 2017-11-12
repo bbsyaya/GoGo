@@ -1,6 +1,6 @@
 package com.scrat.gogo.module.login;
 
-import com.scrat.gogo.framework.common.BaseView;
+import com.scrat.gogo.framework.common.BaseContract;
 
 /**
  * Created by scrat on 2017/11/3.
@@ -15,7 +15,7 @@ public interface LoginContract {
         void telLogin(String tel, String code);
     }
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseContract.BaseView<Presenter> {
         void showLogin();
 
         void showLoginSuccess();
