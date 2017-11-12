@@ -1,6 +1,7 @@
 package com.scrat.gogo.data.api;
 
 import com.scrat.gogo.data.model.News;
+import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.TokenInfo;
 import com.scrat.gogo.framework.common.BaseResponse;
 
@@ -45,4 +46,6 @@ public class Res {
 
     public class NewsListRes extends BaseResponse<ListRes<News>> {
     }
+
+    public class NewsDetailRes extends BaseResponse<NewsDetail> {}
 }

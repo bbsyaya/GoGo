@@ -14,6 +14,7 @@ import com.scrat.gogo.R;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.databinding.FragmentHomeBinding;
 import com.scrat.gogo.framework.common.BaseFragment;
+import com.scrat.gogo.framework.common.BaseOnItemClickListener;
 import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
 import com.scrat.gogo.framework.common.BaseRecyclerViewHolder;
 import com.scrat.gogo.framework.common.BaseRecyclerViewOnScrollListener;
@@ -21,6 +22,7 @@ import com.scrat.gogo.framework.common.GlideApp;
 import com.scrat.gogo.framework.common.GlideRequest;
 import com.scrat.gogo.framework.common.GlideRequests;
 import com.scrat.gogo.framework.util.L;
+import com.scrat.gogo.module.news.NewsDetailActivity;
 
 import java.util.List;
 
@@ -30,6 +32,7 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment implements HomeContract.HomeView {
 
+    private static final int REQUEST_CODE_NEWS_DETAIL = 11;
     private FragmentHomeBinding binding;
     private HomeContract.HomePresenter presenter;
     private Adapter adapter;
@@ -61,7 +64,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         binding.list.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.list.setLayoutManager(layoutManager);
-        adapter = new Adapter(glideRequests);
+        adapter = new Adapter(glideRequests, new BaseOnItemClickListener<News>() {
+            @Override
+            public void onItemClick(News news) {
+                NewsDetailActivity.show(getActivity(), REQUEST_CODE_NEWS_DETAIL, news);
+            }
+        });
         binding.list.setAdapter(adapter);
 
         loadMoreListener = new BaseRecyclerViewOnScrollListener(
@@ -123,17 +131,25 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
     private static class Adapter extends BaseRecyclerViewAdapter<News> {
         private final GlideRequest<Bitmap> requestBuilder;
+        private final BaseOnItemClickListener<News> listener;
 
-        private Adapter(GlideRequests requestBuilder) {
+        private Adapter(GlideRequests requestBuilder, BaseOnItemClickListener<News> listener) {
+            this.listener = listener;
             this.requestBuilder = requestBuilder.asBitmap().centerCrop();
         }
 
         @Override
         protected void onBindItemViewHolder(
-                BaseRecyclerViewHolder holder, int position, News news) {
+                BaseRecyclerViewHolder holder, int position, final News news) {
             holder.setText(R.id.title, news.getTitle())
                     .setText(R.id.tp, news.getTp())
-                    .setText(R.id.count, String.valueOf(news.getTotalComment()));
+                    .setText(R.id.count, String.valueOf(news.getTotalComment()))
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            listener.onItemClick(news);
+                        }
+                    });
 
             requestBuilder.load(news.getCover())
                     .into(holder.getImageView(R.id.img));

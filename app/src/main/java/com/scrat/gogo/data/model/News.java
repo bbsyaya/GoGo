@@ -13,8 +13,8 @@ public class News implements Serializable {
     private String newsId;
     private String title;
     private String tp;
-    @SerializedName("news_ts")
-    private long newsTs;
+//    @SerializedName("news_ts")
+//    private long newsTs;
     @SerializedName("comment_count")
     private int totalComment;
     private String cover;
@@ -31,9 +31,9 @@ public class News implements Serializable {
         return tp;
     }
 
-    public long getNewsTs() {
-        return newsTs;
-    }
+//    public long getNewsTs() {
+//        return newsTs;
+//    }
 
     public int getTotalComment() {
         return totalComment;

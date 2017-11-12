@@ -9,6 +9,7 @@ public class ApiDefine {
     static final String WX_LOGIN = HOST + "/account/wx_login";
     static final String COIN_PLAN_ORDER = HOST + "/pay/alipay/order/coin_plan/%s";
     static final String NEWS = HOST + "/core/news";
+    static final String NEWS_DETAIL = HOST + "/core/news/%s";
 
     static final String PT = "pt";
     static final String APP_KEY = "app_key";
