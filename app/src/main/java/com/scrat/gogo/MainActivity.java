@@ -60,36 +60,52 @@ public class MainActivity extends BaseActivity {
         switchFragment(homeFragment);
 
         binding.home.setTextColor(ContextCompat.getColor(this, R.color.c01_blue));
+        binding.home.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home_1_24, 0, 0);
         binding.race.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
+        binding.race.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_game_0_24, 0, 0);
         binding.shop.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
+        binding.shop.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_store_0_24, 0, 0);
         binding.me.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
+        binding.me.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_me_0_24, 0, 0);
     }
 
     public void navigateToRace(View view) {
         switchFragment(raceFragment);
 
         binding.home.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
+        binding.home.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home_0_24, 0, 0);
         binding.race.setTextColor(ContextCompat.getColor(this, R.color.c01_blue));
+        binding.race.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_game_1_24, 0, 0);
         binding.shop.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
+        binding.shop.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_store_0_24, 0, 0);
         binding.me.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
+        binding.me.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_me_0_24, 0, 0);
     }
 
     public void navigateToShop(View view) {
         switchFragment(shopFragment);
 
         binding.home.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
+        binding.home.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home_0_24, 0, 0);
         binding.race.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
+        binding.race.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_game_0_24, 0, 0);
         binding.shop.setTextColor(ContextCompat.getColor(this, R.color.c01_blue));
+        binding.shop.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_store_1_24, 0, 0);
         binding.me.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
+        binding.me.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_me_0_24, 0, 0);
     }
 
     public void navigateToMe(View view) {
         switchFragment(meFragment);
 
         binding.home.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
+        binding.home.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home_0_24, 0, 0);
         binding.race.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
+        binding.race.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_game_0_24, 0, 0);
         binding.shop.setTextColor(ContextCompat.getColor(this, R.color.c10_icon));
+        binding.shop.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_store_0_24, 0, 0);
         binding.me.setTextColor(ContextCompat.getColor(this, R.color.c01_blue));
+        binding.me.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_me_1_24, 0, 0);
     }
 
     private void switchFragment(Fragment target) {

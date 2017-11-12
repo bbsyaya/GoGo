@@ -21,28 +21,28 @@
             <TextView
                 android:id="@+id/home"
                 style="@style/mainActivityBottomBarItem"
-                android:drawableTop="@drawable/place_holder_24dp"
+                android:drawableTop="@drawable/ic_home_0_24"
                 android:onClick="navigateToHome"
                 android:text="首页" />
 
             <TextView
                 android:id="@+id/race"
                 style="@style/mainActivityBottomBarItem"
-                android:drawableTop="@drawable/place_holder_24dp"
+                android:drawableTop="@drawable/ic_game_0_24"
                 android:onClick="navigateToRace"
                 android:text="赛事" />
 
             <TextView
                 android:id="@+id/shop"
                 style="@style/mainActivityBottomBarItem"
-                android:drawableTop="@drawable/place_holder_24dp"
+                android:drawableTop="@drawable/ic_store_0_24"
                 android:onClick="navigateToShop"
                 android:text="商城" />
 
             <TextView
                 android:id="@+id/me"
                 style="@style/mainActivityBottomBarItem"
-                android:drawableTop="@drawable/place_holder_24dp"
+                android:drawableTop="@drawable/ic_me_0_24"
                 android:onClick="navigateToMe"
                 android:text="我的" />
 
