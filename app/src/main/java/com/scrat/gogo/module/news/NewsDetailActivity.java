@@ -3,6 +3,7 @@ package com.scrat.gogo.module.news;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.scrat.gogo.R;
+import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.databinding.ActivityNewsDetailBinding;
@@ -19,6 +21,13 @@ import com.scrat.gogo.databinding.HeaderNewsDetailBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
 import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
 import com.scrat.gogo.framework.common.BaseRecyclerViewHolder;
+import com.scrat.gogo.framework.common.BaseRecyclerViewOnScrollListener;
+import com.scrat.gogo.framework.common.GlideApp;
+import com.scrat.gogo.framework.common.GlideRequest;
+import com.scrat.gogo.framework.common.GlideRequests;
+import com.scrat.gogo.framework.util.Utils;
+
+import java.util.List;
 
 /**
  * Created by scrat on 2017/11/12.
@@ -31,6 +40,8 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
     private Adapter adapter;
     private NewsDetailContract.Presenter presenter;
     private HeaderNewsDetailBinding headerBinding;
+    private GlideRequests glideRequests;
+    private BaseRecyclerViewOnScrollListener loadMoreListener;
 
     public static void show(Activity activity, int requestCode, News news) {
         Intent i = new Intent(activity, NewsDetailActivity.class);
@@ -49,23 +60,62 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_news_detail);
 
+        glideRequests = GlideApp.with(this);
+
         binding.list.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         binding.list.setLayoutManager(layoutManager);
-        adapter = new Adapter();
+        adapter = new Adapter(glideRequests);
         headerBinding = HeaderNewsDetailBinding.inflate(getLayoutInflater(), binding.list, false);
         adapter.setHeader(headerBinding.getRoot());
         binding.list.setAdapter(adapter);
+
+        loadMoreListener = new BaseRecyclerViewOnScrollListener(
+                layoutManager, new BaseRecyclerViewOnScrollListener.LoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                presenter.loadComment(false);
+            }
+        });
+        binding.list.addOnScrollListener(loadMoreListener);
 
         News news = (News) getIntent().getSerializableExtra(NEWS);
         showNews(news);
         new NewsDetailPresenter(this, news);
         presenter.loadNewsDetail();
+        presenter.loadComment(true);
     }
 
     @Override
     public void setPresenter(NewsDetailContract.Presenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void showLoadingList() {
+        showLoadingComment();
+    }
+
+    @Override
+    public void showListData(List<Res.CommentItem> list, boolean replace) {
+        hideLoadingComment();
+        adapter.setData(list, replace);
+    }
+
+    @Override
+    public void showNoMoreListData() {
+        hideLoadingComment();
+    }
+
+    @Override
+    public void showEmptyList() {
+        hideLoadingComment();
+    }
+
+    @Override
+    public void showLoadingListError(String e) {
+        hideLoadingComment();
+        showMessage(e);
     }
 
     @Override
@@ -75,7 +125,15 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
 
     @Override
     public void showLoadNewsDetailError(String msg) {
+        showMessage(msg);
+    }
 
+    private void showLoadingComment() {
+
+    }
+
+    private void hideLoadingComment() {
+        loadMoreListener.setLoading(false);
     }
 
     @Override
@@ -98,11 +156,24 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
         }
     }
 
-    private static class Adapter extends BaseRecyclerViewAdapter<News> {
+    private static class Adapter extends BaseRecyclerViewAdapter<Res.CommentItem> {
+
+        private final GlideRequest<Drawable> request;
+
+        private Adapter(GlideRequests glideRequests) {
+            request = glideRequests.asDrawable();
+        }
 
         @Override
-        protected void onBindItemViewHolder(BaseRecyclerViewHolder holder, int position, News news) {
+        protected void onBindItemViewHolder(
+                BaseRecyclerViewHolder holder, int position, Res.CommentItem item) {
 
+            holder.setText(R.id.nickname, item.getUser().getUsername())
+                    .setText(R.id.date, Utils.formatDate(item.getComment().getCreateTs()))
+                    .setText(R.id.comment, item.getComment().getContent());
+
+            request.load(item.getUser().getAvatar())
+                    .into(holder.getImageView(R.id.img));
         }
 
         @Override

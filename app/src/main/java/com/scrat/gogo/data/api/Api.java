@@ -22,19 +22,19 @@ public class Api {
 
     private Map<String, String> getHeader() {
         Map<String, String> header = new HashMap<>();
-        header.put(ApiDefine.PT, ApiDefine.DEFAULT_PT);
-        header.put(ApiDefine.APP_KEY, ApiDefine.DEFAULT_APP_KEY);
-        header.put(ApiDefine.UID, Preferences.getInstance().getUid());
-        header.put(ApiDefine.ACCESS_TOKEN, Preferences.getInstance().getAccessToken());
+        header.put(APIS.PT, APIS.DEFAULT_PT);
+        header.put(APIS.APP_KEY, APIS.DEFAULT_APP_KEY);
+        header.put(APIS.UID, Preferences.getInstance().getUid());
+        header.put(APIS.ACCESS_TOKEN, Preferences.getInstance().getAccessToken());
         return header;
     }
 
     public Call wxLogin(String code, DefaultLoadObjCallback<TokenInfo, Res.TokenRes> cb) {
         JSONObject obj = new JSONObject();
         try {
-            obj.put(ApiDefine.CODE, code);
+            obj.put(APIS.CODE, code);
             return OkHttpHelper.getInstance()
-                    .post(ApiDefine.WX_LOGIN, getHeader(), obj.toString(), cb);
+                    .post(APIS.WX_LOGIN, getHeader(), obj.toString(), cb);
         } catch (Exception e) {
             cb.onError(e);
             return null;
@@ -43,7 +43,7 @@ public class Api {
 
     public Call getCoinPlanOrder(
             long coinPlanId, DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
-        String url = String.format(ApiDefine.COIN_PLAN_ORDER, coinPlanId);
+        String url = String.format(APIS.COIN_PLAN_ORDER, coinPlanId);
         try {
             return OkHttpHelper.getInstance().post(url, getHeader(), null, cb);
         } catch (Exception e) {
@@ -55,9 +55,9 @@ public class Api {
     public Call getNews(
             String index, DefaultLoadObjCallback<Res.ListRes<News>, Res.NewsListRes> cb) {
         Map<String, String> param = new HashMap<>();
-        param.put(ApiDefine.INDEX, index);
+        param.put(APIS.INDEX, index);
         try {
-            return OkHttpHelper.getInstance().get(ApiDefine.NEWS, getHeader(), param, cb);
+            return OkHttpHelper.getInstance().get(APIS.NEWS_LIST_URL, getHeader(), param, cb);
         } catch (Exception e) {
             cb.onError(e);
             return null;
@@ -66,12 +66,35 @@ public class Api {
 
     public Call getNewsDetail(
             String newsId, DefaultLoadObjCallback<NewsDetail, Res.NewsDetailRes> cb) {
-        String url = String.format(ApiDefine.NEWS_DETAIL, newsId);
+        String url = String.format(APIS.NEWS_DETAIL_URL, newsId);
         try {
             return OkHttpHelper.getInstance().get(url, getHeader(), null, cb);
         } catch (Exception e) {
             cb.onError(e);
             return null;
         }
+    }
+
+    private Call getComments(String tp,
+                             String tpId,
+                             String index,
+                             DefaultLoadObjCallback<Res.ListRes<Res.CommentItem>, Res.CommentItemListRes> cb) {
+        Map<String, String> param = new HashMap<>();
+        param.put(APIS.INDEX, index);
+        param.put(APIS.TP, tp);
+        param.put(APIS.TARGET_ID, tpId);
+        try {
+            return OkHttpHelper.getInstance().get(APIS.COMMENT_LIST_URL, getHeader(), param, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
+
+    public Call getNewsComments(
+            String newsId,
+            String index,
+            DefaultLoadObjCallback<Res.ListRes<Res.CommentItem>, Res.CommentItemListRes> cb) {
+        return getComments(APIS.NEWS, newsId, index, cb);
     }
 }

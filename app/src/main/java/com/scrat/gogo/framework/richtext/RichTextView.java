@@ -34,7 +34,6 @@ public class RichTextView extends TextView {
     }
 
     public void fromHtml(String source) {
-        L.v(source);
         SpannableStringBuilder builder = new SpannableStringBuilder();
         builder.append(Html.fromHtml(source, new GlideImgGetter(this), null));
         setText(builder);

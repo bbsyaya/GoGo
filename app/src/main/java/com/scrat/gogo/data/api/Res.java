@@ -1,8 +1,10 @@
 package com.scrat.gogo.data.api;
 
+import com.scrat.gogo.data.model.Comment;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.TokenInfo;
+import com.scrat.gogo.data.model.User;
 import com.scrat.gogo.framework.common.BaseResponse;
 
 import java.util.List;
@@ -48,4 +50,19 @@ public class Res {
     }
 
     public class NewsDetailRes extends BaseResponse<NewsDetail> {}
+
+    public class CommentItem {
+        private Comment comment;
+        private User user;
+
+        public Comment getComment() {
+            return comment;
+        }
+
+        public User getUser() {
+            return user;
+        }
+    }
+
+    public class CommentItemListRes extends BaseResponse<ListRes<CommentItem>> {}
 }
