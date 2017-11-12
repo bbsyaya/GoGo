@@ -1,6 +1,10 @@
 package com.scrat.gogo.framework.util;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.support.annotation.NonNull;
 import android.text.format.DateFormat;
+import android.util.TypedValue;
 
 import java.util.Calendar;
 
@@ -57,5 +61,10 @@ public class Utils {
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.MILLISECOND, 0);
         return cal.getTimeInMillis();
+    }
+
+    public static float dpToPx(@NonNull Context context, float dp) {
+        Resources r = context.getResources();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
     }
 }

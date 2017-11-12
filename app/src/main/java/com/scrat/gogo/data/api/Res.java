@@ -1,6 +1,7 @@
 package com.scrat.gogo.data.api;
 
 import com.scrat.gogo.data.model.Comment;
+import com.scrat.gogo.data.model.Goods;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.TokenInfo;
@@ -65,4 +66,6 @@ public class Res {
     }
 
     public class CommentItemListRes extends BaseResponse<ListRes<CommentItem>> {}
+
+    public class GoodsListRes extends BaseResponse<ListRes<Goods>> {}
 }

@@ -2,6 +2,7 @@ package com.scrat.gogo.data.api;
 
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
 import com.scrat.gogo.data.local.Preferences;
+import com.scrat.gogo.data.model.Goods;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.TokenInfo;
@@ -96,5 +97,20 @@ public class Api {
             String index,
             DefaultLoadObjCallback<Res.ListRes<Res.CommentItem>, Res.CommentItemListRes> cb) {
         return getComments(APIS.NEWS, newsId, index, cb);
+    }
+
+    public Call getGoodsList(String tp,
+                             String index,
+                             DefaultLoadObjCallback<Res.ListRes<Goods>, Res.GoodsListRes> cb) {
+
+        Map<String, String> param = new HashMap<>();
+        param.put(APIS.INDEX, index);
+        param.put(APIS.TP, tp);
+        try {
+            return OkHttpHelper.getInstance().get(APIS.GOODS_LIST_URL, getHeader(), param, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
     }
 }
