@@ -6,6 +6,7 @@ import com.scrat.gogo.data.model.Goods;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.TokenInfo;
+import com.scrat.gogo.data.model.Uptoken;
 import com.scrat.gogo.framework.util.OkHttpHelper;
 
 import org.json.JSONObject;
@@ -108,6 +109,16 @@ public class Api {
         param.put(APIS.TP, tp);
         try {
             return OkHttpHelper.getInstance().get(APIS.GOODS_LIST_URL, getHeader(), param, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
+
+    public Call getQiniuUptoken(DefaultLoadObjCallback<Uptoken, Res.UptokenRes> cb) {
+        try {
+            return OkHttpHelper.getInstance()
+                    .get(APIS.QINUIU_UPTOKEN_URL, getHeader(), null, cb);
         } catch (Exception e) {
             cb.onError(e);
             return null;

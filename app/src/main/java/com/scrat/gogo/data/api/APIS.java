@@ -12,6 +12,7 @@ public class APIS {
     static final String NEWS_DETAIL_URL = HOST + "/core/news/%s";
     static final String COMMENT_LIST_URL = HOST + "/core/comments";
     static final String GOODS_LIST_URL = HOST + "/mall/goods";
+    static final String QINUIU_UPTOKEN_URL = HOST + "/file/qiniu_token";
 
     static final String PT = "pt";
     static final String APP_KEY = "app_key";
