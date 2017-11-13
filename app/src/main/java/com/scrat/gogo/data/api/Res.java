@@ -7,6 +7,7 @@ import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.TokenInfo;
 import com.scrat.gogo.data.model.Uptoken;
 import com.scrat.gogo.data.model.User;
+import com.scrat.gogo.data.model.WxPayInfo;
 import com.scrat.gogo.framework.common.BaseResponse;
 
 import java.util.List;
@@ -69,5 +70,8 @@ public class Res {
     public class CommentItemListRes extends BaseResponse<ListRes<CommentItem>> {}
 
     public class GoodsListRes extends BaseResponse<ListRes<Goods>> {}
+
     public class UptokenRes extends BaseResponse<Uptoken> {}
+
+    public class WxPayInfoRes extends BaseResponse<WxPayInfo> {}
 }

@@ -7,6 +7,7 @@ import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.TokenInfo;
 import com.scrat.gogo.data.model.Uptoken;
+import com.scrat.gogo.data.model.WxPayInfo;
 import com.scrat.gogo.framework.util.OkHttpHelper;
 
 import org.json.JSONObject;
@@ -43,9 +44,20 @@ public class Api {
         }
     }
 
-    public Call getCoinPlanOrder(
-            long coinPlanId, DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
-        String url = String.format(APIS.COIN_PLAN_ORDER, coinPlanId);
+    public Call getAlipayCoinPlanOrder(
+            String coinPlanId, DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
+        String url = String.format(APIS.ALIPAY_COIN_PLAN_ORDER, coinPlanId);
+        try {
+            return OkHttpHelper.getInstance().post(url, getHeader(), null, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
+
+    public Call getWeixinCoinPlanOrder(
+            String coinPlanId, DefaultLoadObjCallback<WxPayInfo, Res.WxPayInfoRes> cb) {
+        String url = String.format(APIS.COIN_PLAN_WEIXIN_ORDER_URL, coinPlanId);
         try {
             return OkHttpHelper.getInstance().post(url, getHeader(), null, cb);
         } catch (Exception e) {
