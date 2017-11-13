@@ -33,7 +33,10 @@ public class GlideImgGetter implements Html.ImageGetter {
 
         final UrlDrawable urlDrawable = new UrlDrawable();
         BitmapTarget target = new BitmapTarget(urlDrawable, textView);
-        GlideApp.with(textView).asBitmap().load(s).into(target);
+        try {
+            GlideApp.with(textView).asBitmap().load(s).into(target);
+        } catch (Exception ignore) {
+        }
 
         return urlDrawable;
     }
