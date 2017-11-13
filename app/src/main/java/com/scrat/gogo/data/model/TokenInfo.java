@@ -12,8 +12,8 @@ public class TokenInfo {
     private String refreshToken;
     @SerializedName("access_token")
     private String accessToken;
-    @SerializedName("expired_in")
-    private long expireIn;
+//    @SerializedName("expired_in")
+//    private long expireIn;
 
     public String getUid() {
         return uid;

@@ -1,5 +1,6 @@
 package com.scrat.gogo.framework.common;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.Toast;
@@ -147,5 +149,16 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         }
         super.onDestroy();
+    }
+
+    protected void hideSoftInput() {
+        if (getCurrentFocus() == null) {
+            return;
+        }
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm == null) {
+            return;
+        }
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     }
 }

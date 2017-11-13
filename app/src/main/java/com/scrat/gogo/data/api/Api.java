@@ -136,4 +136,30 @@ public class Api {
             return null;
         }
     }
+
+    public Call sendSms(String tel, DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put(APIS.TEL, tel);
+            return OkHttpHelper.getInstance()
+                    .post(APIS.SEND_SMS_URL, getHeader(), obj.toString(), cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
+
+    public Call smsLogin(
+            String tel, String code, DefaultLoadObjCallback<TokenInfo, Res.TokenRes> cb) {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put(APIS.TEL, tel);
+            obj.put(APIS.CODE, code);
+            return OkHttpHelper.getInstance()
+                    .post(APIS.SMS_LOGIN_URL, getHeader(), obj.toString(), cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
 }

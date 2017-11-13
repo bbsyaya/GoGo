@@ -6,7 +6,11 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import com.scrat.gogo.MainActivity;
 import com.scrat.gogo.R;
@@ -64,23 +68,40 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         });
 
         new LoginPresenter(this);
+        binding.code.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                switch (i) {
+                    case EditorInfo.IME_ACTION_DONE:
+                        telLogin(binding.tel);
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     @Override
     protected void onDestroy() {
+        presenter.release();
         WXEntryActivity.releaseHandler();
         super.onDestroy();
     }
 
     public void sendSmsCode(View view) {
+        presenter.sendSmsCode(binding.tel.getText().toString());
     }
 
     public void telLogin(View view) {
-
+        presenter.telLogin(binding.tel.getText().toString(), binding.code.getText().toString());
     }
 
     public void wxLogin(View view) {
         WXEntryActivity.login();
+    }
+
+    public void qqLogin(View view) {
+
     }
 
     public void navigateToDisclaimer(View view) {
@@ -94,11 +115,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void showLogin() {
-
+        hideSoftInput();
     }
 
     @Override
     public void showLoginSuccess() {
+        toast("登录成功");
         MainActivity.redirect(this);
         finish();
     }
@@ -106,5 +128,36 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void showLoginFail(String msg) {
         showMessage(msg);
+    }
+
+    @Override
+    public void showSendingSms(int second) {
+        if (second <= 0) {
+            binding.sendSmsBtn.setText("获取验证码");
+            binding.sendSmsBtn.setTextColor(ContextCompat.getColor(this, R.color.c08_text));
+            return;
+        }
+        String tip = String.format("稍后重试(%s)", second);
+        binding.sendSmsBtn.setText(tip);
+        binding.sendSmsBtn.setTextColor(ContextCompat.getColor(this, R.color.c09_tips));
+    }
+
+    @Override
+    public void showSendSmsSuccess() {
+        toast("发送成功！");
+        binding.code.requestFocus();
+        binding.code.selectAll();
+    }
+
+    @Override
+    public void showTelError(String msg) {
+        binding.tel.requestFocus();
+        binding.tel.setError(msg);
+    }
+
+    @Override
+    public void showSmsCodeError(String msg) {
+        binding.code.requestFocus();
+        binding.code.setError(msg);
     }
 }

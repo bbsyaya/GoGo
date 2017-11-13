@@ -10,9 +10,11 @@ public interface LoginContract {
     interface Presenter {
         void wxLogin(String code);
 
-        void sendSmsCode();
+        void sendSmsCode(String tel);
 
         void telLogin(String tel, String code);
+
+        void release();
     }
 
     interface View extends BaseContract.BaseView<Presenter> {
@@ -21,5 +23,13 @@ public interface LoginContract {
         void showLoginSuccess();
 
         void showLoginFail(String msg);
+
+        void showSendingSms(int second);
+
+        void showSendSmsSuccess();
+
+        void showTelError(String msg);
+
+        void showSmsCodeError(String msg);
     }
 }
