@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import com.scrat.gogo.framework.common.BaseRecyclerViewOnScrollListener;
 import com.scrat.gogo.framework.common.GlideApp;
 import com.scrat.gogo.framework.common.GlideRequest;
 import com.scrat.gogo.framework.common.GlideRequests;
+import com.scrat.gogo.framework.util.L;
 import com.scrat.gogo.framework.util.Utils;
 
 import java.util.List;
@@ -140,6 +142,24 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
     public void showNewsDetail(NewsDetail detail) {
         if (detail.isWebViewNews()) {
             toast("web");
+        } else if (detail.isVideoNews()) {
+            headerBinding.body.setVisibility(View.GONE);
+            glideRequests.load(detail.getCover()).into(headerBinding.cover);
+            headerBinding.cover.setVisibility(View.VISIBLE);
+            final Uri uri = Uri.parse(detail.getVideo());
+            headerBinding.cover.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //调用系统自带的播放器
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(uri, "video/mp4");
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        L.e(e);
+                    }
+                }
+            });
         } else {
             headerBinding.body.fromHtml(detail.getBody());
         }

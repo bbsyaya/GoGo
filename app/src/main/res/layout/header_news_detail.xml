@@ -14,6 +14,13 @@
             android:textColor="@color/c08_text"
             android:textSize="17sp" />
 
+        <ImageView
+            android:id="@+id/cover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/group_title"
             android:layout_width="match_parent"
