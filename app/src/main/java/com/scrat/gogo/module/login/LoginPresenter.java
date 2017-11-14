@@ -139,7 +139,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                     protected void onSuccess(TokenInfo tokenInfo) {
                         Preferences.getInstance().setUid(tokenInfo.getUid());
                         Preferences.getInstance().setRefreshToken(tokenInfo.getRefreshToken());
-                        Preferences.getInstance().setRefreshToken(tokenInfo.getAccessToken());
+                        Preferences.getInstance().setAccessToken(tokenInfo.getAccessToken());
                         view.showLoginSuccess();
                     }
 
