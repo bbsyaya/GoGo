@@ -9,15 +9,19 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alipay.sdk.app.PayTask;
 import com.scrat.gogo.R;
 import com.scrat.gogo.data.model.CoinPlan;
 import com.scrat.gogo.data.model.WxPayInfo;
 import com.scrat.gogo.databinding.ActivityCoinPlanBinding;
 import com.scrat.gogo.databinding.ListItemCoinPlanBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
+import com.scrat.gogo.framework.util.MainHandlerUtil;
 import com.scrat.gogo.wxapi.WXPayEntryActivity;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by scrat on 2017/11/14.
@@ -122,6 +126,38 @@ public class CoinPlanActivity extends BaseActivity implements CoinPlanContract.V
     @Override
     public void showCreateWeixinOrderSuccess(WxPayInfo info) {
         WXPayEntryActivity.show(this, REQUEST_CODE_WXPAY, info);
+    }
+
+    @Override
+    public void showCreateAlipayOrderSuccess(final String info) {
+        final WeakReference<Activity> activity = new WeakReference<Activity>(this);
+        Runnable payRunnable = new Runnable() {
+            @Override
+            public void run() {
+                PayTask alipay = new PayTask(CoinPlanActivity.this);
+                Map<String, String> result = alipay.payV2(info,true);
+
+                if (result.get("result") == null) {
+                    return;
+                }
+
+                if (result.get("result").replace(" ", "")
+                        .contains("\"code\":\"10000\"")) {
+                    MainHandlerUtil.getMainHandler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (activity.get() == null) {
+                                return;
+                            }
+                            toast("支付成功");
+                            activity.get().finish();
+                        }
+                    });
+                }
+            }
+        };
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
     }
 
     private synchronized void selectPlan(TextView textView, CoinPlan plan) {

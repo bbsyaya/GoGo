@@ -35,5 +35,7 @@ public interface CoinPlanContract {
         void showCreateOrderFail(String e);
 
         void showCreateWeixinOrderSuccess(WxPayInfo info);
+
+        void showCreateAlipayOrderSuccess(String info);
     }
 }

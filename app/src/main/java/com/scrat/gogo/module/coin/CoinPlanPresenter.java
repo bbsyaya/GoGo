@@ -93,5 +93,24 @@ public class CoinPlanPresenter implements CoinPlanContract.Presenter {
                     });
             return;
         }
+
+        DataRepository.getInstance().getApi().getAlipayCoinPlanOrder(
+                plan.getCoinPlanId(), new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+                    @Override
+                    protected void onSuccess(String s) {
+                        view.showCreateAlipayOrderSuccess(s);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        view.showCreateOrderFail(e.getMessage());
+                    }
+
+                    @NonNull
+                    @Override
+                    protected Class<Res.DefaultStrRes> getResClass() {
+                        return Res.DefaultStrRes.class;
+                    }
+                });
     }
 }
