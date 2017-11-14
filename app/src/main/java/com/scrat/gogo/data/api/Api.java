@@ -7,6 +7,7 @@ import com.scrat.gogo.data.model.Comment;
 import com.scrat.gogo.data.model.Goods;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
+import com.scrat.gogo.data.model.RaceGroupItem;
 import com.scrat.gogo.data.model.TokenInfo;
 import com.scrat.gogo.data.model.Uptoken;
 import com.scrat.gogo.data.model.UserInfo;
@@ -217,4 +218,18 @@ public class Api {
             String newsId, String content, DefaultLoadObjCallback<Comment, Res.CommentRes> cb) {
         return addComment(APIS.NEWS, newsId, content, cb);
     }
+
+    public Call getRaceList(
+            String index,
+            DefaultLoadObjCallback<Res.ListRes<RaceGroupItem>, Res.RaceGroupItemRes> cb) {
+        Map<String, String> param = new HashMap<>();
+        param.put(APIS.INDEX, index);
+        try {
+            return OkHttpHelper.getInstance().get(APIS.RACE_LIST_URL, getHeader(), param, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
+
 }

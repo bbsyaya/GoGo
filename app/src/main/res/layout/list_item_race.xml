@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="82dp"
+            android:background="@color/c07_bar"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/logo_a"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="@null" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="58dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/bg_button_50dp"
+                android:gravity="center"
+                android:textColor="@color/c08_text"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/logo_b"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="@null" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/betting_btn"
+                android:layout_width="72dp"
+                android:layout_height="32dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/bg_c01_3dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:text="竞猜"
+                android:textColor="@color/c08_text"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="15dp"
+            android:layout_height="1px"
+            android:background="@color/c07_bar" />
+    </LinearLayout>
+</layout>

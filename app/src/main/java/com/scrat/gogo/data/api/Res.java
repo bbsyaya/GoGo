@@ -5,6 +5,7 @@ import com.scrat.gogo.data.model.Comment;
 import com.scrat.gogo.data.model.Goods;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
+import com.scrat.gogo.data.model.RaceGroupItem;
 import com.scrat.gogo.data.model.TokenInfo;
 import com.scrat.gogo.data.model.Uptoken;
 import com.scrat.gogo.data.model.User;
@@ -82,4 +83,6 @@ public class Res {
     public class UserInfoRes extends BaseResponse<UserInfo> {}
 
     public class CoinPlanListRes extends BaseResponse<List<CoinPlan>> {}
+
+    public class RaceGroupItemRes extends BaseResponse<ListRes<RaceGroupItem>> {}
 }
