@@ -1,6 +1,7 @@
 package com.scrat.gogo.module.coin;
 
 import com.scrat.gogo.data.model.CoinPlan;
+import com.scrat.gogo.data.model.WxPayInfo;
 import com.scrat.gogo.framework.common.BaseContract;
 
 import java.util.List;
@@ -12,6 +13,14 @@ import java.util.List;
 public interface CoinPlanContract {
     interface Presenter {
         void loadCoinPlan();
+
+        void selectCoinPlan(CoinPlan plan);
+
+        void selectWeixinPay();
+
+        void selectAlipay();
+
+        void pay();
     }
 
     interface View extends BaseContract.BaseView<Presenter> {
@@ -20,5 +29,11 @@ public interface CoinPlanContract {
         void showLoadCoinPlanError(String e);
 
         void showCoinPlan(List<CoinPlan> list);
+
+        void showCreatingOrder();
+
+        void showCreateOrderFail(String e);
+
+        void showCreateWeixinOrderSuccess(WxPayInfo info);
     }
 }

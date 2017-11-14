@@ -44,6 +44,7 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
         super.onCreate(savedInstanceState);
 
         WxPayInfo payInfo = (WxPayInfo) getIntent().getSerializableExtra(DATA);
+        L.e(payInfo.toString());
         api = WXAPIFactory.createWXAPI(this, payInfo.getAppId());
         api.handleIntent(getIntent(), this);
         PayReq request = new PayReq();

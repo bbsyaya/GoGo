@@ -25,8 +25,10 @@
             android:text="请选择支付方式" />
 
         <TextView
+            android:id="@+id/weixin_pay"
             style="@style/CoinPlanActivityPayWayItem"
             android:drawableLeft="@drawable/ic_wxpay_29"
+            android:onClick="selectWeixinPay"
             android:text="微信支付" />
 
         <View
@@ -35,8 +37,10 @@
             android:background="@color/c07_bar" />
 
         <TextView
+            android:id="@+id/alipay"
             style="@style/CoinPlanActivityPayWayItem"
             android:drawableLeft="@drawable/ic_alipay_29"
+            android:onClick="selectAlipay"
             android:text="支付宝支付" />
 
         <TextView
@@ -51,6 +55,7 @@
             android:focusable="true"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
+            android:onClick="pay"
             android:text="去支付"
             android:textColor="@color/c08_text"
             android:textSize="17sp" />
