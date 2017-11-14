@@ -9,12 +9,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.scrat.gogo.R;
 import com.scrat.gogo.data.api.Res;
+import com.scrat.gogo.data.model.Comment;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.databinding.ActivityNewsDetailBinding;
@@ -86,6 +89,27 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
         new NewsDetailPresenter(this, news);
         presenter.loadNewsDetail();
         presenter.loadComment(true);
+
+        binding.comment.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    binding.sendBtn.setVisibility(View.VISIBLE);
+                } else {
+                    binding.sendBtn.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     @Override
@@ -118,6 +142,24 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
     public void showLoadingListError(String e) {
         hideLoadingComment();
         showMessage(e);
+    }
+
+    @Override
+    public void showSendingComment() {
+
+    }
+
+    @Override
+    public void showSendCommentError(String e) {
+        showMessage(e);
+    }
+
+    @Override
+    public void showSendCommentSuccess(Comment comment) {
+        toast("发送成功");
+        binding.comment.setText("");
+        binding.sendBtn.setVisibility(View.GONE);
+        presenter.loadComment(true);
     }
 
     @Override
@@ -170,10 +212,16 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
     private void showNews(News news) {
         binding.topBar.subject.setText(news.getTitle());
         if (news.getTotalComment() > 0) {
+            headerBinding.groupTitle.setVisibility(View.VISIBLE);
             headerBinding.groupTitle.setText(String.format("评论 %s", news.getTotalComment()));
         } else {
-            headerBinding.groupTitle.setText("评论");
+            headerBinding.groupTitle.setVisibility(View.GONE);
         }
+    }
+
+    public void sendCommend(View view) {
+        hideSoftInput();
+        presenter.sendComment(binding.comment.getText().toString());
     }
 
     private static class Adapter extends BaseRecyclerViewAdapter<Res.CommentItem> {

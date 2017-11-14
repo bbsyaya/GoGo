@@ -11,6 +11,7 @@ public class APIS {
     static final String NEWS_LIST_URL = HOST + "/core/news";
     static final String NEWS_DETAIL_URL = HOST + "/core/news/%s";
     static final String COMMENT_LIST_URL = HOST + "/core/comments";
+    static final String ADD_COMMENT_URL = HOST + "/core/comment";
     static final String GOODS_LIST_URL = HOST + "/mall/goods";
     static final String QINUIU_UPTOKEN_URL = HOST + "/file/qiniu_token";
     static final String COIN_PLAN_WEIXIN_ORDER_URL = HOST + "/pay/weixin/order/coin_plan/%s";
@@ -31,6 +32,7 @@ public class APIS {
     static final String TEL = "tel";
     static final String CODE = "code";
     static final String REFRESH_TOKEN = "refresh_token";
+    static final String CONTENT = "content";
 
     static final String DEFAULT_PT = "app";
     static final String DEFAULT_APP_KEY = "test_key";

@@ -3,6 +3,7 @@ package com.scrat.gogo.data.api;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
 import com.scrat.gogo.data.local.Preferences;
 import com.scrat.gogo.data.model.CoinPlan;
+import com.scrat.gogo.data.model.Comment;
 import com.scrat.gogo.data.model.Goods;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
@@ -192,5 +193,28 @@ public class Api {
             cb.onError(e);
             return null;
         }
+    }
+
+    private Call addComment(
+            String tp,
+            String tpId,
+            String content,
+            DefaultLoadObjCallback<Comment, Res.CommentRes> cb) {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put(APIS.TP, tp);
+            obj.put(APIS.TARGET_ID, tpId);
+            obj.put(APIS.CONTENT, content);
+            return OkHttpHelper.getInstance()
+                    .post(APIS.ADD_COMMENT_URL, getHeader(), obj.toString(), cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
+
+    public Call addNewsComment(
+            String newsId, String content, DefaultLoadObjCallback<Comment, Res.CommentRes> cb) {
+        return addComment(APIS.NEWS, newsId, content, cb);
     }
 }

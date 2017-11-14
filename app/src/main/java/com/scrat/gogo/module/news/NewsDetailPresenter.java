@@ -1,10 +1,12 @@
 package com.scrat.gogo.module.news;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
+import com.scrat.gogo.data.model.Comment;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 
@@ -93,6 +95,33 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
                     @Override
                     protected Class<Res.CommentItemListRes> getResClass() {
                         return Res.CommentItemListRes.class;
+                    }
+                });
+    }
+
+    @Override
+    public void sendComment(String comment) {
+        if (TextUtils.isEmpty(comment)) {
+            return;
+        }
+
+        view.showSendingComment();
+        DataRepository.getInstance().getApi().addNewsComment(
+                newsId, comment, new DefaultLoadObjCallback<Comment, Res.CommentRes>() {
+                    @Override
+                    protected void onSuccess(Comment comment) {
+                        view.showSendCommentSuccess(comment);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        view.showSendCommentError(e.getMessage());
+                    }
+
+                    @NonNull
+                    @Override
+                    protected Class<Res.CommentRes> getResClass() {
+                        return Res.CommentRes.class;
                     }
                 });
     }

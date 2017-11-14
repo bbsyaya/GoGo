@@ -71,6 +71,8 @@ public class Res {
 
     public class CommentItemListRes extends BaseResponse<ListRes<CommentItem>> {}
 
+    public class CommentRes extends BaseResponse<Comment> {}
+
     public class GoodsListRes extends BaseResponse<ListRes<Goods>> {}
 
     public class UptokenRes extends BaseResponse<Uptoken> {}

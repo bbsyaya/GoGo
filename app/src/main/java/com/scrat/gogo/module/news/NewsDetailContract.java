@@ -1,6 +1,7 @@
 package com.scrat.gogo.module.news;
 
 import com.scrat.gogo.data.api.Res;
+import com.scrat.gogo.data.model.Comment;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.framework.common.BaseContract;
 
@@ -13,6 +14,8 @@ public interface NewsDetailContract {
         void loadNewsDetail();
 
         void loadComment(boolean refresh);
+
+        void sendComment(String comment);
     }
 
     interface View extends BaseContract.BaseListView<Presenter, Res.CommentItem> {
@@ -21,5 +24,11 @@ public interface NewsDetailContract {
         void showLoadNewsDetailError(String msg);
 
         void showNewsDetail(NewsDetail detail);
+
+        void showSendingComment();
+
+        void showSendCommentError(String e);
+
+        void showSendCommentSuccess(Comment comment);
     }
 }
