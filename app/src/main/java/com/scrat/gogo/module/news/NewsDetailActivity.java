@@ -159,7 +159,9 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
         toast("发送成功");
         binding.comment.setText("");
         binding.sendBtn.setVisibility(View.GONE);
+        presenter.loadNewsDetail();
         presenter.loadComment(true);
+        binding.comment.clearFocus();
     }
 
     @Override

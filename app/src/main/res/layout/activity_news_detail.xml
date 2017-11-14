@@ -43,6 +43,8 @@
                 android:hint="发表评论..."
                 android:maxHeight="120dp"
                 android:minHeight="40dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
                 android:textColor="@color/c08_text" />
 
             <TextView
