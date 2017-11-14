@@ -1,5 +1,6 @@
 package com.scrat.gogo.data.api;
 
+import com.scrat.gogo.data.model.CoinPlan;
 import com.scrat.gogo.data.model.Comment;
 import com.scrat.gogo.data.model.Goods;
 import com.scrat.gogo.data.model.News;
@@ -77,4 +78,6 @@ public class Res {
     public class WxPayInfoRes extends BaseResponse<WxPayInfo> {}
 
     public class UserInfoRes extends BaseResponse<UserInfo> {}
+
+    public class CoinPlanListRes extends BaseResponse<List<CoinPlan>> {}
 }

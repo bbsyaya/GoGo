@@ -11,6 +11,7 @@ import com.scrat.gogo.data.local.Preferences;
 import com.scrat.gogo.data.model.UserInfo;
 import com.scrat.gogo.databinding.FragmentMeBinding;
 import com.scrat.gogo.framework.common.BaseFragment;
+import com.scrat.gogo.module.coin.CoinPlanActivity;
 import com.scrat.gogo.module.login.LoginActivity;
 
 /**
@@ -42,6 +43,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
 
         binding.logoutBtn.setOnClickListener(this);
         binding.userInfo.setOnClickListener(this);
+        binding.recharge.setOnClickListener(this);
 
         new MePresenter(this);
 
@@ -83,13 +85,18 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
             return;
         }
 
-        if (view == binding.userInfo) {
-            if (Preferences.getInstance().isLogin()) {
+        if (!Preferences.getInstance().isLogin()) {
+            LoginActivity.show(view.getContext());
+        }
 
-            } else {
-                LoginActivity.show(view.getContext());
-            }
+        if (view == binding.userInfo) {
             return;
         }
+
+        if (view == binding.recharge) {
+            CoinPlanActivity.show(getActivity());
+            return;
+        }
+
     }
 }

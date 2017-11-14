@@ -18,6 +18,7 @@ public class APIS {
     static final String SMS_LOGIN_URL = HOST + "/account/sms_login";
     static final String LOGOUT_URL = HOST + "/account/logout";
     static final String USER_INFO_URL = HOST + "/core/user";
+    static final String COIN_PLAN_URL = HOST + "/core/coin/plans";
 
     static final String PT = "pt";
     static final String APP_KEY = "app_key";

@@ -2,6 +2,7 @@ package com.scrat.gogo.data.api;
 
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
 import com.scrat.gogo.data.local.Preferences;
+import com.scrat.gogo.data.model.CoinPlan;
 import com.scrat.gogo.data.model.Goods;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
@@ -14,6 +15,7 @@ import com.scrat.gogo.framework.util.OkHttpHelper;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -177,6 +179,15 @@ public class Api {
     public Call getUserInfo(DefaultLoadObjCallback<UserInfo, Res.UserInfoRes> cb) {
         try {
             return OkHttpHelper.getInstance().get(APIS.USER_INFO_URL, getHeader(), null, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
+
+    public Call getCoinPlan(DefaultLoadObjCallback<List<CoinPlan>, Res.CoinPlanListRes> cb) {
+        try {
+            return OkHttpHelper.getInstance().get(APIS.COIN_PLAN_URL, getHeader(), null, cb);
         } catch (Exception e) {
             cb.onError(e);
             return null;
