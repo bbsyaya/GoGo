@@ -7,6 +7,7 @@ import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.TokenInfo;
 import com.scrat.gogo.data.model.Uptoken;
 import com.scrat.gogo.data.model.User;
+import com.scrat.gogo.data.model.UserInfo;
 import com.scrat.gogo.data.model.WxPayInfo;
 import com.scrat.gogo.framework.common.BaseResponse;
 
@@ -74,4 +75,6 @@ public class Res {
     public class UptokenRes extends BaseResponse<Uptoken> {}
 
     public class WxPayInfoRes extends BaseResponse<WxPayInfo> {}
+
+    public class UserInfoRes extends BaseResponse<UserInfo> {}
 }

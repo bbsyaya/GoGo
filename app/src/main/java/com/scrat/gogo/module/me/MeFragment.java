@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.scrat.gogo.data.local.Preferences;
+import com.scrat.gogo.data.model.UserInfo;
 import com.scrat.gogo.databinding.FragmentMeBinding;
 import com.scrat.gogo.framework.common.BaseFragment;
 import com.scrat.gogo.module.login.LoginActivity;
@@ -43,9 +44,14 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
         binding.userInfo.setOnClickListener(this);
 
         new MePresenter(this);
-        presenter.loadUserInfo();
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.loadUserInfo();
     }
 
     @Override
@@ -59,6 +65,15 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
         binding.coinTip.setVisibility(View.GONE);
         binding.coin.setVisibility(View.GONE);
         binding.logoutBtn.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showUserInfo(UserInfo info) {
+        binding.name.setText(info.getUsername());
+        binding.coinTip.setVisibility(View.VISIBLE);
+        binding.coin.setVisibility(View.VISIBLE);
+        binding.coin.setText(String.valueOf(info.getCoin()));
+        binding.logoutBtn.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.scrat.gogo.module.me;
 
+import com.scrat.gogo.data.model.UserInfo;
 import com.scrat.gogo.framework.common.BaseContract;
 
 /**
@@ -15,5 +16,7 @@ public interface MeContract {
 
     interface View extends BaseContract.BaseView<Presenter> {
         void showNotLogin();
+
+        void showUserInfo(UserInfo info);
     }
 }

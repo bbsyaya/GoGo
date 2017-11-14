@@ -1,8 +1,12 @@
 package com.scrat.gogo.module.me;
 
+import android.support.annotation.NonNull;
+
 import com.scrat.gogo.data.DataRepository;
+import com.scrat.gogo.data.api.Res;
+import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
 import com.scrat.gogo.data.local.Preferences;
-import com.scrat.gogo.framework.util.L;
+import com.scrat.gogo.data.model.UserInfo;
 
 /**
  * Created by scrat on 2017/11/14.
@@ -26,14 +30,28 @@ public class MePresenter implements MeContract.Presenter {
 
     @Override
     public void loadUserInfo() {
-        L.d(Preferences.getInstance().getUid());
-        L.d(Preferences.getInstance().getRefreshToken());
-        L.d(Preferences.getInstance().getRefreshToken());
         if (!Preferences.getInstance().isLogin()) {
             view.showNotLogin();
             return;
         }
 
+        DataRepository.getInstance().getApi().getUserInfo
+                (new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>() {
+                    @Override
+                    protected void onSuccess(UserInfo userInfo) {
+                        view.showUserInfo(userInfo);
+                    }
 
+                    @Override
+                    public void onError(Exception e) {
+                        // ignore
+                    }
+
+                    @NonNull
+                    @Override
+                    protected Class<Res.UserInfoRes> getResClass() {
+                        return Res.UserInfoRes.class;
+                    }
+                });
     }
 }

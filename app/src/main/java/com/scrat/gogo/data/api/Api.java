@@ -7,6 +7,7 @@ import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.TokenInfo;
 import com.scrat.gogo.data.model.Uptoken;
+import com.scrat.gogo.data.model.UserInfo;
 import com.scrat.gogo.data.model.WxPayInfo;
 import com.scrat.gogo.framework.util.OkHttpHelper;
 
@@ -170,6 +171,15 @@ public class Api {
             OkHttpHelper.getInstance()
                     .post(APIS.LOGOUT_URL, getHeader(), obj.toString(), null);
         } catch (Exception ignore) {
+        }
+    }
+
+    public Call getUserInfo(DefaultLoadObjCallback<UserInfo, Res.UserInfoRes> cb) {
+        try {
+            return OkHttpHelper.getInstance().get(APIS.USER_INFO_URL, getHeader(), null, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
         }
     }
 }
