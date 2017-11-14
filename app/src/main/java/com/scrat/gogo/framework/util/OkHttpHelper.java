@@ -3,6 +3,7 @@ package com.scrat.gogo.framework.util;
 import com.google.gson.Gson;
 import com.scrat.gogo.BuildConfig;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by scrat on 2017/5/17.
@@ -79,7 +81,19 @@ public class OkHttpHelper {
         }
 
         Call call = client.newCall(builder.build());
-        call.enqueue(cb);
+        if (cb != null) {
+            call.enqueue(cb);
+        } else {
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException ignore) {
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                }
+            });
+        }
         return call;
     }
 

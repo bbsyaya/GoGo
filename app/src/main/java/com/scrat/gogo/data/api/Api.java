@@ -162,4 +162,14 @@ public class Api {
             return null;
         }
     }
+
+    public void logout(String refreshToken) {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put(APIS.REFRESH_TOKEN, refreshToken);
+            OkHttpHelper.getInstance()
+                    .post(APIS.LOGOUT_URL, getHeader(), obj.toString(), null);
+        } catch (Exception ignore) {
+        }
+    }
 }

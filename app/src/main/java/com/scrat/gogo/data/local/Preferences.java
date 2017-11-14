@@ -1,6 +1,7 @@
 package com.scrat.gogo.data.local;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.scrat.gogo.framework.common.BaseSharedPreferences;
 
@@ -51,6 +52,10 @@ public class Preferences extends BaseSharedPreferences {
 
     public void setRefreshToken(String refreshToken) {
         setString(REFRESH_TOKEN, refreshToken);
+    }
+
+    public boolean isLogin() {
+        return !TextUtils.isEmpty(getRefreshToken());
     }
 
     public void clearAuth() {
