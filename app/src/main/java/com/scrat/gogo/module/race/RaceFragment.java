@@ -12,6 +12,7 @@ import com.scrat.gogo.databinding.FragmentRaceBinding;
 import com.scrat.gogo.framework.common.BaseFragment;
 import com.scrat.gogo.framework.common.BaseFragmentPagerAdapter;
 import com.scrat.gogo.module.race.list.RaceListFragment;
+import com.scrat.gogo.module.race.team.list.TeamListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,8 @@ public class RaceFragment extends BaseFragment {
 
         fragments.add(RaceListFragment.newInstance());
         titles.add("赛事安排");
+        fragments.add(TeamListFragment.newInstance());
+        titles.add("战队介绍");
 
         adapter = new BaseFragmentPagerAdapter(getChildFragmentManager(), fragments, titles);
         binding.pager.setAdapter(adapter);

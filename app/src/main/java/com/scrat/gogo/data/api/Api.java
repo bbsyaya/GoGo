@@ -8,6 +8,7 @@ import com.scrat.gogo.data.model.Goods;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.RaceGroupItem;
+import com.scrat.gogo.data.model.Team;
 import com.scrat.gogo.data.model.TokenInfo;
 import com.scrat.gogo.data.model.Uptoken;
 import com.scrat.gogo.data.model.UserInfo;
@@ -239,6 +240,18 @@ public class Api {
             obj.put(APIS.REFRESH_TOKEN, refreshToken);
             return OkHttpHelper.getInstance()
                     .post(APIS.REFRESH_TOKEN_URL, getHeader(), obj.toString(), cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
+
+    public Call getTeams(
+            String index, DefaultLoadObjCallback<Res.ListRes<Team>, Res.TeamListRes> cb) {
+        Map<String, String> param = new HashMap<>();
+        param.put(APIS.INDEX, index);
+        try {
+            return OkHttpHelper.getInstance().get(APIS.TEAM_LIST_URL, getHeader(), param, cb);
         } catch (Exception e) {
             cb.onError(e);
             return null;
