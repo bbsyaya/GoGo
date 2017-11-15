@@ -11,14 +11,9 @@ import java.io.Serializable;
 public class NewsDetail extends News implements Serializable {
     private String body;
     private String url;
-    private String video;
 
     public boolean isWebViewNews() {
         return !TextUtils.isEmpty(url);
-    }
-
-    public boolean isVideoNews() {
-        return !TextUtils.isEmpty(video);
     }
 
     public String getBody() {
@@ -29,7 +24,4 @@ public class NewsDetail extends News implements Serializable {
         return url;
     }
 
-    public String getVideo() {
-        return video;
-    }
 }

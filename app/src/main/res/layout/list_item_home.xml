@@ -8,17 +8,32 @@
     android:minHeight="86dp"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/img"
+    <FrameLayout
+        android:id="@+id/img_item"
         android:layout_width="92dp"
         android:layout_height="62dp"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="12dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="12dp"
-        android:contentDescription="@null"
-        android:src="@color/c01_blue" />
+        android:layout_marginTop="12dp">
+
+        <ImageView
+            android:id="@+id/img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@null"
+            android:src="@color/c01_blue" />
+
+        <ImageView
+            android:id="@+id/video_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_play_circle_filled_white_24dp"
+            android:visibility="gone" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/title"
@@ -27,7 +42,7 @@
         android:layout_marginBottom="3dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="12dp"
-        android:layout_toLeftOf="@+id/img"
+        android:layout_toLeftOf="@+id/img_item"
         android:ellipsize="end"
         android:maxLines="2"
         android:minHeight="42dp"
@@ -52,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
-        android:layout_toLeftOf="@id/img"
+        android:layout_toLeftOf="@id/img_item"
         android:drawableLeft="@drawable/ic_comment_12"
         android:drawablePadding="4dp"
         android:gravity="center_vertical"
@@ -62,7 +77,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:layout_below="@id/img"
+        android:layout_below="@id/img_item"
         android:layout_marginLeft="15dp"
         android:background="@color/c05_divider" />
 

@@ -1,5 +1,7 @@
 package com.scrat.gogo.data.model;
 
+import android.text.TextUtils;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -18,6 +20,11 @@ public class News implements Serializable {
     @SerializedName("comment_count")
     private int totalComment;
     private String cover;
+    private String video;
+
+    public boolean isVideoNews() {
+        return !TextUtils.isEmpty(video);
+    }
 
     public String getNewsId() {
         return newsId;
@@ -41,5 +48,9 @@ public class News implements Serializable {
 
     public String getCover() {
         return cover;
+    }
+
+    public String getVideo() {
+        return video;
     }
 }

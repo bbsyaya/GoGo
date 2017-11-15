@@ -144,6 +144,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
             holder.setText(R.id.title, news.getTitle())
                     .setText(R.id.tp, news.getTp())
                     .setText(R.id.count, String.valueOf(news.getTotalComment()))
+                    .setVisibility(R.id.video_tip, news.isVideoNews())
                     .setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

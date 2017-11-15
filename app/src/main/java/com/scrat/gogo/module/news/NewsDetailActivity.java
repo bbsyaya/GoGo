@@ -189,9 +189,9 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
         } else if (detail.isVideoNews()) {
             headerBinding.body.setVisibility(View.GONE);
             glideRequests.load(detail.getCover()).into(headerBinding.cover);
-            headerBinding.cover.setVisibility(View.VISIBLE);
+            headerBinding.coverItem.setVisibility(View.VISIBLE);
             final Uri uri = Uri.parse(detail.getVideo());
-            headerBinding.cover.setOnClickListener(new View.OnClickListener() {
+            headerBinding.coverItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //调用系统自带的播放器
