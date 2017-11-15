@@ -119,9 +119,9 @@ public class MainActivity extends BaseActivity {
             return to;
         }
         Animation fadeOut = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
-        fadeOut.setDuration(150L);
+        fadeOut.setDuration(100L);
         Animation fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in);
-        fadeIn.setDuration(150L);
+        fadeIn.setDuration(100L);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (from != null) {
