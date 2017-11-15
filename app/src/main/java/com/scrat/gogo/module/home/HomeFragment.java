@@ -151,6 +151,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     @Override
     public void showBanner(List<News> list) {
         bannerAdapter.setData(list);
+        headerBinding.pager.setCurrentItem(300);
     }
 
     private static class Adapter extends BaseRecyclerViewAdapter<News> {
@@ -211,7 +212,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
         @Override
         public int getCount() {
-            return newsList.size();
+            return newsList.isEmpty() ? 0 : Integer.MAX_VALUE;
         }
 
         @Override
@@ -224,7 +225,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
             LayoutInflater inflater = LayoutInflater.from(container.getContext());
             View view = inflater.inflate(R.layout.list_item_banner, container, false);
 
-            final News news = newsList.get(position);
+            final News news = newsList.get(position % newsList.size());
 
             ImageView imageView = view.findViewById(R.id.cover);
             request.load(news.getCover()).into(imageView);
