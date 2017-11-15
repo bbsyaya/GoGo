@@ -114,6 +114,7 @@
                 android:background="@color/c07_bar" />
 
             <TextView
+                android:id="@+id/about"
                 style="@style/meFragmentItem"
                 android:text="关于" />
 
