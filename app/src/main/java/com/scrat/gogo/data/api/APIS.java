@@ -21,6 +21,7 @@ public class APIS {
     static final String USER_INFO_URL = HOST + "/core/user";
     static final String COIN_PLAN_URL = HOST + "/core/coin/plans";
     static final String RACE_LIST_URL = HOST + "/core/races";
+    static final String REFRESH_TOKEN_URL = HOST + "/account/token";
 
     static final String PT = "pt";
     static final String APP_KEY = "app_key";

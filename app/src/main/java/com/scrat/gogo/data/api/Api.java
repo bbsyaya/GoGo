@@ -232,4 +232,17 @@ public class Api {
         }
     }
 
+    public Call refreshToken(
+            String refreshToken, DefaultLoadObjCallback<TokenInfo, Res.TokenRes> cb) {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put(APIS.REFRESH_TOKEN, refreshToken);
+            return OkHttpHelper.getInstance()
+                    .post(APIS.REFRESH_TOKEN_URL, getHeader(), obj.toString(), cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
+
 }

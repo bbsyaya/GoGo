@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import com.scrat.gogo.databinding.ActivityMainBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
 import com.scrat.gogo.module.home.HomeFragment;
+import com.scrat.gogo.module.login.RefreshTokenHelper;
 import com.scrat.gogo.module.race.RaceFragment;
 import com.scrat.gogo.module.shop.ShopFragment;
 import com.scrat.gogo.module.me.MeFragment;
@@ -47,6 +48,7 @@ public class MainActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         initFragment();
         navigateToHome(null);
+        RefreshTokenHelper.refreshToken();
     }
 
     private void initFragment() {
