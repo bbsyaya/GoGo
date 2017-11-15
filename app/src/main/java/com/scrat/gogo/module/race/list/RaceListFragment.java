@@ -63,8 +63,6 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
             @Nullable Bundle savedInstanceState) {
         binding = FragmentRaceListBinding.inflate(inflater, container, false);
 
-        new RaceListPresenter(this);
-        presenter.loadData(true);
         binding.srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -85,6 +83,9 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
         glideRequests = GlideApp.with(this);
         adapter = new Adapter(glideRequests);
         binding.list.setAdapter(adapter);
+
+        new RaceListPresenter(this);
+        presenter.loadData(true);
 
         return binding.getRoot();
     }
