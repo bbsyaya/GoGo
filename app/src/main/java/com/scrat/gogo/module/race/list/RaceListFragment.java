@@ -18,12 +18,14 @@ import com.scrat.gogo.data.model.RaceGroupItem;
 import com.scrat.gogo.databinding.FragmentRaceListBinding;
 import com.scrat.gogo.databinding.ListItemRaceBinding;
 import com.scrat.gogo.framework.common.BaseFragment;
+import com.scrat.gogo.framework.common.BaseOnItemClickListener;
 import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
 import com.scrat.gogo.framework.common.BaseRecyclerViewHolder;
 import com.scrat.gogo.framework.common.BaseRecyclerViewOnScrollListener;
 import com.scrat.gogo.framework.common.GlideApp;
 import com.scrat.gogo.framework.common.GlideRequest;
 import com.scrat.gogo.framework.common.GlideRequests;
+import com.scrat.gogo.module.race.betting.BettingActivity;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,7 +42,6 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
     private RaceListContract.Presenter presenter;
     private BaseRecyclerViewOnScrollListener loadMoreListener;
     private Adapter adapter;
-    private GlideRequests glideRequests;
 
     public static RaceListFragment newInstance() {
         Bundle args = new Bundle();
@@ -80,8 +81,13 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
             }
         });
         binding.list.addOnScrollListener(loadMoreListener);
-        glideRequests = GlideApp.with(this);
-        adapter = new Adapter(glideRequests);
+        GlideRequests glideRequests = GlideApp.with(this);
+        adapter = new Adapter(glideRequests, new BaseOnItemClickListener<Race>() {
+            @Override
+            public void onItemClick(Race race) {
+                BettingActivity.show(getActivity(), race);
+            }
+        });
         binding.list.setAdapter(adapter);
 
         new RaceListPresenter(this);
@@ -134,8 +140,10 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
     private static class Adapter extends BaseRecyclerViewAdapter<RaceGroupItem> {
         private GlideRequest<Drawable> request;
         private SimpleDateFormat sdf;
+        private BaseOnItemClickListener<Race> onItemClickListener;
 
-        private Adapter(GlideRequests requests) {
+        private Adapter(GlideRequests requests, BaseOnItemClickListener<Race> onItemClickListener) {
+            this.onItemClickListener = onItemClickListener;
             request = requests.asDrawable().centerCrop();
             sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
         }
@@ -157,11 +165,17 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
             layout.removeAllViews();
 
             LayoutInflater inflater = LayoutInflater.from(layout.getContext());
-            for (Race race : raceGroupItem.getItems()) {
+            for (final Race race : raceGroupItem.getItems()) {
                 ListItemRaceBinding binding = ListItemRaceBinding.inflate(inflater, layout, false);
                 request.load(race.getTeamA().getLogo()).into(binding.logoA);
                 binding.date.setText(DateFormat.format("H:mm", race.getRaceTs()));
                 request.load(race.getTeamB().getLogo()).into(binding.logoB);
+                binding.getRoot().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onItemClickListener.onItemClick(race);
+                    }
+                });
                 layout.addView(binding.getRoot());
             }
 

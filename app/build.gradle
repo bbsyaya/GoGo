@@ -64,4 +64,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.3.0'
 
     compile 'com.qiniu:qiniu-android-sdk:7.3.8'
+
+    compile 'org.apmem.tools:layouts:1.10@aar'
 }

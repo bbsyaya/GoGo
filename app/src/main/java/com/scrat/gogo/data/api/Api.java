@@ -2,6 +2,7 @@ package com.scrat.gogo.data.api;
 
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
 import com.scrat.gogo.data.local.Preferences;
+import com.scrat.gogo.data.model.BettingInfo;
 import com.scrat.gogo.data.model.CoinPlan;
 import com.scrat.gogo.data.model.Comment;
 import com.scrat.gogo.data.model.Goods;
@@ -261,6 +262,17 @@ public class Api {
     public Call getBanner(DefaultLoadObjCallback<List<News>, Res.BannerRes> cb) {
         try {
             return OkHttpHelper.getInstance().get(APIS.BANNER_URL, getHeader(), null, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
+
+    public Call getBettingDetail(
+            String raceId, DefaultLoadObjCallback<BettingInfo, Res.BettingInfoRes> cb) {
+        String url = String.format(APIS.RACE_DETAIL_URL, raceId);
+        try {
+            return OkHttpHelper.getInstance().get(url, getHeader(), null, cb);
         } catch (Exception e) {
             cb.onError(e);
             return null;
