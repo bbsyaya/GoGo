@@ -258,4 +258,13 @@ public class Api {
         }
     }
 
+    public Call getBanner(DefaultLoadObjCallback<List<News>, Res.BannerRes> cb) {
+        try {
+            return OkHttpHelper.getInstance().get(APIS.BANNER_URL, getHeader(), null, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
+
 }

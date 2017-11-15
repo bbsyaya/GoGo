@@ -1,18 +1,23 @@
 package com.scrat.gogo.module.home;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.scrat.gogo.R;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.databinding.FragmentHomeBinding;
+import com.scrat.gogo.databinding.HeaderBannerBinding;
 import com.scrat.gogo.framework.common.BaseFragment;
 import com.scrat.gogo.framework.common.BaseOnItemClickListener;
 import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
@@ -24,6 +29,7 @@ import com.scrat.gogo.framework.common.GlideRequests;
 import com.scrat.gogo.framework.util.L;
 import com.scrat.gogo.module.news.NewsDetailActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +43,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     private HomeContract.HomePresenter presenter;
     private Adapter adapter;
     private BaseRecyclerViewOnScrollListener loadMoreListener;
+    private HeaderBannerBinding headerBinding;
+    private BannerAdapter bannerAdapter;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -70,6 +78,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
                 NewsDetailActivity.show(getActivity(), REQUEST_CODE_NEWS_DETAIL, news);
             }
         });
+        headerBinding = HeaderBannerBinding.inflate(inflater, binding.list, false);
+        bannerAdapter = new BannerAdapter(glideRequests, new BaseOnItemClickListener<News>() {
+            @Override
+            public void onItemClick(News news) {
+                NewsDetailActivity.show(getActivity(), REQUEST_CODE_NEWS_DETAIL, news);
+            }
+        });
+        headerBinding.pager.setAdapter(bannerAdapter);
+        adapter.setHeader(headerBinding.getRoot());
         binding.list.setAdapter(adapter);
 
         loadMoreListener = new BaseRecyclerViewOnScrollListener(
@@ -77,6 +94,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
             @Override
             public void onLoadMore() {
                 presenter.loadData(false);
+                presenter.loadBanner();
             }
         });
         binding.list.addOnScrollListener(loadMoreListener);
@@ -89,6 +107,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
         new HomePresenter(this);
         presenter.loadData(true);
+        presenter.loadBanner();
         return binding.getRoot();
     }
 
@@ -129,6 +148,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         binding.srl.setRefreshing(false);
     }
 
+    @Override
+    public void showBanner(List<News> list) {
+        bannerAdapter.setData(list);
+    }
+
     private static class Adapter extends BaseRecyclerViewAdapter<News> {
         private final GlideRequest<Bitmap> requestBuilder;
         private final BaseOnItemClickListener<News> listener;
@@ -162,6 +186,74 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
                     .inflate(R.layout.list_item_home, parent, false);
             return new BaseRecyclerViewHolder(v);
         }
+    }
+
+    private static class BannerAdapter extends PagerAdapter {
+
+        private List<News> newsList;
+        private GlideRequest<Drawable> request;
+        private BaseOnItemClickListener<News> onItemClickListener;
+
+        private BannerAdapter(
+                GlideRequests glideRequests, BaseOnItemClickListener<News> onItemClickListener) {
+            this.onItemClickListener = onItemClickListener;
+            newsList = new ArrayList<>();
+            request = glideRequests.asDrawable().centerCrop();
+        }
+
+        private void setData(List<News> list) {
+            newsList.clear();
+            if (list != null) {
+                newsList.addAll(list);
+            }
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getCount() {
+            return newsList.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object obj) {
+            return view == obj;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            LayoutInflater inflater = LayoutInflater.from(container.getContext());
+            View view = inflater.inflate(R.layout.list_item_banner, container, false);
+
+            final News news = newsList.get(position);
+
+            ImageView imageView = view.findViewById(R.id.cover);
+            request.load(news.getCover()).into(imageView);
+
+            TextView textView = view.findViewById(R.id.title);
+            textView.setText(news.getTitle());
+
+            if (news.isVideoNews()) {
+                view.findViewById(R.id.video_tip).setVisibility(View.VISIBLE);
+            } else {
+                view.findViewById(R.id.video_tip).setVisibility(View.GONE);
+            }
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemClickListener.onItemClick(news);
+                }
+            });
+
+            container.addView(view);
+            return view;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
     }
 
 }

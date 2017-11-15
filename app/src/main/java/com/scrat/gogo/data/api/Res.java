@@ -56,6 +56,8 @@ public class Res {
     public class NewsListRes extends BaseResponse<ListRes<News>> {
     }
 
+    public class BannerRes extends BaseResponse<List<News>> {}
+
     public class NewsDetailRes extends BaseResponse<NewsDetail> {}
 
     public class CommentItem {

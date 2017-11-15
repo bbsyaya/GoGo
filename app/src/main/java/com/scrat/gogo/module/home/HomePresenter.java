@@ -6,6 +6,9 @@ import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
 import com.scrat.gogo.data.model.News;
+import com.scrat.gogo.framework.util.L;
+
+import java.util.List;
 
 import okhttp3.Call;
 
@@ -21,6 +24,28 @@ public class HomePresenter implements HomeContract.HomePresenter {
     public HomePresenter(HomeContract.HomeView view) {
         this.view = view;
         view.setPresenter(this);
+    }
+
+    @Override
+    public void loadBanner() {
+        DataRepository.getInstance().getApi().getBanner(
+                new DefaultLoadObjCallback<List<News>, Res.BannerRes>() {
+                    @Override
+                    protected void onSuccess(List<News> list) {
+                        view.showBanner(list);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        L.e(e);
+                    }
+
+                    @NonNull
+                    @Override
+                    protected Class<Res.BannerRes> getResClass() {
+                        return Res.BannerRes.class;
+                    }
+                });
     }
 
     @Override
