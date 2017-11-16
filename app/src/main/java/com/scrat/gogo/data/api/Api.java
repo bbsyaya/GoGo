@@ -6,6 +6,7 @@ import com.scrat.gogo.data.model.BettingInfo;
 import com.scrat.gogo.data.model.CoinPlan;
 import com.scrat.gogo.data.model.Comment;
 import com.scrat.gogo.data.model.Goods;
+import com.scrat.gogo.data.model.GoodsDetail;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.RaceGroupItem;
@@ -277,6 +278,19 @@ public class Api {
             cb.onError(e);
             return null;
         }
+    }
+
+    public Call getGoodsDetail(
+            String goodsId, DefaultLoadObjCallback<GoodsDetail, Res.GoodsDetailRes> cb) {
+
+        String url = String.format(APIS.GOODS_DETAIL_URL, goodsId);
+        try {
+            return OkHttpHelper.getInstance().get(url, getHeader(), null, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+
     }
 
 }

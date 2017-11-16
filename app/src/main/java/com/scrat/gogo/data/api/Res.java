@@ -4,6 +4,7 @@ import com.scrat.gogo.data.model.BettingInfo;
 import com.scrat.gogo.data.model.CoinPlan;
 import com.scrat.gogo.data.model.Comment;
 import com.scrat.gogo.data.model.Goods;
+import com.scrat.gogo.data.model.GoodsDetail;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.RaceGroupItem;
@@ -93,4 +94,6 @@ public class Res {
     public class TeamListRes extends BaseResponse<ListRes<Team>> {}
 
     public class BettingInfoRes extends BaseResponse<BettingInfo> {}
+
+    public class GoodsDetailRes extends BaseResponse<GoodsDetail> {}
 }

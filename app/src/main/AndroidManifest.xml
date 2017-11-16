@@ -40,6 +40,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".module.shop.detail.GoodsDetailActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".module.login.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

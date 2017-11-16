@@ -14,6 +14,7 @@ import com.scrat.gogo.R;
 import com.scrat.gogo.data.model.Goods;
 import com.scrat.gogo.databinding.FragmentShopListBinding;
 import com.scrat.gogo.framework.common.BaseFragment;
+import com.scrat.gogo.framework.common.BaseOnItemClickListener;
 import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
 import com.scrat.gogo.framework.common.BaseRecyclerViewHolder;
 import com.scrat.gogo.framework.common.BaseRecyclerViewOnScrollListener;
@@ -22,6 +23,7 @@ import com.scrat.gogo.framework.common.GlideRequest;
 import com.scrat.gogo.framework.common.GlideRequests;
 import com.scrat.gogo.framework.util.Utils;
 import com.scrat.gogo.framework.view.GridSpacingItemDecoration;
+import com.scrat.gogo.module.shop.detail.GoodsDetailActivity;
 
 import java.util.List;
 
@@ -93,7 +95,12 @@ public class ShopListFragment extends BaseFragment implements ShopListContract.V
         });
         binding.list.addOnScrollListener(loadMoreListener);
         GlideRequests requests = GlideApp.with(this);
-        adapter = new Adapter(requests);
+        adapter = new Adapter(requests, new BaseOnItemClickListener<Goods>() {
+            @Override
+            public void onItemClick(Goods goods) {
+                GoodsDetailActivity.show(getActivity(), goods);
+            }
+        });
         binding.list.setAdapter(adapter);
 
         new ShopListPresenter(this, getArguments().getString(TYPE));
@@ -145,16 +152,25 @@ public class ShopListFragment extends BaseFragment implements ShopListContract.V
 
     private static class Adapter extends BaseRecyclerViewAdapter<Goods> {
         private final GlideRequest<Drawable> request;
+        private BaseOnItemClickListener<Goods> onItemClickListener;
 
-        private Adapter(GlideRequests requests) {
+        private Adapter(
+                GlideRequests requests, BaseOnItemClickListener<Goods> onItemClickListener) {
             request = requests.asDrawable().centerCrop();
+            this.onItemClickListener = onItemClickListener;
         }
 
         @Override
         protected void onBindItemViewHolder(
-                BaseRecyclerViewHolder holder, int position, Goods goods) {
+                BaseRecyclerViewHolder holder, int position, final Goods goods) {
             request.load(goods.getCover())
                     .into(holder.getImageView(R.id.img));
+            holder.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemClickListener.onItemClick(goods);
+                }
+            });
         }
 
         @Override
