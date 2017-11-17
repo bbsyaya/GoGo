@@ -10,6 +10,8 @@ import com.scrat.gogo.framework.common.BaseContract;
 public interface GoodsDetailContract {
     interface Presenter {
         void loadData();
+
+        void exchange();
     }
 
     interface View extends BaseContract.BaseView<Presenter> {
@@ -18,5 +20,9 @@ public interface GoodsDetailContract {
         void showLoadGoodsDetailError(String e);
 
         void showGoodsDetail(GoodsDetail detail);
+
+        void showExchangeSuccess();
+
+        void showExchangeError(String e);
     }
 }

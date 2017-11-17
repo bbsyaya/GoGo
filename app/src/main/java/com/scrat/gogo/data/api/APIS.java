@@ -26,6 +26,7 @@ public class APIS {
     static final String TEAM_LIST_URL = HOST + "/core/teams";
     static final String BANNER_URL = HOST + "/core/banner";
     static final String GOODS_DETAIL_URL = HOST + "/mall/goods/%s";
+    static final String EXCHANGE_URL = HOST + "/mall/exchange/%s";
 
     static final String PT = "pt";
     static final String APP_KEY = "app_key";

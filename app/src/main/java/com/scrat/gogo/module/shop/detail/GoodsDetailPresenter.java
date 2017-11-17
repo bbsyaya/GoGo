@@ -14,6 +14,7 @@ import com.scrat.gogo.data.model.GoodsDetail;
 public class GoodsDetailPresenter implements GoodsDetailContract.Presenter {
     private GoodsDetailContract.View view;
     private String goodsId;
+    private volatile boolean exchanging;
 
     public GoodsDetailPresenter(GoodsDetailContract.View view, String goodsId) {
         this.view = view;
@@ -40,6 +41,34 @@ public class GoodsDetailPresenter implements GoodsDetailContract.Presenter {
                     @Override
                     protected Class<Res.GoodsDetailRes> getResClass() {
                         return Res.GoodsDetailRes.class;
+                    }
+                });
+    }
+
+    @Override
+    public void exchange() {
+        if (exchanging) {
+            return;
+        }
+        exchanging = true;
+        DataRepository.getInstance().getApi().exchange(
+                goodsId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+                    @Override
+                    protected void onSuccess(String s) {
+                        exchanging = false;
+                        view.showExchangeSuccess();
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        exchanging = false;
+                        view.showExchangeError(e.getMessage());
+                    }
+
+                    @NonNull
+                    @Override
+                    protected Class<Res.DefaultStrRes> getResClass() {
+                        return Res.DefaultStrRes.class;
                     }
                 });
     }

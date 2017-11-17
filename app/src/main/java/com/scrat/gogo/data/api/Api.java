@@ -290,7 +290,16 @@ public class Api {
             cb.onError(e);
             return null;
         }
+    }
 
+    public Call exchange(String goodsId, DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
+        String url = String.format(APIS.EXCHANGE_URL, goodsId);
+        try {
+            return OkHttpHelper.getInstance().post(url, getHeader(), null, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
     }
 
 }

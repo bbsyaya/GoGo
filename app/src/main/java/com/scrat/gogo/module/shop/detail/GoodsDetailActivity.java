@@ -51,7 +51,7 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailCont
     }
 
     public void exchange(View view) {
-
+        presenter.exchange();
     }
 
     @Override
@@ -78,10 +78,20 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailCont
         showGoods(detail);
     }
 
+    @Override
+    public void showExchangeSuccess() {
+        toast("兑换成功");
+        finish();
+    }
+
+    @Override
+    public void showExchangeError(String e) {
+        showMessage(e);
+    }
+
     private void showGoods(Goods goods) {
         glideRequests.load(goods.getCover()).fitCenter().into(binding.cover);
         binding.title.setText(goods.getTitle());
         binding.coin.setText(String.valueOf(goods.getCoin()));
-
     }
 }

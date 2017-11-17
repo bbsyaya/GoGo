@@ -18,5 +18,7 @@ public interface MeContract {
         void showNotLogin();
 
         void showUserInfo(UserInfo info);
+
+        void showLogoutSuccess();
     }
 }
