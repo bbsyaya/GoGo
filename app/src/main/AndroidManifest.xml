@@ -62,6 +62,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".module.me.exchange.ExchangeHistoryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait"

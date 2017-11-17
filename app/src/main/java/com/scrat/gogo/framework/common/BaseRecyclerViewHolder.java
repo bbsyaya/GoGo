@@ -43,6 +43,12 @@ public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
         views = new SparseArray<>();
     }
 
+    public static BaseRecyclerViewHolder newInstance(ViewGroup parent, int layoutId) {
+        View v = LayoutInflater.from(parent.getContext())
+                .inflate(layoutId, parent, false);
+        return new BaseRecyclerViewHolder(v);
+    }
+
     public <T extends View> T getView(int viewId) {
         View view = views.get(viewId);
         if (view == null) {
@@ -50,6 +56,10 @@ public class BaseRecyclerViewHolder extends RecyclerView.ViewHolder {
             views.put(viewId, view);
         }
         return (T) view;
+    }
+
+    public TextView getTextView(int viewId) {
+        return getView(viewId);
     }
 
     public ImageView getImageView(int viewId) {

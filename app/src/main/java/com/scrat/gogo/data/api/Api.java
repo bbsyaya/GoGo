@@ -5,6 +5,7 @@ import com.scrat.gogo.data.local.Preferences;
 import com.scrat.gogo.data.model.BettingInfo;
 import com.scrat.gogo.data.model.CoinPlan;
 import com.scrat.gogo.data.model.Comment;
+import com.scrat.gogo.data.model.ExchangeHistory;
 import com.scrat.gogo.data.model.Goods;
 import com.scrat.gogo.data.model.GoodsDetail;
 import com.scrat.gogo.data.model.News;
@@ -302,4 +303,17 @@ public class Api {
         }
     }
 
+    public Call getExchangeHistory(
+            String index,
+            DefaultLoadObjCallback<Res.ListRes<ExchangeHistory>, Res.ExchangeHistoryListRes> cb) {
+        Map<String, String> param = new HashMap<>();
+        param.put(APIS.INDEX, index);
+        try {
+            return OkHttpHelper.getInstance()
+                    .get(APIS.EXCHANGE_HISTORY_URL, getHeader(), param, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
 }

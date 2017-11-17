@@ -105,6 +105,7 @@
                 android:background="@color/c07_bar" />
 
             <TextView
+                android:id="@+id/exchange_history"
                 style="@style/meFragmentItem"
                 android:text="兑换记录" />
 

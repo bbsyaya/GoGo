@@ -14,6 +14,7 @@ import com.scrat.gogo.framework.common.BaseFragment;
 import com.scrat.gogo.module.about.AboutActivity;
 import com.scrat.gogo.module.coin.CoinPlanActivity;
 import com.scrat.gogo.module.login.LoginActivity;
+import com.scrat.gogo.module.me.exchange.ExchangeHistoryActivity;
 
 /**
  * Created by scrat on 2017/10/24.
@@ -46,6 +47,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
         binding.userInfo.setOnClickListener(this);
         binding.recharge.setOnClickListener(this);
         binding.about.setOnClickListener(this);
+        binding.exchangeHistory.setOnClickListener(this);
 
         new MePresenter(this);
 
@@ -104,11 +106,17 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
         }
 
         if (view == binding.userInfo) {
+//            TODO
             return;
         }
 
         if (view == binding.recharge) {
             CoinPlanActivity.show(getActivity());
+            return;
+        }
+
+        if (view == binding.exchangeHistory) {
+            ExchangeHistoryActivity.show(getContext());
             return;
         }
 
