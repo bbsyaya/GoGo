@@ -47,11 +47,13 @@ public class ShopFragment extends BaseFragment {
             @Nullable Bundle savedInstanceState) {
         binding = FragmentShopBinding.inflate(inflater, container, false);
         fragments = new ArrayList<>();
+        fragments.add(ShopListFragment.newEquipmentInstance());
         fragments.add(ShopListFragment.newVirtualInstance());
         fragments.add(ShopListFragment.newGameAroundInstance());
         fragments.add(ShopListFragment.newLuckMoneyInstance());
         fragments.add(ShopListFragment.newEquipmentInstance());
         List<String> titles = new ArrayList<String>() {{
+            add("热门");
             add("虚拟物品");
             add("游戏周边");
             add("现金红包");
