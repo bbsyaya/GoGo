@@ -1,5 +1,6 @@
 package com.scrat.gogo.data.api;
 
+import com.scrat.gogo.data.model.Address;
 import com.scrat.gogo.data.model.BettingInfo;
 import com.scrat.gogo.data.model.CoinPlan;
 import com.scrat.gogo.data.model.Comment;
@@ -99,4 +100,6 @@ public class Res {
     public class GoodsDetailRes extends BaseResponse<GoodsDetail> {}
 
     public class ExchangeHistoryListRes extends BaseResponse<ListRes<ExchangeHistory>> {}
+
+    public class AddressRes extends BaseResponse<Address> {}
 }

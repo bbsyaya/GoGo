@@ -87,6 +87,7 @@
                 android:background="@color/c07_bar" />
 
             <TextView
+                android:id="@+id/address"
                 style="@style/meFragmentItem"
                 android:text="地址信息" />
 

@@ -2,6 +2,7 @@ package com.scrat.gogo.data.api;
 
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
 import com.scrat.gogo.data.local.Preferences;
+import com.scrat.gogo.data.model.Address;
 import com.scrat.gogo.data.model.BettingInfo;
 import com.scrat.gogo.data.model.CoinPlan;
 import com.scrat.gogo.data.model.Comment;
@@ -311,6 +312,34 @@ public class Api {
         try {
             return OkHttpHelper.getInstance()
                     .get(APIS.EXCHANGE_HISTORY_URL, getHeader(), param, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
+
+    public Call updateAddress(String receiver,
+                              String tel,
+                              String location,
+                              String detail,
+                              DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put(APIS.RECEIVER, receiver);
+            obj.put(APIS.TEL, tel);
+            obj.put(APIS.LOCATION, location);
+            obj.put(APIS.ADDRESS_DETAIL, detail);
+            return OkHttpHelper.getInstance()
+                    .post(APIS.UPDATE_ADDRESS_URL, getHeader(), obj.toString(), cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
+
+    public Call getAddress(DefaultLoadObjCallback<Address, Res.AddressRes> cb) {
+        try {
+            return OkHttpHelper.getInstance().get(APIS.GET_ADDRESS_URL, getHeader(), null, cb);
         } catch (Exception e) {
             cb.onError(e);
             return null;

@@ -28,6 +28,8 @@ public class APIS {
     static final String GOODS_DETAIL_URL = HOST + "/mall/goods/%s";
     static final String EXCHANGE_URL = HOST + "/mall/exchange/%s";
     static final String EXCHANGE_HISTORY_URL = HOST + "/mall/exchange/history";
+    static final String UPDATE_ADDRESS_URL = HOST + "/core/address";
+    static final String GET_ADDRESS_URL = HOST + "/core/address";
 
     static final String PT = "pt";
     static final String APP_KEY = "app_key";
@@ -41,6 +43,9 @@ public class APIS {
     static final String CODE = "code";
     static final String REFRESH_TOKEN = "refresh_token";
     static final String CONTENT = "content";
+    static final String RECEIVER = "receiver";
+    static final String LOCATION = "location";
+    static final String ADDRESS_DETAIL = "address_detail";
 
     static final String DEFAULT_PT = "app";
     static final String DEFAULT_APP_KEY = "test_key";
