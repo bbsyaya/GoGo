@@ -81,6 +81,12 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
     }
 
     @Override
+    public void showLogoutSuccess() {
+        showToast("退出成功");
+        showNotLogin();
+    }
+
+    @Override
     public void onClick(View view) {
         if (view == binding.logoutBtn) {
             presenter.logout();
