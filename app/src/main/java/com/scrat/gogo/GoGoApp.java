@@ -12,6 +12,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 public class GoGoApp extends Application {
 
+    public static final String QQ_APP_ID = "1106448485";
     private static final String WX_APP_ID = "wx3349545f4d083130";
     public static IWXAPI WX_API;
 

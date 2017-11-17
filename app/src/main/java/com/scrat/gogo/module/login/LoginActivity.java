@@ -12,15 +12,20 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
+import com.scrat.gogo.GoGoApp;
 import com.scrat.gogo.MainActivity;
 import com.scrat.gogo.R;
 import com.scrat.gogo.databinding.ActivityLoginBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
+import com.scrat.gogo.framework.util.L;
 import com.scrat.gogo.wxapi.WXEntryActivity;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.Tencent;
+import com.tencent.tauth.UiError;
 
 /**
  * Created by scrat on 2017/10/31.
@@ -36,6 +41,8 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     private ActivityLoginBinding binding;
     private LoginContract.Presenter presenter;
+    private Tencent tencent;
+    private QQUiListener qqUiListener;
 
     @NonNull
     @Override
@@ -79,6 +86,9 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
                 return true;
             }
         });
+
+        tencent = Tencent.createInstance(GoGoApp.QQ_APP_ID, getApplicationContext());
+        qqUiListener = new QQUiListener();
     }
 
     @Override
@@ -86,6 +96,17 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         presenter.release();
         WXEntryActivity.releaseHandler();
         super.onDestroy();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                MainActivity.redirect(this);
+                finish();
+                return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     public void sendSmsCode(View view) {
@@ -101,7 +122,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     public void qqLogin(View view) {
-
+        tencent.login(this, "all", qqUiListener);
     }
 
     public void navigateToDisclaimer(View view) {
@@ -159,5 +180,25 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public void showSmsCodeError(String msg) {
         binding.code.requestFocus();
         binding.code.setError(msg);
+    }
+
+    private class QQUiListener implements IUiListener {
+
+        @Override
+        public void onComplete(Object o) {
+            L.e(o.toString());
+        }
+
+        @Override
+        public void onError(UiError uiError) {
+            L.e(uiError.errorCode + "");
+            L.e(uiError.errorMessage);
+            L.e(uiError.errorDetail);
+        }
+
+        @Override
+        public void onCancel() {
+            //ignore
+        }
     }
 }

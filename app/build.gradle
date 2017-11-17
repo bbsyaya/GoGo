@@ -66,4 +66,6 @@ dependencies {
     compile 'com.qiniu:qiniu-android-sdk:7.3.8'
 
     compile 'org.apmem.tools:layouts:1.10@aar'
+
+    compile files('libs/open_sdk_r5886_lite.jar')
 }
