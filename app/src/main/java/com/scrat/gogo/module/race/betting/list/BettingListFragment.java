@@ -17,6 +17,7 @@ import com.scrat.gogo.framework.common.BaseFragment;
 import com.scrat.gogo.framework.common.BaseOnItemClickListener;
 import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
 import com.scrat.gogo.framework.common.BaseRecyclerViewHolder;
+import com.scrat.gogo.module.me.betting.BettingHistoryActivity;
 
 import org.apmem.tools.layouts.FlowLayout;
 
@@ -103,7 +104,7 @@ public class BettingListFragment extends BaseFragment implements BettingListCont
     public void showBettingExecuteSuccess() {
         popupWindow.dismiss();
         showToast("参与成功");
-        // TODO
+        BettingHistoryActivity.show(getContext());
     }
 
     @Override
