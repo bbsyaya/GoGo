@@ -19,6 +19,7 @@ import com.scrat.gogo.data.model.UserInfo;
 import com.scrat.gogo.data.model.WxPayInfo;
 import com.scrat.gogo.framework.util.OkHttpHelper;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -340,6 +341,22 @@ public class Api {
     public Call getAddress(DefaultLoadObjCallback<Address, Res.AddressRes> cb) {
         try {
             return OkHttpHelper.getInstance().get(APIS.GET_ADDRESS_URL, getHeader(), null, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
+
+    public Call betting(
+            int coin, String bettingItemId, DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
+        JSONObject obj = new JSONObject();
+        JSONArray arr = new JSONArray();
+        arr.put(bettingItemId);
+        try {
+            obj.put(APIS.COIN, coin);
+            obj.put(APIS.BETTING_ITEM_ID_LIST, arr);
+            return OkHttpHelper.getInstance()
+                    .post(APIS.BETTING_URL, getHeader(), obj.toString(), cb);
         } catch (Exception e) {
             cb.onError(e);
             return null;

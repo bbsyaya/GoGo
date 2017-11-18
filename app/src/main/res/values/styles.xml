@@ -66,4 +66,19 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="PopupBettingItem">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@drawable/bg_border_c01_3</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:textColor">@color/c08_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
 </resources>

@@ -82,7 +82,7 @@ public abstract class BaseFragment extends Fragment {
         Toast.makeText(getContext().getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
-    private boolean isFinish() {
+    protected boolean isFinish() {
         if (getView() == null) {
             return true;
         }
