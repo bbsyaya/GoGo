@@ -15,6 +15,7 @@ import com.scrat.gogo.module.about.AboutActivity;
 import com.scrat.gogo.module.coin.CoinPlanActivity;
 import com.scrat.gogo.module.login.LoginActivity;
 import com.scrat.gogo.module.me.address.AddressActivity;
+import com.scrat.gogo.module.me.betting.BettingHistoryActivity;
 import com.scrat.gogo.module.me.exchange.ExchangeHistoryActivity;
 
 /**
@@ -50,6 +51,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
         binding.about.setOnClickListener(this);
         binding.exchangeHistory.setOnClickListener(this);
         binding.address.setOnClickListener(this);
+        binding.betting.setOnClickListener(this);
 
         new MePresenter(this);
 
@@ -125,6 +127,10 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
         if (view == binding.address) {
             AddressActivity.show(getContext());
             return;
+        }
+
+        if (view == binding.betting) {
+            BettingHistoryActivity.show(getContext());
         }
 
     }

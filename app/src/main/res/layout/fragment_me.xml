@@ -97,6 +97,7 @@
                 android:background="@color/c07_bar" />
 
             <TextView
+                android:id="@+id/betting"
                 style="@style/meFragmentItem"
                 android:text="竞猜历史" />
 

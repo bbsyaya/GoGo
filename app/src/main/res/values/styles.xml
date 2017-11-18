@@ -81,4 +81,62 @@
         <item name="android:foreground">?attr/selectableItemBackground</item>
     </style>
 
+    <style name="BettingHistoryItemTitleContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:background">@color/c07_bar</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+    </style>
+
+    <style name="BettingHistoryItemTitleLeft">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/c08_text</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="BettingHistoryItemTitleRight">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/c09_tips</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="Divider15dp">
+        <item name="android:layout_width">15dp</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/c07_bar</item>
+    </style>
+
+    <style name="BettingHistoryItemDetailContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/c07_bar</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+    </style>
+
+    <style name="BettingHistoryItemDetailLeft">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/c09_tips</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="BettingHistoryItemDetailRight">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">end</item>
+        <item name="android:textColor">@color/c09_tips</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

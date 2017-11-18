@@ -97,6 +97,8 @@ public class Res {
 
     public class BettingInfoRes extends BaseResponse<BettingInfo> {}
 
+    public class BettingInfoListRes extends BaseResponse<ListRes<BettingInfo>> {}
+
     public class GoodsDetailRes extends BaseResponse<GoodsDetail> {}
 
     public class ExchangeHistoryListRes extends BaseResponse<ListRes<ExchangeHistory>> {}

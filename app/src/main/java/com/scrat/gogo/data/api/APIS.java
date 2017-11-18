@@ -31,6 +31,7 @@ public class APIS {
     static final String UPDATE_ADDRESS_URL = HOST + "/core/address";
     static final String GET_ADDRESS_URL = HOST + "/core/address";
     static final String BETTING_URL = HOST + "/core/betting";
+    static final String BETTING_HISTORY_URL = HOST + "/core/betting";
 
     static final String PT = "pt";
     static final String APP_KEY = "app_key";

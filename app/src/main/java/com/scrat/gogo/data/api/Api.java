@@ -362,4 +362,18 @@ public class Api {
             return null;
         }
     }
+
+    public Call getBettingHistory(
+            String index,
+            DefaultLoadObjCallback<Res.ListRes<BettingInfo>, Res.BettingInfoListRes> cb) {
+        Map<String, String> param = new HashMap<>();
+        param.put(APIS.INDEX, index);
+        try {
+            return OkHttpHelper.getInstance()
+                    .get(APIS.BETTING_HISTORY_URL, getHeader(), param, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+            return null;
+        }
+    }
 }

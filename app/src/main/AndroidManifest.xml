@@ -70,6 +70,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".module.me.betting.BettingHistoryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:screenOrientation="portrait"
