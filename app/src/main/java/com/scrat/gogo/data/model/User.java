@@ -10,7 +10,6 @@ public class User implements Serializable {
     private String uid;
     private String username;
     private String avatar;
-    private String gender;
 
     public String getUid() {
         return uid;
@@ -22,9 +21,5 @@ public class User implements Serializable {
 
     public String getAvatar() {
         return avatar;
-    }
-
-    public String getGender() {
-        return gender;
     }
 }

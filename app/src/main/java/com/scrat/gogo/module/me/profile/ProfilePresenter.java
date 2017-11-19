@@ -50,4 +50,57 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         Preferences.getInstance().clearAuth();
         view.showLogoutSuccess();
     }
+
+    @Override
+    public void updateGenderToMale() {
+        updateUserInfo("male");
+    }
+
+    @Override
+    public void updateGenderToFemale() {
+        updateUserInfo("female");
+    }
+
+    private void updateUserInfo(final String gender) {
+        view.showProfileUpdating();
+        DataRepository.getInstance().getApi().getUserInfo(
+                new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>() {
+                    @Override
+                    protected void onSuccess(final UserInfo info) {
+                        DataRepository.getInstance().getApi()
+                                .updateUserInfo(info.getUsername(),
+                                        info.getAvatar(),
+                                        gender,
+                                        new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+                                            @Override
+                                            protected void onSuccess(String s) {
+                                                info.setGender(gender);
+                                                view.showProfileUpdateSuccess(info);
+                                            }
+
+                                            @Override
+                                            public void onError(Exception e) {
+                                                view.showProfileUpdateError(e.getMessage());
+                                            }
+
+                                            @NonNull
+                                            @Override
+                                            protected Class<Res.DefaultStrRes> getResClass() {
+                                                return Res.DefaultStrRes.class;
+                                            }
+                                        });
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        view.showProfileUpdateError(e.getMessage());
+                    }
+
+                    @NonNull
+                    @Override
+                    protected Class<Res.UserInfoRes> getResClass() {
+                        return Res.UserInfoRes.class;
+                    }
+                });
+    }
 }

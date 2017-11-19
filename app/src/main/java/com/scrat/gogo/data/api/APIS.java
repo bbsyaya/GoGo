@@ -19,6 +19,7 @@ public class APIS {
     static final String SMS_LOGIN_URL = HOST + "/account/sms_login";
     static final String LOGOUT_URL = HOST + "/account/logout";
     static final String USER_INFO_URL = HOST + "/core/user";
+    static final String UPDATE_USER_INFO_URL = HOST + "/core/user";
     static final String COIN_PLAN_URL = HOST + "/core/coin/plans";
     static final String RACE_LIST_URL = HOST + "/core/races";
     static final String RACE_DETAIL_URL = HOST + "/core/race/%s";
@@ -50,6 +51,9 @@ public class APIS {
     static final String ADDRESS_DETAIL = "address_detail";
     static final String BETTING_ITEM_ID_LIST = "betting_item_id_list";
     static final String COIN = "coin";
+    static final String USERNAME = "username";
+    static final String AVATAR = "avatar";
+    static final String GENDER = "gender";
 
     static final String DEFAULT_PT = "app";
     static final String DEFAULT_APP_KEY = "test_key";

@@ -376,4 +376,20 @@ public class Api {
             return null;
         }
     }
+
+    public void updateUserInfo(String username,
+                               String avatar,
+                               String gender,
+                               DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put(APIS.USERNAME, username);
+            obj.put(APIS.AVATAR, avatar);
+            obj.put(APIS.GENDER, gender);
+            OkHttpHelper.getInstance()
+                    .post(APIS.UPDATE_USER_INFO_URL, getHeader(), obj.toString(), cb);
+        } catch (Exception e) {
+            cb.onError(e);
+        }
+    }
 }

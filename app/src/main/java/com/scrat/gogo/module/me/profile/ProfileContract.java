@@ -12,6 +12,10 @@ public interface ProfileContract {
         void loadUserInfo();
 
         void logout();
+
+        void updateGenderToMale();
+
+        void updateGenderToFemale();
     }
 
     interface View extends BaseContract.BaseView<Presenter> {
@@ -22,5 +26,11 @@ public interface ProfileContract {
         void showUserInfo(UserInfo info);
 
         void showLogoutSuccess();
+
+        void showProfileUpdating();
+
+        void showProfileUpdateError(String e);
+
+        void showProfileUpdateSuccess(UserInfo info);
     }
 }

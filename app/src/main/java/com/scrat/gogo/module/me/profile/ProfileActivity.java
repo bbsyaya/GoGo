@@ -13,10 +13,12 @@ import com.scrat.gogo.R;
 import com.scrat.gogo.data.model.UserInfo;
 import com.scrat.gogo.databinding.ActivityProfileBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
+import com.scrat.gogo.framework.common.BaseOnItemClickListener;
 import com.scrat.gogo.framework.glide.GlideApp;
 import com.scrat.gogo.framework.glide.GlideCircleTransform;
 import com.scrat.gogo.framework.glide.GlideRequests;
 import com.scrat.gogo.framework.view.IosDialog;
+import com.scrat.gogo.framework.view.SelectorPopupWindow;
 
 /**
  * Created by scrat on 2017/11/19.
@@ -28,6 +30,7 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
     private GlideRequests glideRequests;
     private RequestOptions options;
     private IosDialog logoutDialog;
+    private SelectorPopupWindow sexDialog;
 
     public static void show(Context context) {
         Intent i = new Intent(context, ProfileActivity.class);
@@ -63,10 +66,27 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
                         presenter.logout();
                     }
                 });
+
+        sexDialog = new SelectorPopupWindow(this, new BaseOnItemClickListener<String>() {
+            @Override
+            public void onItemClick(String s) {
+                if ("男".equals(s)) {
+                    presenter.updateGenderToMale();
+                    return;
+                }
+
+                if ("女".equals(s)) {
+                    presenter.updateGenderToFemale();
+                }
+            }
+        }, "男", "女");
     }
 
     @Override
     protected void onDestroy() {
+        if (sexDialog.isShowing()) {
+            sexDialog.dismiss();
+        }
         if (logoutDialog.isShowing()) {
             logoutDialog.dismiss();
         }
@@ -101,6 +121,22 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         finish();
     }
 
+    @Override
+    public void showProfileUpdating() {
+
+    }
+
+    @Override
+    public void showProfileUpdateError(String e) {
+
+    }
+
+    @Override
+    public void showProfileUpdateSuccess(UserInfo info) {
+        toast("更新成功");
+        showUserInfo(info);
+    }
+
     private String getGenderStr(String gender) {
         if ("male".equals(gender)) {
             return "男";
@@ -115,5 +151,9 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
 
     public void logout(View view) {
         logoutDialog.show(view);
+    }
+
+    public void selectGender(View view) {
+        sexDialog.show(view);
     }
 }
