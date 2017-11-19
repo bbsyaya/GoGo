@@ -67,4 +67,14 @@ public class Utils {
         Resources r = context.getResources();
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
     }
+
+    public static String getVersionName(Context applicationContext) {
+        try {
+            String pkName = applicationContext.getPackageName();
+            return applicationContext.getPackageManager().getPackageInfo(pkName, 0).versionName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 }

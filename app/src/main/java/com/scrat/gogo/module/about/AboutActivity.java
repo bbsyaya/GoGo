@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import com.scrat.gogo.R;
 import com.scrat.gogo.databinding.ActivityAboutBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
+import com.scrat.gogo.framework.util.Utils;
 
 /**
  * Created by scrat on 2017/11/15.
@@ -33,5 +34,6 @@ public class AboutActivity extends BaseActivity {
         ActivityAboutBinding binding = DataBindingUtil
                 .setContentView(this, R.layout.activity_about);
         binding.topBar.subject.setText("关于");
+        binding.ver.setText(Utils.getVersionName(getApplicationContext()));
     }
 }
