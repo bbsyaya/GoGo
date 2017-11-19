@@ -12,6 +12,7 @@ import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.RaceGroupItem;
 import com.scrat.gogo.data.model.Team;
 import com.scrat.gogo.data.model.TokenInfo;
+import com.scrat.gogo.data.model.UpdateInfo;
 import com.scrat.gogo.data.model.Uptoken;
 import com.scrat.gogo.data.model.User;
 import com.scrat.gogo.data.model.UserInfo;
@@ -104,4 +105,6 @@ public class Res {
     public class ExchangeHistoryListRes extends BaseResponse<ListRes<ExchangeHistory>> {}
 
     public class AddressRes extends BaseResponse<Address> {}
+
+    public class UpdateInfoRes extends BaseResponse<UpdateInfo> {}
 }

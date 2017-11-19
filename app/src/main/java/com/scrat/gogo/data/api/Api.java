@@ -14,6 +14,7 @@ import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.RaceGroupItem;
 import com.scrat.gogo.data.model.Team;
 import com.scrat.gogo.data.model.TokenInfo;
+import com.scrat.gogo.data.model.UpdateInfo;
 import com.scrat.gogo.data.model.Uptoken;
 import com.scrat.gogo.data.model.UserInfo;
 import com.scrat.gogo.data.model.WxPayInfo;
@@ -22,6 +23,7 @@ import com.scrat.gogo.framework.util.OkHttpHelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -388,6 +390,16 @@ public class Api {
             obj.put(APIS.GENDER, gender);
             OkHttpHelper.getInstance()
                     .post(APIS.UPDATE_USER_INFO_URL, getHeader(), obj.toString(), cb);
+        } catch (Exception e) {
+            cb.onError(e);
+        }
+    }
+
+    public void checkUpdate(DefaultLoadObjCallback<UpdateInfo, Res.UpdateInfoRes> cb) {
+        Map<String, String> param = new HashMap<>();
+        param.put(APIS.TS, String.valueOf(new Date().getTime()));
+        try {
+            OkHttpHelper.getInstance().get(APIS.CHECK_UPDATE_URL, getHeader(), param, cb);
         } catch (Exception e) {
             cb.onError(e);
         }

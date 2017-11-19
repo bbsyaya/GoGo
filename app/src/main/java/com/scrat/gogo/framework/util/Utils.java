@@ -77,4 +77,14 @@ public class Utils {
         }
         return "";
     }
+
+    public static int getVersionCode(Context applicationContext) {
+        try {
+            String pkName = applicationContext.getPackageName();
+            return applicationContext.getPackageManager().getPackageInfo(pkName, 0).versionCode;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
 }

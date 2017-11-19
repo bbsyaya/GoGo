@@ -63,4 +63,14 @@ public class Preferences extends BaseSharedPreferences {
         removeItem(ACCESS_TOKEN);
         removeItem(REFRESH_TOKEN);
     }
+
+    private static final String LAST_CHECK_VER_CODE = "last_check_ver_code";
+
+    public int getLastCheckVerCode() {
+        return getInt(LAST_CHECK_VER_CODE, 0);
+    }
+
+    public void setLastCheckVerCode(int ver) {
+        setInt(LAST_CHECK_VER_CODE, ver);
+    }
 }

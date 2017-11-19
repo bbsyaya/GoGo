@@ -12,13 +12,17 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import com.scrat.gogo.data.local.Preferences;
+import com.scrat.gogo.data.model.UpdateInfo;
 import com.scrat.gogo.databinding.ActivityMainBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
+import com.scrat.gogo.framework.view.IosDialog;
 import com.scrat.gogo.module.home.HomeFragment;
 import com.scrat.gogo.module.login.RefreshTokenHelper;
 import com.scrat.gogo.module.race.RaceFragment;
 import com.scrat.gogo.module.shop.ShopFragment;
 import com.scrat.gogo.module.me.MeFragment;
+import com.scrat.gogo.module.update.UpdateHelper;
 
 public class MainActivity extends BaseActivity {
 
@@ -29,6 +33,7 @@ public class MainActivity extends BaseActivity {
 
     private Fragment currFragment;
     private ActivityMainBinding binding;
+    private IosDialog updateDialog;
 
     public static void redirect(Activity activity) {
         Intent i = new Intent(activity, MainActivity.class);
@@ -49,6 +54,38 @@ public class MainActivity extends BaseActivity {
         initFragment();
         navigateToHome(null);
         RefreshTokenHelper.refreshToken();
+        UpdateHelper.checkUpdate(this.getApplicationContext(), new UpdateHelper.UpdateListener() {
+            @Override
+            public void update(boolean force, final UpdateInfo info) {
+                updateDialog.setTitle(info.getTitle())
+                        .setContent(info.getContent())
+                        .setPositive("立即更新", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Preferences.getInstance().setLastCheckVerCode(info.getVer());
+                                UpdateHelper.downloadApk(MainActivity.this, info.getUrl());
+                            }
+                        });
+                if (!force) {
+                    updateDialog.setNegative("稍后再说", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Preferences.getInstance().setLastCheckVerCode(info.getVer());
+                        }
+                    });
+                }
+                updateDialog.show(binding.content);
+            }
+        });
+        updateDialog = new IosDialog(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (updateDialog.isShowing()) {
+            updateDialog.dismiss();
+        }
+        super.onDestroy();
     }
 
     private void initFragment() {
