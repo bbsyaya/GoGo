@@ -15,6 +15,7 @@ import com.scrat.gogo.databinding.ActivityGoodsDetailBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
 import com.scrat.gogo.framework.glide.GlideApp;
 import com.scrat.gogo.framework.glide.GlideRequests;
+import com.scrat.gogo.module.me.exchange.ExchangeHistoryActivity;
 
 /**
  * Created by scrat on 2017/11/17.
@@ -81,7 +82,7 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailCont
     @Override
     public void showExchangeSuccess() {
         toast("兑换成功");
-        finish();
+        ExchangeHistoryActivity.show(this);
     }
 
     @Override
