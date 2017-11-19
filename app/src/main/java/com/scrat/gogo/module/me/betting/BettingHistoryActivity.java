@@ -115,7 +115,7 @@ public class BettingHistoryActivity extends BaseActivity implements BettingHisto
                 String titleStr = String.format(
                         Locale.getDefault(),
                         "+ %.0f",
-                        (float) info.getCoin() * (1f - info.getOdds()));
+                        (float) info.getCoin() * (info.getOdds() - 1f));
                 title.setText(titleStr);
                 title.setTextColor(ContextCompat.getColor(ctx, R.color.c01_blue));
                 state.setText("WIN");
