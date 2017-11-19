@@ -17,6 +17,7 @@ import com.scrat.gogo.module.login.LoginActivity;
 import com.scrat.gogo.module.me.address.AddressActivity;
 import com.scrat.gogo.module.me.betting.BettingHistoryActivity;
 import com.scrat.gogo.module.me.exchange.ExchangeHistoryActivity;
+import com.scrat.gogo.module.me.profile.ProfileActivity;
 
 /**
  * Created by scrat on 2017/10/24.
@@ -45,7 +46,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentMeBinding.inflate(inflater, container, false);
 
-        binding.logoutBtn.setOnClickListener(this);
         binding.userInfo.setOnClickListener(this);
         binding.recharge.setOnClickListener(this);
         binding.about.setOnClickListener(this);
@@ -74,7 +74,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
         binding.name.setText("登录");
         binding.coinTip.setVisibility(View.GONE);
         binding.coin.setVisibility(View.GONE);
-        binding.logoutBtn.setVisibility(View.GONE);
     }
 
     @Override
@@ -83,22 +82,10 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
         binding.coinTip.setVisibility(View.VISIBLE);
         binding.coin.setVisibility(View.VISIBLE);
         binding.coin.setText(String.valueOf(info.getCoin()));
-        binding.logoutBtn.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void showLogoutSuccess() {
-        showToast("退出成功");
-        showNotLogin();
     }
 
     @Override
     public void onClick(View view) {
-        if (view == binding.logoutBtn) {
-            presenter.logout();
-            return;
-        }
-
         if (view == binding.about) {
             AboutActivity.show(getContext());
             return;
@@ -110,7 +97,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
         }
 
         if (view == binding.userInfo) {
-//            TODO
+            ProfileActivity.show(getContext());
             return;
         }
 

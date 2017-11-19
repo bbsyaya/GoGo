@@ -121,22 +121,6 @@
                 style="@style/meFragmentItem"
                 android:text="关于" />
 
-            <TextView
-                android:id="@+id/logout_btn"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="30dp"
-                android:layout_marginLeft="52dp"
-                android:layout_marginRight="52dp"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/bg_button_50dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:text="退出登录"
-                android:textColor="@color/c08_text"
-                android:textSize="17sp" />
-
         </LinearLayout>
     </ScrollView>
 </layout>

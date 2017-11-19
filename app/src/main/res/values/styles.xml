@@ -139,4 +139,36 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="ActivityProfileItemRight">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:drawablePadding">8dp</item>
+        <item name="android:drawableRight">@drawable/ic_go_12</item>
+        <item name="android:gravity">end</item>
+        <item name="android:textColor">@color/c09_tips</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="ActivityProfileItemLeft">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/c08_text</item>
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <style name="ActivityProfileItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/c07_bar</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:minHeight">55dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
 </resources>

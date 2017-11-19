@@ -21,14 +21,6 @@ public class MePresenter implements MeContract.Presenter {
     }
 
     @Override
-    public void logout() {
-        String refreshToken = Preferences.getInstance().getRefreshToken();
-        DataRepository.getInstance().getApi().logout(refreshToken);
-        Preferences.getInstance().clearAuth();
-        view.showLogoutSuccess();
-    }
-
-    @Override
     public void loadUserInfo() {
         if (!Preferences.getInstance().isLogin()) {
             view.showNotLogin();

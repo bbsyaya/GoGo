@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/top_bar"
+            layout="@layout/layout_top_bar" />
+
+        <LinearLayout
+            style="@style/ActivityProfileItem"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                style="@style/ActivityProfileItemLeft"
+                android:text="头像" />
+
+            <TextView style="@style/ActivityProfileItemRight" />
+
+        </LinearLayout>
+
+        <View style="@style/Divider15dp" />
+
+        <LinearLayout style="@style/ActivityProfileItem">
+
+            <TextView
+                style="@style/ActivityProfileItemLeft"
+                android:text="昵称" />
+
+            <TextView
+                android:id="@+id/nickname"
+                style="@style/ActivityProfileItemRight" />
+
+        </LinearLayout>
+
+        <View style="@style/Divider15dp" />
+
+        <LinearLayout style="@style/ActivityProfileItem">
+
+            <TextView
+                style="@style/ActivityProfileItemLeft"
+                android:text="性别" />
+
+            <TextView
+                android:id="@+id/gender"
+                style="@style/ActivityProfileItemRight" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_margin="30dp"
+            android:background="@drawable/bg_button_50dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:onClick="logout"
+            android:text="退出"
+            android:textColor="@color/c08_text"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+</layout>
