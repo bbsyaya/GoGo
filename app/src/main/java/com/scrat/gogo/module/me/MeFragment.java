@@ -3,6 +3,7 @@ package com.scrat.gogo.module.me;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,6 +88,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
         binding.name.setText("登录");
         binding.coinTip.setVisibility(View.GONE);
         binding.coin.setVisibility(View.GONE);
+        binding.img.setImageDrawable(
+                ContextCompat.getDrawable(getContext(), R.drawable.place_holder_circle_80dp));
     }
 
     @Override
