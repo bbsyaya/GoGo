@@ -13,8 +13,8 @@ import com.scrat.gogo.data.model.Goods;
 import com.scrat.gogo.data.model.GoodsDetail;
 import com.scrat.gogo.databinding.ActivityGoodsDetailBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
-import com.scrat.gogo.framework.common.GlideApp;
-import com.scrat.gogo.framework.common.GlideRequests;
+import com.scrat.gogo.framework.glide.GlideApp;
+import com.scrat.gogo.framework.glide.GlideRequests;
 
 /**
  * Created by scrat on 2017/11/17.

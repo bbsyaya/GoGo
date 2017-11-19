@@ -1,6 +1,5 @@
 package com.scrat.gogo.module.race.list;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.scrat.gogo.R;
 import com.scrat.gogo.data.model.Race;
 import com.scrat.gogo.data.model.RaceGroupItem;
@@ -22,9 +22,9 @@ import com.scrat.gogo.framework.common.BaseOnItemClickListener;
 import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
 import com.scrat.gogo.framework.common.BaseRecyclerViewHolder;
 import com.scrat.gogo.framework.common.BaseRecyclerViewOnScrollListener;
-import com.scrat.gogo.framework.common.GlideApp;
-import com.scrat.gogo.framework.common.GlideRequest;
-import com.scrat.gogo.framework.common.GlideRequests;
+import com.scrat.gogo.framework.glide.GlideApp;
+import com.scrat.gogo.framework.glide.GlideRequests;
+import com.scrat.gogo.framework.glide.GlideRoundTransform;
 import com.scrat.gogo.module.race.betting.BettingActivity;
 
 import java.text.ParseException;
@@ -138,14 +138,18 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
     }
 
     private static class Adapter extends BaseRecyclerViewAdapter<RaceGroupItem> {
-        private GlideRequest<Drawable> request;
+        private GlideRequests request;
         private SimpleDateFormat sdf;
         private BaseOnItemClickListener<Race> onItemClickListener;
+        private RequestOptions options;
 
         private Adapter(GlideRequests requests, BaseOnItemClickListener<Race> onItemClickListener) {
             this.onItemClickListener = onItemClickListener;
-            request = requests.asDrawable().centerCrop();
+            request = requests;
             sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+            options = new RequestOptions()
+                    .centerCrop()
+                    .transform(new GlideRoundTransform(4));
         }
 
         private String formatGroupTitle(String dt) {
@@ -167,9 +171,9 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
             LayoutInflater inflater = LayoutInflater.from(layout.getContext());
             for (final Race race : raceGroupItem.getItems()) {
                 ListItemRaceBinding binding = ListItemRaceBinding.inflate(inflater, layout, false);
-                request.load(race.getTeamA().getLogo()).into(binding.logoA);
+                request.load(race.getTeamA().getLogo()).apply(options).into(binding.logoA);
                 binding.date.setText(DateFormat.format("H:mm", race.getRaceTs()));
-                request.load(race.getTeamB().getLogo()).into(binding.logoB);
+                request.load(race.getTeamB().getLogo()).apply(options).into(binding.logoB);
                 binding.getRoot().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

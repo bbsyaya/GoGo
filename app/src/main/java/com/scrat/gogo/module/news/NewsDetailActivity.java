@@ -3,7 +3,6 @@ package com.scrat.gogo.module.news;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.scrat.gogo.R;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.model.Comment;
@@ -26,9 +26,9 @@ import com.scrat.gogo.framework.common.BaseActivity;
 import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
 import com.scrat.gogo.framework.common.BaseRecyclerViewHolder;
 import com.scrat.gogo.framework.common.BaseRecyclerViewOnScrollListener;
-import com.scrat.gogo.framework.common.GlideApp;
-import com.scrat.gogo.framework.common.GlideRequest;
-import com.scrat.gogo.framework.common.GlideRequests;
+import com.scrat.gogo.framework.glide.GlideApp;
+import com.scrat.gogo.framework.glide.GlideCircleTransform;
+import com.scrat.gogo.framework.glide.GlideRequests;
 import com.scrat.gogo.framework.util.L;
 import com.scrat.gogo.framework.util.Utils;
 
@@ -228,10 +228,15 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
 
     private static class Adapter extends BaseRecyclerViewAdapter<Res.CommentItem> {
 
-        private final GlideRequest<Drawable> request;
+        private final GlideRequests GlideRequests;
+        private RequestOptions options;
 
-        private Adapter(GlideRequests glideRequests) {
-            request = glideRequests.asDrawable();
+        private Adapter(GlideRequests GlideRequests) {
+            this.GlideRequests = GlideRequests;
+            options = new RequestOptions()
+                    .centerCrop()
+                    .error(R.drawable.place_holder_circle_80dp)
+                    .transform(new GlideCircleTransform());
         }
 
         @Override
@@ -242,7 +247,8 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
                     .setText(R.id.date, Utils.formatDate(item.getComment().getCreateTs()))
                     .setText(R.id.comment, item.getComment().getContent());
 
-            request.load(item.getUser().getAvatar())
+            GlideRequests.load(item.getUser().getAvatar())
+                    .apply(options)
                     .into(holder.getImageView(R.id.img));
         }
 

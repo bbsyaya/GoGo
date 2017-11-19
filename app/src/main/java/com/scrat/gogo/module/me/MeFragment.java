@@ -7,10 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.request.RequestOptions;
+import com.scrat.gogo.R;
 import com.scrat.gogo.data.local.Preferences;
 import com.scrat.gogo.data.model.UserInfo;
 import com.scrat.gogo.databinding.FragmentMeBinding;
 import com.scrat.gogo.framework.common.BaseFragment;
+import com.scrat.gogo.framework.glide.GlideApp;
+import com.scrat.gogo.framework.glide.GlideCircleTransform;
+import com.scrat.gogo.framework.glide.GlideRequests;
 import com.scrat.gogo.module.about.AboutActivity;
 import com.scrat.gogo.module.coin.CoinPlanActivity;
 import com.scrat.gogo.module.login.LoginActivity;
@@ -26,6 +31,8 @@ import com.scrat.gogo.module.me.profile.ProfileActivity;
 public class MeFragment extends BaseFragment implements View.OnClickListener, MeContract.View {
     private FragmentMeBinding binding;
     private MeContract.Presenter presenter;
+    private RequestOptions options;
+    private GlideRequests glideRequests;
 
     public static MeFragment newInstance() {
         Bundle args = new Bundle();
@@ -52,6 +59,12 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
         binding.exchangeHistory.setOnClickListener(this);
         binding.address.setOnClickListener(this);
         binding.betting.setOnClickListener(this);
+
+        glideRequests = GlideApp.with(this);
+        options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.place_holder_circle_80dp)
+                .transform(new GlideCircleTransform());
 
         new MePresenter(this);
 
@@ -82,6 +95,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
         binding.coinTip.setVisibility(View.VISIBLE);
         binding.coin.setVisibility(View.VISIBLE);
         binding.coin.setText(String.valueOf(info.getCoin()));
+        glideRequests.load(info.getAvatar()).apply(options).into(binding.img);
     }
 
     @Override

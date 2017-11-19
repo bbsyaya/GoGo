@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.scrat.gogo.framework.common.GlideApp;
+import com.scrat.gogo.framework.glide.GlideApp;
 
 /**
  * Created by scrat on 2017/11/12.

@@ -18,9 +18,9 @@ import com.scrat.gogo.framework.common.BaseOnItemClickListener;
 import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
 import com.scrat.gogo.framework.common.BaseRecyclerViewHolder;
 import com.scrat.gogo.framework.common.BaseRecyclerViewOnScrollListener;
-import com.scrat.gogo.framework.common.GlideApp;
-import com.scrat.gogo.framework.common.GlideRequest;
-import com.scrat.gogo.framework.common.GlideRequests;
+import com.scrat.gogo.framework.glide.GlideApp;
+import com.scrat.gogo.framework.glide.GlideRequest;
+import com.scrat.gogo.framework.glide.GlideRequests;
 
 import java.util.List;
 

@@ -9,14 +9,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.scrat.gogo.R;
 import com.scrat.gogo.data.model.BettingInfo;
 import com.scrat.gogo.data.model.Race;
 import com.scrat.gogo.databinding.ActivityBettingBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
 import com.scrat.gogo.framework.common.BaseFragmentPagerAdapter;
-import com.scrat.gogo.framework.common.GlideApp;
-import com.scrat.gogo.framework.common.GlideRequests;
+import com.scrat.gogo.framework.glide.GlideApp;
+import com.scrat.gogo.framework.glide.GlideRequests;
+import com.scrat.gogo.framework.glide.GlideRoundTransform;
 import com.scrat.gogo.module.race.betting.list.BettingListFragment;
 
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class BettingActivity extends BaseActivity implements BettingContract.Vie
     private static final String RACE = "race";
     private GlideRequests glideRequests;
     private BettingListFragment bettingListFragment;
+    private RequestOptions options;
 
     public static void show(Context context, Race race) {
         Intent i = new Intent(context, BettingActivity.class);
@@ -61,6 +64,10 @@ public class BettingActivity extends BaseActivity implements BettingContract.Vie
         binding.tabs.setupWithViewPager(binding.pager);
 
         glideRequests = GlideApp.with(this);
+        options = new RequestOptions()
+                .centerCrop()
+                .error(R.drawable.place_holder_circle_80dp)
+                .transform(new GlideRoundTransform(10));
         Race race = (Race) getIntent().getSerializableExtra(RACE);
         showRace(race);
 
@@ -95,9 +102,13 @@ public class BettingActivity extends BaseActivity implements BettingContract.Vie
     }
 
     private void showRace(Race race) {
-        glideRequests.load(race.getTeamA().getLogo()).into(binding.teamALogo);
+        glideRequests.load(race.getTeamA().getLogo())
+                .apply(options)
+                .into(binding.teamALogo);
         binding.teamAName.setText(race.getTeamA().getTeamName());
-        glideRequests.load(race.getTeamB().getLogo()).into(binding.teamBLogo);
+        glideRequests.load(race.getTeamB().getLogo())
+                .apply(options)
+                .into(binding.teamBLogo);
         binding.teamBName.setText(race.getTeamB().getTeamName());
         binding.score.setText(formatScore(race.getScoreA(), race.getScoreB()));
         binding.date.setText(DateFormat.format("M月d日 H:mm", race.getRaceTs()));
