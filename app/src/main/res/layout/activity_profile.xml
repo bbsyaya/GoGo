@@ -37,7 +37,9 @@
 
         <View style="@style/Divider15dp" />
 
-        <LinearLayout style="@style/ActivityProfileItem">
+        <LinearLayout
+            style="@style/ActivityProfileItem"
+            android:onClick="updateNickname">
 
             <TextView
                 style="@style/ActivityProfileItemLeft"

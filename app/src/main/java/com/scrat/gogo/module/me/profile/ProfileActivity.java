@@ -19,6 +19,7 @@ import com.scrat.gogo.framework.glide.GlideCircleTransform;
 import com.scrat.gogo.framework.glide.GlideRequests;
 import com.scrat.gogo.framework.view.IosDialog;
 import com.scrat.gogo.framework.view.SelectorPopupWindow;
+import com.scrat.gogo.module.me.nickname.NicknameActivity;
 
 /**
  * Created by scrat on 2017/11/19.
@@ -31,6 +32,7 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
     private RequestOptions options;
     private IosDialog logoutDialog;
     private SelectorPopupWindow sexDialog;
+    private static final int UPDATE_NICKNAME = 1;
 
     public static void show(Context context) {
         Intent i = new Intent(context, ProfileActivity.class);
@@ -80,6 +82,20 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
                 }
             }
         }, "男", "女");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+
+        switch (requestCode) {
+            case UPDATE_NICKNAME:
+                presenter.loadUserInfo();
+                break;
+        }
     }
 
     @Override
@@ -155,5 +171,9 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
 
     public void selectGender(View view) {
         sexDialog.show(view);
+    }
+
+    public void updateNickname(View view) {
+        NicknameActivity.show(this, UPDATE_NICKNAME);
     }
 }
