@@ -1,6 +1,5 @@
 package com.scrat.gogo.module.race.team.list;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.request.RequestOptions;
 import com.scrat.gogo.R;
 import com.scrat.gogo.data.model.Team;
 import com.scrat.gogo.databinding.FragmentTeamListBinding;
@@ -19,8 +19,8 @@ import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
 import com.scrat.gogo.framework.common.BaseRecyclerViewHolder;
 import com.scrat.gogo.framework.common.BaseRecyclerViewOnScrollListener;
 import com.scrat.gogo.framework.glide.GlideApp;
-import com.scrat.gogo.framework.glide.GlideRequest;
 import com.scrat.gogo.framework.glide.GlideRequests;
+import com.scrat.gogo.framework.glide.GlideRoundTransform;
 
 import java.util.List;
 
@@ -132,18 +132,22 @@ public class TeamListFragment extends BaseFragment implements TeamListContract.V
     }
 
     private static class Adapter extends BaseRecyclerViewAdapter<Team> {
-        private final GlideRequest<Drawable> request;
+        private final GlideRequests request;
         private final BaseOnItemClickListener<Team> onItemClickListener;
+        private RequestOptions options;
 
         private Adapter(GlideRequests requests, BaseOnItemClickListener<Team> onItemClickListener) {
-            request = requests.asDrawable().centerCrop();
+            request = requests;
+            options = new RequestOptions()
+                    .centerCrop()
+                    .transform(new GlideRoundTransform(4));
             this.onItemClickListener = onItemClickListener;
         }
 
         @Override
         protected void onBindItemViewHolder(
                 BaseRecyclerViewHolder holder, int position, Team team) {
-            request.load(team.getLogo()).into(holder.getImageView(R.id.logo));
+            request.load(team.getLogo()).apply(options).into(holder.getImageView(R.id.logo));
             holder.setText(R.id.name, team.getTeamName());
         }
 
