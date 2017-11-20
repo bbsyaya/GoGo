@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.request.RequestOptions;
 import com.scrat.gogo.R;
 import com.scrat.gogo.data.api.Res;
+import com.scrat.gogo.data.local.Preferences;
 import com.scrat.gogo.data.model.Comment;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
@@ -32,6 +33,8 @@ import com.scrat.gogo.framework.glide.GlideCircleTransform;
 import com.scrat.gogo.framework.glide.GlideRequests;
 import com.scrat.gogo.framework.util.L;
 import com.scrat.gogo.framework.util.Utils;
+import com.scrat.gogo.framework.view.IosDialog;
+import com.scrat.gogo.framework.view.LoginDialog;
 
 import java.util.List;
 
@@ -49,6 +52,7 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
     private GlideRequests glideRequests;
     private BaseRecyclerViewOnScrollListener loadMoreListener;
     private BottomNewsDetailCommentBinding commentBinding;
+    private IosDialog loginDialog;
 
     public static void show(Activity activity, int requestCode, News news) {
         Intent i = new Intent(activity, NewsDetailActivity.class);
@@ -79,6 +83,10 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
         commentBinding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!Preferences.getInstance().isLogin()) {
+                    loginDialog.show(view);
+                    return;
+                }
                 requestFocus(binding.comment);
             }
         });
@@ -120,6 +128,15 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
                 }
             }
         });
+        loginDialog = LoginDialog.build(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (loginDialog.isShowing()) {
+            loginDialog.dismiss();
+        }
+        super.onDestroy();
     }
 
     @Override
@@ -233,6 +250,10 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
 
     public void sendCommend(View view) {
         hideSoftInput();
+        if (!Preferences.getInstance().isLogin()) {
+            loginDialog.show(view);
+            return;
+        }
         presenter.sendComment(binding.comment.getText().toString());
     }
 
