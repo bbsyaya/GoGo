@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.scrat.gogo.R;
 import com.scrat.gogo.data.model.News;
+import com.scrat.gogo.databinding.BottomNewsLoadMoreBinding;
 import com.scrat.gogo.databinding.FragmentHomeBinding;
 import com.scrat.gogo.databinding.HeaderBannerBinding;
 import com.scrat.gogo.framework.common.BaseFragment;
@@ -45,6 +46,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     private BaseRecyclerViewOnScrollListener loadMoreListener;
     private HeaderBannerBinding headerBinding;
     private BannerAdapter bannerAdapter;
+    private BottomNewsLoadMoreBinding loadMoreBinding;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -87,6 +89,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         });
         headerBinding.pager.setAdapter(bannerAdapter);
         adapter.setHeader(headerBinding.getRoot());
+        loadMoreBinding = BottomNewsLoadMoreBinding.inflate(inflater, binding.list, false);
+        adapter.setFooter(loadMoreBinding.getRoot());
         binding.list.setAdapter(adapter);
 
         loadMoreListener = new BaseRecyclerViewOnScrollListener(
@@ -119,6 +123,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     @Override
     public void showLoadingList() {
         binding.srl.setRefreshing(true);
+        loadMoreBinding.sf.setVisibility(View.VISIBLE);
+        loadMoreBinding.sf.startShimmerAnimation();
+        loadMoreBinding.noMore.setVisibility(View.GONE);
     }
 
     @Override
@@ -130,6 +137,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     @Override
     public void showNoMoreListData() {
         hideLoading();
+        loadMoreBinding.noMore.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -146,6 +154,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     private void hideLoading() {
         loadMoreListener.setLoading(false);
         binding.srl.setRefreshing(false);
+        loadMoreBinding.sf.stopShimmerAnimation();
+        loadMoreBinding.sf.setVisibility(View.GONE);
     }
 
     @Override

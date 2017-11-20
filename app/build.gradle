@@ -35,7 +35,7 @@ android {
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.scrat.gogo"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode getVersionCode()
         versionName getVersionName() + "." + getVersionCode()
@@ -98,4 +98,6 @@ dependencies {
     compile 'org.apmem.tools:layouts:1.10@aar'
 
     compile files('libs/open_sdk_r5886_lite.jar')
+
+    compile 'com.facebook.shimmer:shimmer:0.1.0@aar'
 }

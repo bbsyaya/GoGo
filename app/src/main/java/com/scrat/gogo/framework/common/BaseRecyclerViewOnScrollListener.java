@@ -60,7 +60,7 @@ public class BaseRecyclerViewOnScrollListener extends RecyclerView.OnScrollListe
         int totalItemCount = getItemCount();
         int pastVisibleItems = findFirstVisibleItemPosition();
 
-        if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
+        if ((visibleItemCount + pastVisibleItems) >= totalItemCount - 3) {
             L.d("load more");
             loading = true;
             loadMoreListener.onLoadMore();
