@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.scrat.gogo.R;
+import com.scrat.gogo.data.local.Preferences;
 import com.scrat.gogo.data.model.Betting;
 import com.scrat.gogo.data.model.BettingItem;
 import com.scrat.gogo.databinding.FragmentBettingListBinding;
@@ -17,6 +18,8 @@ import com.scrat.gogo.framework.common.BaseFragment;
 import com.scrat.gogo.framework.common.BaseOnItemClickListener;
 import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
 import com.scrat.gogo.framework.common.BaseRecyclerViewHolder;
+import com.scrat.gogo.framework.view.IosDialog;
+import com.scrat.gogo.framework.view.LoginDialog;
 import com.scrat.gogo.module.me.betting.BettingHistoryActivity;
 
 import org.apmem.tools.layouts.FlowLayout;
@@ -33,6 +36,7 @@ public class BettingListFragment extends BaseFragment implements BettingListCont
     private BettingPopupWindow popupWindow;
     private Adapter adapter;
     private BettingListContract.Presenter presenter;
+    private IosDialog loginDialog;
 
     public static BettingListFragment newInstance() {
         Bundle args = new Bundle();
@@ -70,16 +74,24 @@ public class BettingListFragment extends BaseFragment implements BettingListCont
                 getContext(), new BettingPopupWindow.OnBettingClickListener() {
             @Override
             public void onBettingClick(BettingItem item, int coin) {
+                if (!Preferences.getInstance().isLogin()) {
+                    loginDialog.show(binding.list);
+                    return;
+                }
                 presenter.betting(item.getBettingItemId(), coin);
             }
         });
 
         new BettingListPresenter(this);
+        loginDialog = LoginDialog.build(getContext());
         return binding.getRoot();
     }
 
     @Override
     public void onDestroy() {
+        if (loginDialog.isShowing()) {
+            loginDialog.dismiss();
+        }
         if (popupWindow.isShowing()) {
             popupWindow.dismiss();
         }
