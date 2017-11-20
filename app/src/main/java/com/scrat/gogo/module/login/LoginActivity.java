@@ -62,6 +62,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
             @Override
             public void onResp(BaseResp baseResp) {
+                hideLoggingIn();
                 switch (baseResp.errCode) {
                     case BaseResp.ErrCode.ERR_OK:
                         SendAuth.Resp resp = ((SendAuth.Resp) baseResp);
@@ -118,10 +119,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     }
 
     public void wxLogin(View view) {
+        showLoggingIn();
         WXEntryActivity.login();
     }
 
     public void qqLogin(View view) {
+        showLoggingIn();
         tencent.login(this, "all", qqUiListener);
     }
 
@@ -136,11 +139,12 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
 
     @Override
     public void showLogin() {
-        hideSoftInput();
+        showLoggingIn();
     }
 
     @Override
     public void showLoginSuccess() {
+        hideLoggingIn();
         toast("登录成功");
         MainActivity.redirect(this);
         finish();
@@ -149,6 +153,7 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     @Override
     public void showLoginFail(String msg) {
         showMessage(msg);
+        hideLoggingIn();
     }
 
     @Override
@@ -174,15 +179,26 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
     public void showTelError(String msg) {
         binding.tel.requestFocus();
         binding.tel.setError(msg);
+        hideLoggingIn();
     }
 
     @Override
     public void showSmsCodeError(String msg) {
         binding.code.requestFocus();
         binding.code.setError(msg);
+        hideLoggingIn();
     }
 
-    private class QQUiListener implements IUiListener {
+    private void showLoggingIn() {
+        hideSoftInput();
+        binding.sr.startShimmerAnimation();
+    }
+
+    private void hideLoggingIn() {
+        binding.sr.stopShimmerAnimation();
+    }
+
+    private static class QQUiListener implements IUiListener {
 
         @Override
         public void onComplete(Object o) {
