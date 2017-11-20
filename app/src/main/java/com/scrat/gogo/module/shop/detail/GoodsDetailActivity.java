@@ -9,12 +9,15 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.scrat.gogo.R;
+import com.scrat.gogo.data.local.Preferences;
 import com.scrat.gogo.data.model.Goods;
 import com.scrat.gogo.data.model.GoodsDetail;
 import com.scrat.gogo.databinding.ActivityGoodsDetailBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
 import com.scrat.gogo.framework.glide.GlideApp;
 import com.scrat.gogo.framework.glide.GlideRequests;
+import com.scrat.gogo.framework.view.IosDialog;
+import com.scrat.gogo.framework.view.LoginDialog;
 import com.scrat.gogo.module.me.exchange.ExchangeHistoryActivity;
 
 /**
@@ -25,6 +28,7 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailCont
     private ActivityGoodsDetailBinding binding;
     private GoodsDetailContract.Presenter presenter;
     private GlideRequests glideRequests;
+    private IosDialog loginDialog;
     private static final String DATA = "data";
 
     public static void show(Activity activity, Goods goods) {
@@ -48,10 +52,23 @@ public class GoodsDetailActivity extends BaseActivity implements GoodsDetailCont
         Goods goods = (Goods) getIntent().getSerializableExtra(DATA);
         showGoods(goods);
         new GoodsDetailPresenter(this, goods.getGoodsId());
+        loginDialog = LoginDialog.build(this);
         presenter.loadData();
     }
 
+    @Override
+    protected void onDestroy() {
+        if (loginDialog.isShowing()) {
+            loginDialog.dismiss();
+        }
+        super.onDestroy();
+    }
+
     public void exchange(View view) {
+        if (!Preferences.getInstance().isLogin()) {
+            loginDialog.show(view);
+            return;
+        }
         presenter.exchange();
     }
 
