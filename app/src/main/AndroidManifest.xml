@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <!--ALiPay-->
     <!--<uses-permission android:name="android.permission.INTERNET" />-->
@@ -78,6 +79,16 @@
 
         <activity
             android:name=".module.me.nickname.NicknameActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".framework.view.SingleImgSelectorActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/myTransparent"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".framework.view.CropPhotoActivity"
             android:screenOrientation="portrait" />
 
         <activity

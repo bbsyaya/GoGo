@@ -11,6 +11,11 @@ public class User implements Serializable {
     private String username;
     private String avatar;
 
+    public User setAvatar(String avatar) {
+        this.avatar = avatar;
+        return this;
+    }
+
     public String getUid() {
         return uid;
     }

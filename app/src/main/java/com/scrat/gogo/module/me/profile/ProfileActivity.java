@@ -3,9 +3,11 @@ package com.scrat.gogo.module.me.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.bumptech.glide.request.RequestOptions;
@@ -17,8 +19,10 @@ import com.scrat.gogo.framework.common.BaseOnItemClickListener;
 import com.scrat.gogo.framework.glide.GlideApp;
 import com.scrat.gogo.framework.glide.GlideCircleTransform;
 import com.scrat.gogo.framework.glide.GlideRequests;
+import com.scrat.gogo.framework.view.CropPhotoActivity;
 import com.scrat.gogo.framework.view.IosDialog;
 import com.scrat.gogo.framework.view.SelectorPopupWindow;
+import com.scrat.gogo.framework.view.SingleImgSelectorActivity;
 import com.scrat.gogo.module.me.nickname.NicknameActivity;
 
 /**
@@ -33,6 +37,8 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
     private IosDialog logoutDialog;
     private SelectorPopupWindow sexDialog;
     private static final int UPDATE_NICKNAME = 1;
+    private static final int SELECT_IMG = 2;
+    private static final int CROP_IMG = 3;
 
     public static void show(Context context) {
         Intent i = new Intent(context, ProfileActivity.class);
@@ -94,6 +100,18 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
         switch (requestCode) {
             case UPDATE_NICKNAME:
                 presenter.loadUserInfo();
+                break;
+            case SELECT_IMG:
+                Uri uri = SingleImgSelectorActivity.parseUri(data);
+                if (uri != null) {
+                    CropPhotoActivity.show(this, CROP_IMG, uri, 1, 1);
+                }
+                break;
+            case CROP_IMG:
+                String cropPath = CropPhotoActivity.parsePath(data);
+                if (!TextUtils.isEmpty(cropPath)) {
+                    presenter.updateAvatar(cropPath);
+                }
                 break;
         }
     }
@@ -175,5 +193,9 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
 
     public void updateNickname(View view) {
         NicknameActivity.show(this, UPDATE_NICKNAME);
+    }
+
+    public void selectAvatar(View view) {
+        SingleImgSelectorActivity.show(this, SELECT_IMG);
     }
 }

@@ -16,6 +16,8 @@ public interface ProfileContract {
         void updateGenderToMale();
 
         void updateGenderToFemale();
+
+        void updateAvatar(String imgPath);
     }
 
     interface View extends BaseContract.BaseView<Presenter> {
