@@ -21,6 +21,7 @@ import com.scrat.gogo.data.model.Comment;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.databinding.ActivityNewsDetailBinding;
+import com.scrat.gogo.databinding.BottomNewsDetailCommentBinding;
 import com.scrat.gogo.databinding.HeaderNewsDetailBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
 import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
@@ -47,6 +48,7 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
     private HeaderNewsDetailBinding headerBinding;
     private GlideRequests glideRequests;
     private BaseRecyclerViewOnScrollListener loadMoreListener;
+    private BottomNewsDetailCommentBinding commentBinding;
 
     public static void show(Activity activity, int requestCode, News news) {
         Intent i = new Intent(activity, NewsDetailActivity.class);
@@ -73,6 +75,14 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
         adapter = new Adapter(glideRequests);
         headerBinding = HeaderNewsDetailBinding.inflate(getLayoutInflater(), binding.list, false);
         adapter.setHeader(headerBinding.getRoot());
+        commentBinding = BottomNewsDetailCommentBinding.inflate(getLayoutInflater(), binding.list, false);
+        commentBinding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestFocus(binding.comment);
+            }
+        });
+        adapter.setFooter(commentBinding.getRoot());
         binding.list.setAdapter(adapter);
 
         loadMoreListener = new BaseRecyclerViewOnScrollListener(

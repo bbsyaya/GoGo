@@ -87,6 +87,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void requestFocus(EditText editText) {
         editText.requestFocus();
+        showSoftInput();
         editText.selectAll();
     }
 
@@ -160,5 +161,16 @@ public abstract class BaseActivity extends AppCompatActivity {
             return;
         }
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    }
+
+    protected void showSoftInput() {
+        if (getCurrentFocus() == null) {
+            return;
+        }
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm == null) {
+            return;
+        }
+        imm.showSoftInput(getCurrentFocus(), 0);
     }
 }
