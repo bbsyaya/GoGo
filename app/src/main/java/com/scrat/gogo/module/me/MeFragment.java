@@ -17,9 +17,10 @@ import com.scrat.gogo.framework.common.BaseFragment;
 import com.scrat.gogo.framework.glide.GlideApp;
 import com.scrat.gogo.framework.glide.GlideCircleTransform;
 import com.scrat.gogo.framework.glide.GlideRequests;
+import com.scrat.gogo.framework.view.IosDialog;
+import com.scrat.gogo.framework.view.LoginDialog;
 import com.scrat.gogo.module.about.AboutActivity;
 import com.scrat.gogo.module.coin.CoinPlanActivity;
-import com.scrat.gogo.module.login.LoginActivity;
 import com.scrat.gogo.module.me.address.AddressActivity;
 import com.scrat.gogo.module.me.betting.BettingHistoryActivity;
 import com.scrat.gogo.module.me.exchange.ExchangeHistoryActivity;
@@ -34,6 +35,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
     private MeContract.Presenter presenter;
     private RequestOptions options;
     private GlideRequests glideRequests;
+    private IosDialog loginDialog;
 
     public static MeFragment newInstance() {
         Bundle args = new Bundle();
@@ -68,6 +70,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
                 .transform(new GlideCircleTransform());
 
         new MePresenter(this);
+        loginDialog = LoginDialog.build(getContext());
 
         return binding.getRoot();
     }
@@ -76,6 +79,14 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
     public void onResume() {
         super.onResume();
         presenter.loadUserInfo();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (loginDialog.isShowing()) {
+            loginDialog.dismiss();
+        }
+        super.onDestroyView();
     }
 
     @Override
@@ -109,7 +120,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
         }
 
         if (!Preferences.getInstance().isLogin()) {
-            LoginActivity.show(view.getContext());
+            loginDialog.show(view);
             return;
         }
 
