@@ -53,18 +53,24 @@
 
         </LinearLayout>
 
-        <TextView
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/sr"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="30dp"
-            android:background="@drawable/bg_button_50dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            android:gravity="center"
-            android:onClick="feedback"
-            android:text="反馈"
-            android:textColor="@color/c08_text"
-            android:textSize="17sp" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="30dp"
+                android:background="@drawable/bg_button_50dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:onClick="feedback"
+                android:text="反馈"
+                android:textColor="@color/c08_text"
+                android:textSize="17sp" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
     </LinearLayout>
 </layout>

@@ -29,6 +29,7 @@ public class FeedbackPresenter implements FeedbackContract.Presenter {
 
     @Override
     public void feedback(String content, String verName, int verCode) {
+        view.showFeedback();
         DataRepository.getInstance().getApi().feedback(
                 "",
                 content,

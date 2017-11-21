@@ -18,6 +18,8 @@ public interface FeedbackContract {
     }
 
     interface View extends BaseContract.BaseView<Presenter> {
+        void showFeedback();
+
         void showFeedbackFail(String e);
 
         void showFeedbackSuccess();

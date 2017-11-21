@@ -72,12 +72,19 @@ public class FeedbackActivity extends BaseActivity implements FeedbackContract.V
     }
 
     @Override
+    public void showFeedback() {
+        binding.sr.startShimmerAnimation();
+    }
+
+    @Override
     public void showFeedbackFail(String e) {
+        binding.sr.stopShimmerAnimation();
         showMessage(e);
     }
 
     @Override
     public void showFeedbackSuccess() {
+        binding.sr.stopShimmerAnimation();
         toast("提交成功");
         finish();
     }
