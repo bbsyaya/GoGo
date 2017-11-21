@@ -117,6 +117,16 @@
                 android:background="@color/c07_bar" />
 
             <TextView
+                android:id="@+id/feedback"
+                style="@style/meFragmentItem"
+                android:text="反馈" />
+
+            <View
+                android:layout_width="15dp"
+                android:layout_height="1px"
+                android:background="@color/c07_bar" />
+
+            <TextView
                 android:id="@+id/about"
                 style="@style/meFragmentItem"
                 android:text="关于" />

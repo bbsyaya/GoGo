@@ -404,4 +404,28 @@ public class Api {
             cb.onError(e);
         }
     }
+
+    public void feedback(
+            String title,
+            String content,
+            int verCode,
+            String verName,
+            List<String> imgs,
+            DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put(APIS.TITLE, title);
+            obj.put(APIS.CONTENT, content);
+            obj.put(APIS.VER_NAME, verName);
+            obj.put(APIS.VER_CODE, verCode);
+            JSONArray array = new JSONArray();
+            for (String img : imgs) {
+                array.put(img);
+            }
+            obj.put(APIS.IMGS, array);
+            OkHttpHelper.getInstance().post(APIS.FEEDBACK_URL, getHeader(), obj.toString(), cb);
+        } catch (Exception e) {
+            cb.onError(e);
+        }
+    }
 }

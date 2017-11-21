@@ -24,6 +24,7 @@ import com.scrat.gogo.module.coin.CoinPlanActivity;
 import com.scrat.gogo.module.me.address.AddressActivity;
 import com.scrat.gogo.module.me.betting.BettingHistoryActivity;
 import com.scrat.gogo.module.me.exchange.ExchangeHistoryActivity;
+import com.scrat.gogo.module.me.feedback.FeedbackActivity;
 import com.scrat.gogo.module.me.profile.ProfileActivity;
 
 /**
@@ -62,6 +63,7 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
         binding.exchangeHistory.setOnClickListener(this);
         binding.address.setOnClickListener(this);
         binding.betting.setOnClickListener(this);
+        binding.feedback.setOnClickListener(this);
 
         glideRequests = GlideApp.with(this);
         options = new RequestOptions()
@@ -116,6 +118,11 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
     public void onClick(View view) {
         if (view == binding.about) {
             AboutActivity.show(getContext());
+            return;
+        }
+
+        if (view == binding.feedback) {
+            FeedbackActivity.show(getContext());
             return;
         }
 
