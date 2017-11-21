@@ -44,6 +44,7 @@ public class FeedbackActivity extends BaseActivity implements FeedbackContract.V
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_feedback);
+        binding.topBar.subject.setText("用户反馈");
         requests = GlideApp.with(this);
         new FeedbackPresenter(this);
     }
@@ -107,9 +108,9 @@ public class FeedbackActivity extends BaseActivity implements FeedbackContract.V
                 binding.img1.setFocusable(false);
                 binding.img2.setVisibility(View.VISIBLE);
                 binding.img3.setVisibility(View.VISIBLE);
-                requests.load(imgs.get(0)).centerCrop().into(binding.img1);
-                requests.load(imgs.get(1)).centerCrop().into(binding.img2);
-                requests.load(imgs.get(2)).centerCrop().into(binding.img3);
+                requests.load(imgs.get(2)).centerCrop().into(binding.img1);
+                requests.load(imgs.get(0)).centerCrop().into(binding.img2);
+                requests.load(imgs.get(1)).centerCrop().into(binding.img3);
                 break;
         }
     }
