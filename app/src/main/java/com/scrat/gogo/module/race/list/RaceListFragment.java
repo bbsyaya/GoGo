@@ -180,6 +180,11 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
                         onItemClickListener.onItemClick(race);
                     }
                 });
+                if (!"ready".equals(race.getStatus())) {
+                    binding.bettingBtn.setVisibility(View.GONE);
+                } else {
+                    binding.bettingBtn.setVisibility(View.VISIBLE);
+                }
                 layout.addView(binding.getRoot());
             }
 
