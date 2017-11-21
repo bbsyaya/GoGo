@@ -3,6 +3,7 @@ package com.scrat.gogo.data.api;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
 import com.scrat.gogo.data.local.Preferences;
 import com.scrat.gogo.data.model.Address;
+import com.scrat.gogo.data.model.Betting;
 import com.scrat.gogo.data.model.BettingInfo;
 import com.scrat.gogo.data.model.CoinPlan;
 import com.scrat.gogo.data.model.Comment;
@@ -12,6 +13,7 @@ import com.scrat.gogo.data.model.GoodsDetail;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.RaceGroupItem;
+import com.scrat.gogo.data.model.RaceInfo;
 import com.scrat.gogo.data.model.Team;
 import com.scrat.gogo.data.model.TokenInfo;
 import com.scrat.gogo.data.model.UpdateInfo;
@@ -282,6 +284,28 @@ public class Api {
         } catch (Exception e) {
             cb.onError(e);
             return null;
+        }
+    }
+
+    public void getRaceDetail(
+            String raceId, DefaultLoadObjCallback<RaceInfo, Res.RaceInfoRes> cb) {
+        String url = String.format(APIS.RACE_DETAIL_URL2, raceId);
+        try {
+            OkHttpHelper.getInstance().get(url, getHeader(), null, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+        }
+    }
+
+    public void getBettingItem(
+            String raceId,
+            String tp,
+            DefaultLoadObjCallback<List<Betting>, Res.BettingListRes> cb) {
+        String url = String.format(APIS.BETTING_ITEM_URL, raceId, tp);
+        try {
+            OkHttpHelper.getInstance().get(url, getHeader(), null, cb);
+        } catch (Exception e) {
+            cb.onError(e);
         }
     }
 

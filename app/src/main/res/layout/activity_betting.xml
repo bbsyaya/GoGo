@@ -162,6 +162,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/c07_bar"
                 app:tabGravity="fill"
+                app:tabMode="scrollable"
                 app:tabIndicatorColor="@color/c01_blue"
                 app:tabIndicatorHeight="2dp"
                 app:tabSelectedTextColor="@color/c01_blue"

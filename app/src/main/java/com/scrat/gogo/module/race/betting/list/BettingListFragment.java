@@ -37,10 +37,13 @@ public class BettingListFragment extends BaseFragment implements BettingListCont
     private Adapter adapter;
     private BettingListContract.Presenter presenter;
     private IosDialog loginDialog;
+    private static final String TP = "tp";
+    private static final String ID = "id";
 
-    public static BettingListFragment newInstance() {
+    public static BettingListFragment newInstance(String raceId, String tp) {
         Bundle args = new Bundle();
-
+        args.putString(ID, raceId);
+        args.putString(TP, tp);
         BettingListFragment fragment = new BettingListFragment();
         fragment.setArguments(args);
         return fragment;
@@ -82,7 +85,8 @@ public class BettingListFragment extends BaseFragment implements BettingListCont
             }
         });
 
-        new BettingListPresenter(this);
+        new BettingListPresenter(this, getArguments().getString(ID), getArguments().getString(TP));
+        presenter.loadBetting();
         loginDialog = LoginDialog.build(getContext());
         return binding.getRoot();
     }
@@ -98,8 +102,14 @@ public class BettingListFragment extends BaseFragment implements BettingListCont
         super.onDestroy();
     }
 
+    @Override
     public void showBetting(List<Betting> list) {
         adapter.replaceData(list);
+    }
+
+    @Override
+    public void showBettingLoadError(String message) {
+
     }
 
     @Override
@@ -136,7 +146,7 @@ public class BettingListFragment extends BaseFragment implements BettingListCont
 
     @Override
     public void showLoadingCoinError(String e) {
-
+        showMsg(e);
     }
 
     @Override
@@ -146,6 +156,11 @@ public class BettingListFragment extends BaseFragment implements BettingListCont
         }
 
         popupWindow.showUserCoin(coin);
+    }
+
+    @Override
+    public void showBettingLoading() {
+
     }
 
     private static class Adapter extends BaseRecyclerViewAdapter<Betting> {

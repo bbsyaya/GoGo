@@ -23,6 +23,8 @@ public class APIS {
     static final String COIN_PLAN_URL = HOST + "/core/coin/plans";
     static final String RACE_LIST_URL = HOST + "/core/races";
     static final String RACE_DETAIL_URL = HOST + "/core/race/%s";
+    static final String RACE_DETAIL_URL2 = HOST + "/core/race2/%s";
+    static final String BETTING_ITEM_URL = HOST + "/core/race2/%s/%s";
     static final String REFRESH_TOKEN_URL = HOST + "/account/token";
     static final String TEAM_LIST_URL = HOST + "/core/teams";
     static final String BANNER_URL = HOST + "/core/banner";

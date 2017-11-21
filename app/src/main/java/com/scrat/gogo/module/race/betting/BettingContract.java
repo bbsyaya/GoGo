@@ -1,6 +1,6 @@
 package com.scrat.gogo.module.race.betting;
 
-import com.scrat.gogo.data.model.BettingInfo;
+import com.scrat.gogo.data.model.RaceInfo;
 import com.scrat.gogo.framework.common.BaseContract;
 
 /**
@@ -17,6 +17,6 @@ public interface BettingContract {
 
         void showLoadBettingError(String e);
 
-        void showBetting(BettingInfo info);
+        void showBetting(RaceInfo info);
     }
 }

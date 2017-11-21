@@ -11,8 +11,9 @@ import android.text.format.DateFormat;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.scrat.gogo.R;
-import com.scrat.gogo.data.model.BettingInfo;
+import com.scrat.gogo.data.model.BettingTpItem;
 import com.scrat.gogo.data.model.Race;
+import com.scrat.gogo.data.model.RaceInfo;
 import com.scrat.gogo.databinding.ActivityBettingBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
 import com.scrat.gogo.framework.common.BaseFragmentPagerAdapter;
@@ -33,7 +34,6 @@ public class BettingActivity extends BaseActivity implements BettingContract.Vie
     private BettingContract.Presenter presenter;
     private static final String RACE = "race";
     private GlideRequests glideRequests;
-    private BettingListFragment bettingListFragment;
     private RequestOptions options;
 
     public static void show(Context context, Race race) {
@@ -52,17 +52,6 @@ public class BettingActivity extends BaseActivity implements BettingContract.Vie
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_betting);
-        List<Fragment> fragments = new ArrayList<>();
-        bettingListFragment = BettingListFragment.newInstance();
-        fragments.add(bettingListFragment);
-        List<String> titles = new ArrayList<>();
-        titles.add("竞猜");
-        BaseFragmentPagerAdapter adapter = new BaseFragmentPagerAdapter(
-                getSupportFragmentManager(), fragments, titles);
-        binding.pager.setAdapter(adapter);
-        binding.pager.setCurrentItem(0);
-        binding.tabs.setupWithViewPager(binding.pager);
-
         glideRequests = GlideApp.with(this);
         options = new RequestOptions()
                 .centerCrop()
@@ -91,10 +80,21 @@ public class BettingActivity extends BaseActivity implements BettingContract.Vie
     }
 
     @Override
-    public void showBetting(BettingInfo info) {
+    public void showBetting(RaceInfo info) {
         binding.subject.setText(info.getRace().getRaceName());
         showRace(info.getRace());
-        bettingListFragment.showBetting(info.getBetting());
+        List<BettingTpItem> items = info.getTpItems();
+        List<Fragment> fragments = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
+        for (BettingTpItem item : items) {
+            fragments.add(BettingListFragment.newInstance(info.getRace().getRaceId(), item.getTp()));
+            titles.add(item.getName());
+        }
+        BaseFragmentPagerAdapter adapter = new BaseFragmentPagerAdapter(
+                getSupportFragmentManager(), fragments, titles);
+        binding.pager.setAdapter(adapter);
+        binding.pager.setCurrentItem(0);
+        binding.tabs.setupWithViewPager(binding.pager);
     }
 
     private String formatScore(String scoreA, String scoreB) {

@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
-import com.scrat.gogo.data.model.BettingInfo;
+import com.scrat.gogo.data.model.RaceInfo;
 
 /**
  * Created by scrat on 2017/11/15.
@@ -24,12 +24,12 @@ public class BettingPresenter implements BettingContract.Presenter {
     @Override
     public void loadData() {
         view.showLoadingBetting();
-        DataRepository.getInstance().getApi().getBettingDetail(
+        DataRepository.getInstance().getApi().getRaceDetail(
                 raceId,
-                new DefaultLoadObjCallback<BettingInfo, Res.BettingInfoRes>() {
+                new DefaultLoadObjCallback<RaceInfo, Res.RaceInfoRes>() {
                     @Override
-                    protected void onSuccess(BettingInfo bettingInfo) {
-                        view.showBetting(bettingInfo);
+                    protected void onSuccess(RaceInfo raceInfo) {
+                        view.showBetting(raceInfo);
                     }
 
                     @Override
@@ -39,9 +39,10 @@ public class BettingPresenter implements BettingContract.Presenter {
 
                     @NonNull
                     @Override
-                    protected Class<Res.BettingInfoRes> getResClass() {
-                        return Res.BettingInfoRes.class;
+                    protected Class<Res.RaceInfoRes> getResClass() {
+                        return Res.RaceInfoRes.class;
                     }
-                });
+                }
+        );
     }
 }

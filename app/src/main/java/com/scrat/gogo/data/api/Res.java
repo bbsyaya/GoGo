@@ -1,6 +1,7 @@
 package com.scrat.gogo.data.api;
 
 import com.scrat.gogo.data.model.Address;
+import com.scrat.gogo.data.model.Betting;
 import com.scrat.gogo.data.model.BettingInfo;
 import com.scrat.gogo.data.model.CoinPlan;
 import com.scrat.gogo.data.model.Comment;
@@ -10,6 +11,7 @@ import com.scrat.gogo.data.model.ExchangeHistory;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.RaceGroupItem;
+import com.scrat.gogo.data.model.RaceInfo;
 import com.scrat.gogo.data.model.Team;
 import com.scrat.gogo.data.model.TokenInfo;
 import com.scrat.gogo.data.model.UpdateInfo;
@@ -107,4 +109,8 @@ public class Res {
     public class AddressRes extends BaseResponse<Address> {}
 
     public class UpdateInfoRes extends BaseResponse<UpdateInfo> {}
+
+    public class RaceInfoRes extends BaseResponse<RaceInfo> {}
+
+    public class BettingListRes extends BaseResponse<List<Betting>> {}
 }

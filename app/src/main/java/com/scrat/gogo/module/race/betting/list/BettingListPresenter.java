@@ -5,7 +5,10 @@ import android.support.annotation.NonNull;
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
+import com.scrat.gogo.data.model.Betting;
 import com.scrat.gogo.data.model.UserInfo;
+
+import java.util.List;
 
 /**
  * Created by scrat on 2017/11/18.
@@ -13,10 +16,37 @@ import com.scrat.gogo.data.model.UserInfo;
 
 public class BettingListPresenter implements BettingListContract.Presenter {
     private BettingListContract.View view;
+    private String raceId;
+    private String tp;
 
-    public BettingListPresenter(BettingListContract.View view) {
+    public BettingListPresenter(BettingListContract.View view, String raceId, String tp) {
+        this.tp = tp;
+        this.raceId = raceId;
         this.view = view;
         view.setPresenter(this);
+    }
+
+    @Override
+    public void loadBetting() {
+        view.showBettingLoading();
+        DataRepository.getInstance().getApi().getBettingItem(
+                raceId, tp, new DefaultLoadObjCallback<List<Betting>, Res.BettingListRes>() {
+                    @Override
+                    protected void onSuccess(List<Betting> list) {
+                        view.showBetting(list);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        view.showBettingLoadError(e.getMessage());
+                    }
+
+                    @NonNull
+                    @Override
+                    protected Class<Res.BettingListRes> getResClass() {
+                        return Res.BettingListRes.class;
+                    }
+                });
     }
 
     @Override
