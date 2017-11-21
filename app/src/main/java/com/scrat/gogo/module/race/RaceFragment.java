@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by scrat on 2017/10/24.
  */
-
+@Deprecated
 public class RaceFragment extends BaseFragment {
     private FragmentRaceBinding binding;
     private List<Fragment> fragments;

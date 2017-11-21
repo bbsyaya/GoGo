@@ -19,15 +19,15 @@ import com.scrat.gogo.framework.common.BaseActivity;
 import com.scrat.gogo.framework.view.IosDialog;
 import com.scrat.gogo.module.home.HomeFragment;
 import com.scrat.gogo.module.login.RefreshTokenHelper;
-import com.scrat.gogo.module.race.RaceFragment;
-import com.scrat.gogo.module.shop.ShopFragment;
 import com.scrat.gogo.module.me.MeFragment;
+import com.scrat.gogo.module.race.list.RaceListFragment;
+import com.scrat.gogo.module.shop.ShopFragment;
 import com.scrat.gogo.module.update.UpdateHelper;
 
 public class MainActivity extends BaseActivity {
 
     private HomeFragment homeFragment;
-    private RaceFragment raceFragment;
+    private RaceListFragment raceFragment;
     private ShopFragment shopFragment;
     private MeFragment meFragment;
 
@@ -90,7 +90,7 @@ public class MainActivity extends BaseActivity {
 
     private void initFragment() {
         homeFragment = HomeFragment.newInstance();
-        raceFragment = RaceFragment.newInstance();
+        raceFragment = RaceListFragment.newInstance();
         shopFragment = ShopFragment.newInstance();
         meFragment = MeFragment.newInstance();
     }
