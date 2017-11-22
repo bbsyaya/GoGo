@@ -9,10 +9,5 @@ import java.io.Serializable;
  */
 
 public class RaceDetail extends Race implements Serializable {
-    @SerializedName("race_name")
-    private String raceName;
 
-    public String getRaceName() {
-        return raceName;
-    }
 }

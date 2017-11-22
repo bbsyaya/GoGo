@@ -184,12 +184,16 @@ public class BettingListFragment extends BaseFragment implements BettingListCont
                 String odds = String.format(Locale.getDefault(), "%.2f", item.getOdds());
                 binding.odds.setText(odds);
                 binding.title.setText(item.getTitle());
-                binding.getRoot().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        onItemClickListener.onItemClick(item);
-                    }
-                });
+                if ("unknown".equals(item.getStatus())) {
+                    binding.getRoot().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            onItemClickListener.onItemClick(item);
+                        }
+                    });
+                } else if ("win".equals(item.getStatus())) {
+                    binding.getRoot().setBackgroundResource(R.drawable.bg_c01_3dp);
+                }
                 layout.addView(binding.getRoot());
             }
         }

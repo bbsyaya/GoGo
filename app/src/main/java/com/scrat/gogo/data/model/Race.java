@@ -22,6 +22,12 @@ public class Race implements Serializable {
     private Team teamB;
     @SerializedName("race_ts")
     private long raceTs;
+    @SerializedName("race_name")
+    private String raceName;
+
+    public String getRaceName() {
+        return raceName;
+    }
 
     public String getRaceId() {
         return raceId;

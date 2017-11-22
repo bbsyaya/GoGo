@@ -171,6 +171,9 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
             LayoutInflater inflater = LayoutInflater.from(layout.getContext());
             for (final Race race : raceGroupItem.getItems()) {
                 ListItemRaceBinding binding = ListItemRaceBinding.inflate(inflater, layout, false);
+                binding.raceName.setText(race.getRaceName());
+                binding.teamAName.setText(race.getTeamA().getTeamName());
+                binding.teamBName.setText(race.getTeamB().getTeamName());
                 request.load(race.getTeamA().getLogo()).apply(options).into(binding.logoA);
                 binding.date.setText(DateFormat.format("H:mm", race.getRaceTs()));
                 request.load(race.getTeamB().getLogo()).apply(options).into(binding.logoB);
@@ -180,10 +183,18 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
                         onItemClickListener.onItemClick(race);
                     }
                 });
+                binding.bettingBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onItemClickListener.onItemClick(race);
+                    }
+                });
                 if (!"ready".equals(race.getStatus())) {
-                    binding.bettingBtn.setVisibility(View.GONE);
+                    binding.bettingBtn.setText("结果");
+                    binding.bettingBtn.setBackgroundResource(R.drawable.bg_c01_3dp);
                 } else {
-                    binding.bettingBtn.setVisibility(View.VISIBLE);
+                    binding.bettingBtn.setText("竞猜");
+                    binding.bettingBtn.setBackgroundResource(R.drawable.bg_c02_3dp);
                 }
                 layout.addView(binding.getRoot());
             }

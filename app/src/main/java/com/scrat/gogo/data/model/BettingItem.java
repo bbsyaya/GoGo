@@ -13,6 +13,7 @@ public class BettingItem implements Serializable {
     private String bettingItemId;
     private String title;
     private float odds;
+    private String status;
 
     public String getBettingItemId() {
         return bettingItemId;
@@ -24,5 +25,9 @@ public class BettingItem implements Serializable {
 
     public float getOdds() {
         return odds;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }
