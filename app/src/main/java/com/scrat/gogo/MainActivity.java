@@ -94,6 +94,15 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
     }
 
+    @Override
+    public void onBackPressed() {
+        if (currFragment != homeFragment) {
+            navigateToHome(binding.home);
+            return;
+        }
+        super.onBackPressed();
+    }
+
     private void initFragment() {
         homeFragment = HomeFragment.newInstance();
         raceFragment = RaceListFragment.newInstance();
