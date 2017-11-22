@@ -36,7 +36,7 @@ public class AddressActivity extends BaseActivity implements AddressContract.Vie
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_address);
-        binding.topBar.subject.setText("地址信息");
+        binding.topBar.subject.setText("我的地址");
         new AddressPresenter(this);
         presenter.loadAddress();
     }

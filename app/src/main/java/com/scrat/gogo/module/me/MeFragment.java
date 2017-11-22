@@ -19,13 +19,11 @@ import com.scrat.gogo.framework.glide.GlideCircleTransform;
 import com.scrat.gogo.framework.glide.GlideRequests;
 import com.scrat.gogo.framework.view.IosDialog;
 import com.scrat.gogo.framework.view.LoginDialog;
-import com.scrat.gogo.module.about.AboutActivity;
 import com.scrat.gogo.module.coin.CoinPlanActivity;
-import com.scrat.gogo.module.me.address.AddressActivity;
 import com.scrat.gogo.module.me.betting.BettingHistoryActivity;
 import com.scrat.gogo.module.me.exchange.ExchangeHistoryActivity;
-import com.scrat.gogo.module.me.feedback.FeedbackActivity;
 import com.scrat.gogo.module.me.profile.ProfileActivity;
+import com.scrat.gogo.module.setting.SettingActivity;
 
 /**
  * Created by scrat on 2017/10/24.
@@ -59,11 +57,9 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
 
         binding.userInfo.setOnClickListener(this);
         binding.recharge.setOnClickListener(this);
-        binding.about.setOnClickListener(this);
         binding.exchangeHistory.setOnClickListener(this);
-        binding.address.setOnClickListener(this);
         binding.betting.setOnClickListener(this);
-        binding.feedback.setOnClickListener(this);
+        binding.setting.setOnClickListener(this);
 
         glideRequests = GlideApp.with(this);
         options = new RequestOptions()
@@ -116,13 +112,8 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
 
     @Override
     public void onClick(View view) {
-        if (view == binding.about) {
-            AboutActivity.show(getContext());
-            return;
-        }
-
-        if (view == binding.feedback) {
-            FeedbackActivity.show(getContext());
+        if (view == binding.setting) {
+            SettingActivity.show(getContext());
             return;
         }
 
@@ -143,11 +134,6 @@ public class MeFragment extends BaseFragment implements View.OnClickListener, Me
 
         if (view == binding.exchangeHistory) {
             ExchangeHistoryActivity.show(getContext());
-            return;
-        }
-
-        if (view == binding.address) {
-            AddressActivity.show(getContext());
             return;
         }
 

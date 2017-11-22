@@ -82,16 +82,6 @@
                 android:background="@color/c07_bar" />
 
             <TextView
-                android:id="@+id/address"
-                style="@style/meFragmentItem"
-                android:text="地址信息" />
-
-            <View
-                android:layout_width="15dp"
-                android:layout_height="1px"
-                android:background="@color/c07_bar" />
-
-            <TextView
                 android:id="@+id/betting"
                 style="@style/meFragmentItem"
                 android:text="竞猜历史" />
@@ -106,25 +96,11 @@
                 style="@style/meFragmentItem"
                 android:text="兑换记录" />
 
-            <View
-                android:layout_width="15dp"
-                android:layout_height="1px"
-                android:background="@color/c07_bar" />
-
             <TextView
-                android:id="@+id/feedback"
+                android:id="@+id/setting"
+                android:layout_marginTop="10dp"
                 style="@style/meFragmentItem"
-                android:text="反馈" />
-
-            <View
-                android:layout_width="15dp"
-                android:layout_height="1px"
-                android:background="@color/c07_bar" />
-
-            <TextView
-                android:id="@+id/about"
-                style="@style/meFragmentItem"
-                android:text="关于" />
+                android:text="设置" />
 
         </LinearLayout>
     </ScrollView>

@@ -86,6 +86,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".module.setting.SettingActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".framework.view.SingleImgSelectorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/myTransparent"

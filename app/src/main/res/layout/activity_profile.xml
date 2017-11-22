@@ -69,18 +69,16 @@
         </LinearLayout>
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_margin="30dp"
-            android:background="@drawable/bg_button_50dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
-            android:gravity="center"
+            style="@style/meFragmentItem"
+            android:layout_marginTop="10dp"
+            android:onClick="address"
+            android:text="我的地址" />
+
+        <TextView
+            style="@style/meFragmentItem"
+            android:layout_marginTop="10dp"
             android:onClick="logout"
-            android:text="退出"
-            android:textColor="@color/c08_text"
-            android:textSize="17sp" />
+            android:text="退出登录" />
 
     </LinearLayout>
 </layout>

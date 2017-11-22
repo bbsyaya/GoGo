@@ -23,6 +23,7 @@ import com.scrat.gogo.framework.view.CropPhotoActivity;
 import com.scrat.gogo.framework.view.IosDialog;
 import com.scrat.gogo.framework.view.SelectorPopupWindow;
 import com.scrat.gogo.framework.view.SingleImgSelectorActivity;
+import com.scrat.gogo.module.me.address.AddressActivity;
 import com.scrat.gogo.module.me.nickname.NicknameActivity;
 
 /**
@@ -197,5 +198,9 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
 
     public void selectAvatar(View view) {
         SingleImgSelectorActivity.show(this, SELECT_IMG);
+    }
+
+    public void address(View view) {
+        AddressActivity.show(this);
     }
 }

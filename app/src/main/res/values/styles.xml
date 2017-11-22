@@ -43,6 +43,8 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="android:drawableRight">@drawable/ic_go_12</item>
         <item name="android:textColor">@color/c08_text</item>
         <item name="android:textSize">17sp</item>
     </style>
@@ -188,7 +190,7 @@
         <item name="android:clickable">true</item>
         <item name="android:background">?attr/selectableItemBackground</item>
     </style>
-    
+
     <style name="FeedbackImgItem">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
