@@ -11,6 +11,7 @@ import com.scrat.gogo.data.model.Uptoken;
 import com.scrat.gogo.data.model.UserInfo;
 import com.scrat.gogo.framework.qiniu.DefaultUploadListener;
 import com.scrat.gogo.framework.qiniu.QiniuUploadManager;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by scrat on 2017/11/19.
@@ -52,6 +53,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
         String refreshToken = Preferences.getInstance().getRefreshToken();
         DataRepository.getInstance().getApi().logout(refreshToken);
         Preferences.getInstance().clearAuth();
+        MobclickAgent.onProfileSignOff();
         view.showLogoutSuccess();
     }
 

@@ -83,6 +83,17 @@
 -keep class com.tencent.open.PKDialog$*
 -keep class com.tencent.open.PKDialog$* {*;}
 
+
+# Umeng
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+# default
 -keep class com.scrat.gogo.data.model.**{*;}
 -keep class com.scrat.gogo.data.api.Res$*
 -keep class com.scrat.gogo.data.api.Res$* {*;}

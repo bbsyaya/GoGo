@@ -16,6 +16,7 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.scrat.gogo.framework.util.L;
+import com.umeng.analytics.MobclickAgent;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -41,15 +42,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-//        MobclickAgent.onPageStart(getActivityName());
-//        MobclickAgent.onResume(this);
+        MobclickAgent.onPageStart(getActivityName());
+        MobclickAgent.onResume(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        MobclickAgent.onPageEnd(getActivityName());
-//        MobclickAgent.onPause(this);
+        MobclickAgent.onPageEnd(getActivityName());
+        MobclickAgent.onPause(this);
     }
 
     protected void showMessage(CharSequence message) {

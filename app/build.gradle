@@ -33,12 +33,14 @@ def getVersionName = { ->
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
+    flavorDimensions 'internal'
     defaultConfig {
         applicationId "com.scrat.gogo"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode getVersionCode()
         versionName getVersionName() + "." + getVersionCode()
+        manifestPlaceholders = [CHANNEL_NAME: "gogo"]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
@@ -76,6 +78,13 @@ android {
     dataBinding {
         enabled = true
     }
+
+    productFlavors {
+        gogo {
+            dimension 'internal'
+            manifestPlaceholders = [CHANNEL_NAME: "gogo"]
+        }
+    }
 }
 
 dependencies {
@@ -105,4 +114,6 @@ dependencies {
     compile files('libs/open_sdk_r5886_lite.jar')
 
     compile 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }

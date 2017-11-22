@@ -10,6 +10,7 @@ import com.scrat.gogo.data.local.Preferences;
 import com.scrat.gogo.data.model.TokenInfo;
 import com.scrat.gogo.framework.util.L;
 import com.scrat.gogo.framework.util.MainHandlerUtil;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.Date;
 
@@ -37,6 +38,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                         Preferences.getInstance().setUid(tokenInfo.getUid());
                         Preferences.getInstance().setAccessToken(tokenInfo.getAccessToken());
                         Preferences.getInstance().setRefreshToken(tokenInfo.getRefreshToken());
+                        MobclickAgent.onProfileSignIn("wx", tokenInfo.getUid());
                         view.showLoginSuccess();
                     }
 
@@ -140,6 +142,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                         Preferences.getInstance().setUid(tokenInfo.getUid());
                         Preferences.getInstance().setRefreshToken(tokenInfo.getRefreshToken());
                         Preferences.getInstance().setAccessToken(tokenInfo.getAccessToken());
+                        MobclickAgent.onProfileSignIn("tel", tokenInfo.getUid());
                         view.showLoginSuccess();
                     }
 

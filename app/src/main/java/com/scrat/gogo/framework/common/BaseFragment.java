@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.scrat.gogo.framework.util.L;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by scrat on 2017/4/27.
@@ -23,13 +24,13 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-//        MobclickAgent.onPageStart(getFragmentName());
+        MobclickAgent.onPageStart(getFragmentName());
     }
 
     @Override
     public void onPause() {
         super.onPause();
-//        MobclickAgent.onPageEnd(getFragmentName());
+        MobclickAgent.onPageEnd(getFragmentName());
     }
 
     @Override
