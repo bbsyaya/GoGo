@@ -165,6 +165,9 @@ public class ShopListFragment extends BaseFragment implements ShopListContract.V
                 BaseRecyclerViewHolder holder, int position, final Goods goods) {
             request.load(goods.getCover())
                     .into(holder.getImageView(R.id.img));
+            holder.setText(R.id.title, goods.getTitle());
+            String coinStr = String.format("%s竞猜币", goods.getCoin());
+            holder.setText(R.id.sub_title, coinStr);
             holder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
