@@ -24,6 +24,13 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+# Okhttp
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+-dontwarn okio.**
+
 # Wechat
 -keep class com.tencent.mm.opensdk.** {
    *;
@@ -55,6 +62,8 @@
 -keep class com.alipay.tscenter.** { *; }
 -keep class com.ta.utdid2.** { *;}
 -keep class com.ut.device.** { *;}
+-dontwarn android.net.**
+-keep class android.net.SSLCertificateSocketFactory{*;}
 
 # Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
@@ -63,7 +72,7 @@
   **[] $VALUES;
   public *;
 }
--keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+#-keep resourcexmlelements manifest/application/meta-data@value=GlideModule
 
 # QQ
 -keep class * extends android.app.Dialog
@@ -73,3 +82,7 @@
 -keep class com.tencent.open.PKDialog {*;}
 -keep class com.tencent.open.PKDialog$*
 -keep class com.tencent.open.PKDialog$* {*;}
+
+-keep class com.scrat.gogo.data.model.**{*;}
+-keep class com.scrat.gogo.data.api.Res$*
+-keep class com.scrat.gogo.data.api.Res$* {*;}
