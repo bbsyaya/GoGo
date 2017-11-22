@@ -54,29 +54,35 @@ public class MainActivity extends BaseActivity {
         initFragment();
         navigateToHome(null);
         RefreshTokenHelper.refreshToken();
-        UpdateHelper.checkUpdate(this.getApplicationContext(), new UpdateHelper.UpdateListener() {
-            @Override
-            public void update(boolean force, final UpdateInfo info) {
-                updateDialog.setTitle(info.getTitle())
-                        .setContent(info.getContent())
-                        .setPositive("立即更新", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Preferences.getInstance().setLastCheckVerCode(info.getVer());
-                                UpdateHelper.downloadApk(MainActivity.this, info.getUrl());
-                            }
-                        });
-                if (!force) {
-                    updateDialog.setNegative("稍后再说", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Preferences.getInstance().setLastCheckVerCode(info.getVer());
+        UpdateHelper.checkUpdate(
+                this.getApplicationContext(), false, new UpdateHelper.UpdateListener() {
+                    @Override
+                    public void update(boolean force, final UpdateInfo info) {
+                        updateDialog.setTitle(info.getTitle())
+                                .setContent(info.getContent())
+                                .setPositive("立即更新", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Preferences.getInstance().setLastCheckVerCode(info.getVer());
+                                        UpdateHelper.downloadApk(MainActivity.this, info.getUrl());
+                                    }
+                                });
+                        if (!force) {
+                            updateDialog.setNegative("稍后再说", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Preferences.getInstance().setLastCheckVerCode(info.getVer());
+                                }
+                            });
                         }
-                    });
-                }
-                updateDialog.show(binding.content);
-            }
-        });
+                        updateDialog.show(binding.content);
+                    }
+
+                    @Override
+                    public void showNoNeedToUpdate() {
+                        // ignore
+                    }
+                });
         updateDialog = new IosDialog(this);
     }
 

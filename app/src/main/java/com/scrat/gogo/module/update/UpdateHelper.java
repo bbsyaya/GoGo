@@ -22,9 +22,12 @@ import com.scrat.gogo.framework.util.Utils;
 public class UpdateHelper {
     public interface UpdateListener {
         void update(boolean force, UpdateInfo info);
+
+        void showNoNeedToUpdate();
     }
 
-    public static void checkUpdate(final Context context, final UpdateListener listener) {
+    public static void checkUpdate(
+            final Context context, final boolean forceChecked, final UpdateListener listener) {
         DataRepository.getInstance().getApi()
                 .checkUpdate(new DefaultLoadObjCallback<UpdateInfo, Res.UpdateInfoRes>() {
                     @Override
@@ -40,11 +43,13 @@ public class UpdateHelper {
                             return;
                         }
 
-                        if (serverVer == lastVerCode) {
+                        if (!forceChecked && serverVer == lastVerCode) {
+                            listener.showNoNeedToUpdate();
                             return;
                         }
 
                         if (serverVer <= verCode) {
+                            listener.showNoNeedToUpdate();
                             return;
                         }
 
