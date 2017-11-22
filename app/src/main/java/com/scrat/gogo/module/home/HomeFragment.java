@@ -2,6 +2,7 @@ package com.scrat.gogo.module.home;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,6 +29,7 @@ import com.scrat.gogo.framework.glide.GlideApp;
 import com.scrat.gogo.framework.glide.GlideRequest;
 import com.scrat.gogo.framework.glide.GlideRequests;
 import com.scrat.gogo.framework.util.L;
+import com.scrat.gogo.framework.util.Utils;
 import com.scrat.gogo.module.news.NewsDetailActivity;
 
 import java.util.ArrayList;
@@ -44,8 +46,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     private HomeContract.HomePresenter presenter;
     private Adapter adapter;
     private BaseRecyclerViewOnScrollListener loadMoreListener;
-    private HeaderBannerBinding headerBinding;
-    private BannerAdapter bannerAdapter;
+//    private HeaderBannerBinding headerBinding;
+//    private BannerAdapter bannerAdapter;
     private BottomNewsLoadMoreBinding loadMoreBinding;
 
     public static HomeFragment newInstance() {
@@ -74,21 +76,26 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         binding.list.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.list.setLayoutManager(layoutManager);
-        adapter = new Adapter(glideRequests, new BaseOnItemClickListener<News>() {
+        adapter = new Adapter(glideRequests, new OnItemClickListener() {
             @Override
             public void onItemClick(News news) {
                 NewsDetailActivity.show(getActivity(), REQUEST_CODE_NEWS_DETAIL, news);
             }
-        });
-        headerBinding = HeaderBannerBinding.inflate(inflater, binding.list, false);
-        bannerAdapter = new BannerAdapter(glideRequests, new BaseOnItemClickListener<News>() {
+
             @Override
-            public void onItemClick(News news) {
-                NewsDetailActivity.show(getActivity(), REQUEST_CODE_NEWS_DETAIL, news);
+            public void onVideoClick(String url) {
+                Utils.showVideo(getContext(), Uri.parse(url));
             }
         });
-        headerBinding.pager.setAdapter(bannerAdapter);
-        adapter.setHeader(headerBinding.getRoot());
+//        headerBinding = HeaderBannerBinding.inflate(inflater, binding.list, false);
+//        bannerAdapter = new BannerAdapter(glideRequests, new BaseOnItemClickListener<News>() {
+//            @Override
+//            public void onItemClick(News news) {
+//                NewsDetailActivity.show(getActivity(), REQUEST_CODE_NEWS_DETAIL, news);
+//            }
+//        });
+//        headerBinding.pager.setAdapter(bannerAdapter);
+//        adapter.setHeader(headerBinding.getRoot());
         loadMoreBinding = BottomNewsLoadMoreBinding.inflate(inflater, binding.list, false);
         adapter.setFooter(loadMoreBinding.getRoot());
         binding.list.setAdapter(adapter);
@@ -98,7 +105,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
             @Override
             public void onLoadMore() {
                 presenter.loadData(false);
-                presenter.loadBanner();
+//                presenter.loadBanner();
             }
         });
         binding.list.addOnScrollListener(loadMoreListener);
@@ -111,7 +118,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
         new HomePresenter(this);
         presenter.loadData(true);
-        presenter.loadBanner();
+//        presenter.loadBanner();
         return binding.getRoot();
     }
 
@@ -160,15 +167,21 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
     @Override
     public void showBanner(List<News> list) {
-        bannerAdapter.setData(list);
-        headerBinding.pager.setCurrentItem(300);
+//        bannerAdapter.setData(list);
+//        headerBinding.pager.setCurrentItem(300);
+    }
+
+    interface OnItemClickListener {
+        void onItemClick(News news);
+
+        void onVideoClick(String url);
     }
 
     private static class Adapter extends BaseRecyclerViewAdapter<News> {
         private final GlideRequest<Bitmap> requestBuilder;
-        private final BaseOnItemClickListener<News> listener;
+        private final OnItemClickListener listener;
 
-        private Adapter(GlideRequests requestBuilder, BaseOnItemClickListener<News> listener) {
+        private Adapter(GlideRequests requestBuilder, OnItemClickListener listener) {
             this.listener = listener;
             this.requestBuilder = requestBuilder.asBitmap().centerCrop();
         }
@@ -176,19 +189,44 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         @Override
         protected void onBindItemViewHolder(
                 BaseRecyclerViewHolder holder, int position, final News news) {
-            holder.setText(R.id.title, news.getTitle())
-                    .setText(R.id.tp, news.getTp())
-                    .setText(R.id.count, String.valueOf(news.getTotalComment()))
-                    .setVisibility(R.id.video_tip, news.isVideoNews())
-                    .setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            listener.onItemClick(news);
-                        }
-                    });
+            if (news.isVideoNews()) {
+                holder.setVisibility(R.id.news_container, false)
+                        .setVisibility(R.id.video_container, true)
+                        .setText(R.id.video_title, news.getTitle())
+                        .setText(R.id.video_tp, news.getTp())
+                        .setText(R.id.video_count, String.valueOf(news.getTotalComment()))
+                        .setOnClickListener(R.id.video_container, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                listener.onItemClick(news);
+                            }
+                        })
+                        .setOnClickListener(R.id.video_cover, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                listener.onVideoClick(news.getVideo());
+                            }
+                        });
 
-            requestBuilder.load(news.getCover())
-                    .into(holder.getImageView(R.id.img));
+                requestBuilder.load(news.getCover())
+                        .into(holder.getImageView(R.id.video_cover));
+            } else {
+                holder.setVisibility(R.id.news_container, true)
+                        .setVisibility(R.id.video_container, false)
+                        .setText(R.id.title, news.getTitle())
+                        .setText(R.id.tp, news.getTp())
+                        .setText(R.id.count, String.valueOf(news.getTotalComment()))
+                        .setVisibility(R.id.video_tip, news.isVideoNews())
+                        .setOnClickListener(R.id.news_container, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                listener.onItemClick(news);
+                            }
+                        });
+
+                requestBuilder.load(news.getCover())
+                        .into(holder.getImageView(R.id.img));
+            }
         }
 
         @Override
