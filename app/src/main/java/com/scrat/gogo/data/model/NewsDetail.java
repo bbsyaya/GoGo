@@ -2,6 +2,8 @@ package com.scrat.gogo.data.model;
 
 import android.text.TextUtils;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -11,6 +13,8 @@ import java.io.Serializable;
 public class NewsDetail extends News implements Serializable {
     private String body;
     private String url;
+    @SerializedName("news_ts")
+    private long newsTs;
 
     public boolean isWebViewNews() {
         return !TextUtils.isEmpty(url);
@@ -24,4 +28,7 @@ public class NewsDetail extends News implements Serializable {
         return url;
     }
 
+    public long getNewsTs() {
+        return newsTs;
+    }
 }

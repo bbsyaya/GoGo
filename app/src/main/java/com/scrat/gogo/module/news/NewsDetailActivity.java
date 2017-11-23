@@ -211,9 +211,12 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
 
     @Override
     public void showNewsDetail(NewsDetail detail) {
+        headerBinding.title.setText(detail.getTitle());
+        headerBinding.date.setText(Utils.formatDate(detail.getNewsTs()));
         if (detail.isWebViewNews()) {
             toast("web");
         } else if (detail.isVideoNews()) {
+            headerBinding.line.setVisibility(View.GONE);
             headerBinding.body.setVisibility(View.GONE);
             glideRequests.load(detail.getCover()).into(headerBinding.cover);
             headerBinding.coverItem.setVisibility(View.VISIBLE);
@@ -232,6 +235,7 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
                 }
             });
         } else {
+            headerBinding.line.setVisibility(View.VISIBLE);
             headerBinding.body.fromHtml(detail.getBody());
         }
 
@@ -239,7 +243,7 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
     }
 
     private void showNews(News news) {
-        binding.topBar.subject.setText(news.getTitle());
+        binding.topBar.subject.setText(news.getTp());
         if (news.getTotalComment() > 0) {
             headerBinding.groupTitle.setVisibility(View.VISIBLE);
             headerBinding.groupTitle.setText(String.format("评论 %s", news.getTotalComment()));
