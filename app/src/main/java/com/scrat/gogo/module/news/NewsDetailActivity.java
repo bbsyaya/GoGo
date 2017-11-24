@@ -216,7 +216,6 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
         if (detail.isWebViewNews()) {
             toast("web");
         } else if (detail.isVideoNews()) {
-            headerBinding.line.setVisibility(View.GONE);
             headerBinding.body.setVisibility(View.GONE);
             glideRequests.load(detail.getCover()).into(headerBinding.cover);
             headerBinding.coverItem.setVisibility(View.VISIBLE);
@@ -235,7 +234,6 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
                 }
             });
         } else {
-            headerBinding.line.setVisibility(View.VISIBLE);
             headerBinding.body.fromHtml(detail.getBody());
         }
 

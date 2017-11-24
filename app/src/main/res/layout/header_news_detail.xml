@@ -26,12 +26,6 @@
             android:textColor="@color/c10_icon"
             android:textSize="12sp" />
 
-        <View
-            android:id="@+id/line"
-            android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:background="@color/c09_tips" />
-
         <com.scrat.gogo.framework.richtext.RichTextView
             android:id="@+id/body"
             android:layout_width="match_parent"
