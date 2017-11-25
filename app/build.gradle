@@ -40,7 +40,7 @@ android {
         targetSdkVersion 26
         versionCode getVersionCode()
         versionName getVersionName() + "." + getVersionCode()
-        manifestPlaceholders = [CHANNEL_NAME: "gogo"]
+        manifestPlaceholders = [CHANNEL_NAME: "gogo", UMENG_APPKEY: UMENG_APPKEY]
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 

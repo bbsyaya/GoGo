@@ -19,7 +19,6 @@ import com.scrat.gogo.R;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.databinding.BottomNewsLoadMoreBinding;
 import com.scrat.gogo.databinding.FragmentHomeBinding;
-import com.scrat.gogo.databinding.HeaderBannerBinding;
 import com.scrat.gogo.framework.common.BaseFragment;
 import com.scrat.gogo.framework.common.BaseOnItemClickListener;
 import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;

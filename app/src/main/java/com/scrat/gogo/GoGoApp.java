@@ -5,6 +5,7 @@ import android.app.Application;
 import com.scrat.gogo.data.local.Preferences;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.umeng.analytics.MobclickAgent;
 
 /**
  * Created by scrat on 2017/11/1.
@@ -24,5 +25,9 @@ public class GoGoApp extends Application {
 
         WX_API = WXAPIFactory.createWXAPI(this, WX_APP_ID);
         WX_API.registerApp(WX_APP_ID);
+
+        if (BuildConfig.DEBUG) {
+            MobclickAgent.setDebugMode(true);
+        }
     }
 }
