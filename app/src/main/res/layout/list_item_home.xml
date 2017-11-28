@@ -33,27 +33,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <!--<VideoView-->
-                <!--android:id="@+id/video"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content" />-->
-
-            <com.scrat.gogo.framework.view.NewsVideoImageView
-                android:id="@+id/video_cover"
+            <com.scrat.gogo.framework.view.NewsVideoView
+                android:id="@+id/video"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?attr/selectableItemBackground" />
+                android:layout_height="wrap_content" />
 
-            <ImageView
-                android:id="@+id/play"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:contentDescription="@null"
-                android:src="@drawable/ic_play_circle_outline_white_80dp" />
+            <FrameLayout
+                android:id="@+id/video_cover_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <com.scrat.gogo.framework.view.NewsVideoImageView
+                    android:id="@+id/video_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground" />
+
+                <ImageView
+                    android:id="@+id/play"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_play_circle_outline_white_80dp" />
+            </FrameLayout>
         </RelativeLayout>
 
         <LinearLayout

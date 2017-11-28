@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.scrat.gogo.R;
 import com.scrat.gogo.data.model.News;
@@ -27,7 +28,7 @@ import com.scrat.gogo.framework.glide.GlideApp;
 import com.scrat.gogo.framework.glide.GlideRequest;
 import com.scrat.gogo.framework.glide.GlideRequests;
 import com.scrat.gogo.framework.util.L;
-import com.scrat.gogo.framework.util.Utils;
+import com.scrat.gogo.framework.util.MainHandlerUtil;
 import com.scrat.gogo.module.news.detail.NewsDetailActivity;
 
 import java.util.ArrayList;
@@ -44,9 +45,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     private HomeContract.HomePresenter presenter;
     private Adapter adapter;
     private BaseRecyclerViewOnScrollListener loadMoreListener;
-//    private HeaderBannerBinding headerBinding;
+    //    private HeaderBannerBinding headerBinding;
 //    private BannerAdapter bannerAdapter;
     private BottomNewsLoadMoreBinding loadMoreBinding;
+    private LinearLayoutManager layoutManager;
+    private volatile boolean videoRunningCheck;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -72,17 +75,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         GlideRequests glideRequests = GlideApp.with(this);
 
         binding.list.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager = new LinearLayoutManager(getContext());
         binding.list.setLayoutManager(layoutManager);
         adapter = new Adapter(glideRequests, new OnItemClickListener() {
             @Override
             public void onItemClick(News news) {
                 NewsDetailActivity.show(getActivity(), REQUEST_CODE_NEWS_DETAIL, news);
-            }
-
-            @Override
-            public void onVideoClick(String url) {
-                Utils.showVideo(getContext(), Uri.parse(url));
             }
         });
 //        headerBinding = HeaderBannerBinding.inflate(inflater, binding.list, false);
@@ -100,9 +98,9 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
         loadMoreListener = new BaseRecyclerViewOnScrollListener(
                 layoutManager, () -> {
-                    presenter.loadData(false);
-    //                presenter.loadBanner();
-                });
+            presenter.loadData(false);
+            //                presenter.loadBanner();
+        });
         binding.list.addOnScrollListener(loadMoreListener);
         binding.srl.setOnRefreshListener(() -> presenter.loadData(true));
 
@@ -110,6 +108,19 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         presenter.loadData(true);
 //        presenter.loadBanner();
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkVideo(true);
+    }
+
+    @Override
+    public void onPause() {
+        adapter.stopVideo();
+        videoRunningCheck = false;
+        super.onPause();
     }
 
     @Override
@@ -161,32 +172,95 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 //        headerBinding.pager.setCurrentItem(300);
     }
 
+    private void checkVideo(boolean ignore) {
+        if (ignore) {
+            videoRunningCheck = true;
+        }
+        MainHandlerUtil.getMainHandler().postDelayed(() -> {
+            if (!videoRunningCheck) {
+                return;
+            }
+
+            int first = layoutManager.findFirstVisibleItemPosition();
+            int last = layoutManager.findLastVisibleItemPosition();
+
+            adapter.checkVideo(first, last);
+            checkVideo(false);
+        }, 1000L);
+    }
+
     interface OnItemClickListener {
         void onItemClick(News news);
-
-        void onVideoClick(String url);
     }
 
     private static class Adapter extends BaseRecyclerViewAdapter<News> {
         private final GlideRequest<Bitmap> requestBuilder;
         private final OnItemClickListener listener;
+        private int currVideoPos;
+        private VideoView videoView;
+        private View coverView;
 
         private Adapter(GlideRequests requestBuilder, OnItemClickListener listener) {
             this.listener = listener;
             this.requestBuilder = requestBuilder.asBitmap().centerCrop();
+            currVideoPos = -1;
+        }
+
+        private void checkVideo(int firstPos, int lastPos) {
+            if (currVideoPos == -1) {
+                return;
+            }
+
+            if (currVideoPos < firstPos) {
+                stopVideo();
+                return;
+            }
+
+            if (currVideoPos > lastPos) {
+                stopVideo();
+                return;
+            }
+
+        }
+
+        private void stopVideo() {
+            if (videoView == null) {
+                return;
+            }
+            if (videoView.isPlaying()) {
+                videoView.pause();
+            }
+            if (coverView != null) {
+                coverView.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override
         protected void onBindItemViewHolder(
                 BaseRecyclerViewHolder holder, int position, final News news) {
             if (news.isVideoNews()) {
+                VideoView videoView = holder.getView(R.id.video);
+                View coverView = holder.getView(R.id.video_cover_container);
                 holder.setVisibility(R.id.news_container, false)
                         .setVisibility(R.id.video_container, true)
                         .setText(R.id.video_title, news.getTitle())
                         .setText(R.id.video_tp, news.getTp())
                         .setText(R.id.video_count, String.valueOf(news.getTotalComment()))
+                        .setVisibility(R.id.video_cover_container, true)
                         .setOnClickListener(R.id.video_container, view -> listener.onItemClick(news))
-                        .setOnClickListener(R.id.video_cover, view -> listener.onVideoClick(news.getVideo()));
+                        .setOnClickListener(R.id.video_cover, view -> {
+                            videoView.setVideoURI(Uri.parse(news.getVideo()));
+                            videoView.start();
+                            this.videoView = videoView;
+                            this.coverView = coverView;
+                            coverView.setVisibility(View.GONE);
+                        })
+                        .setOnClickListener(R.id.video, view -> {
+                            if (videoView.isPlaying()) {
+                                videoView.pause();
+                            }
+                            coverView.setVisibility(View.VISIBLE);
+                        });
 
                 requestBuilder.load(news.getCover())
                         .into(holder.getImageView(R.id.video_cover));
