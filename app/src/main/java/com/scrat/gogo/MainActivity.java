@@ -17,7 +17,7 @@ import com.scrat.gogo.data.model.UpdateInfo;
 import com.scrat.gogo.databinding.ActivityMainBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
 import com.scrat.gogo.framework.view.IosDialog;
-import com.scrat.gogo.module.home.HomeFragment;
+import com.scrat.gogo.module.news.list.HomeFragment;
 import com.scrat.gogo.module.login.RefreshTokenHelper;
 import com.scrat.gogo.module.me.MeFragment;
 import com.scrat.gogo.module.race.list.RaceListFragment;

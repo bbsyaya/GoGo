@@ -1,4 +1,4 @@
-package com.scrat.gogo.module.news;
+package com.scrat.gogo.module.news.detail;
 
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.model.Comment;

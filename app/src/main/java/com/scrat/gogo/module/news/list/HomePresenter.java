@@ -1,4 +1,4 @@
-package com.scrat.gogo.module.home;
+package com.scrat.gogo.module.news.list;
 
 import android.support.annotation.NonNull;
 

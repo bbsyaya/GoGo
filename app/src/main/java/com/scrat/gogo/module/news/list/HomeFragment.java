@@ -1,4 +1,4 @@
-package com.scrat.gogo.module.home;
+package com.scrat.gogo.module.news.list;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -28,7 +28,7 @@ import com.scrat.gogo.framework.glide.GlideRequest;
 import com.scrat.gogo.framework.glide.GlideRequests;
 import com.scrat.gogo.framework.util.L;
 import com.scrat.gogo.framework.util.Utils;
-import com.scrat.gogo.module.news.NewsDetailActivity;
+import com.scrat.gogo.module.news.detail.NewsDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;

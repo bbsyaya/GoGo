@@ -1,4 +1,4 @@
-package com.scrat.gogo.module.home;
+package com.scrat.gogo.module.news.list;
 
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.framework.common.BaseContract;

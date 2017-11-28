@@ -1,4 +1,4 @@
-package com.scrat.gogo.module.news;
+package com.scrat.gogo.module.news.detail;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -38,7 +38,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".module.news.NewsDetailActivity"
+            android:name=".module.news.detail.NewsDetailActivity"
             android:screenOrientation="portrait" />
 
         <activity
