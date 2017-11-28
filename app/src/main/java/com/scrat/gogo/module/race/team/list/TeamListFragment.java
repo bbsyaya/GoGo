@@ -3,7 +3,6 @@ package com.scrat.gogo.module.race.team.list;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,30 +57,17 @@ public class TeamListFragment extends BaseFragment implements TeamListContract.V
             @Nullable Bundle savedInstanceState) {
         binding = FragmentTeamListBinding.inflate(inflater, container, false);
 
-        binding.srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.loadData(true);
-            }
-        });
+        binding.srl.setOnRefreshListener(() -> presenter.loadData(true));
         binding.list.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.list.setLayoutManager(layoutManager);
         glideRequests = GlideApp.with(this);
-        adapter = new Adapter(glideRequests, new BaseOnItemClickListener<Team>() {
-            @Override
-            public void onItemClick(Team team) {
-                // TODO
-            }
+        adapter = new Adapter(glideRequests, team -> {
+            // TODO
         });
         binding.list.setAdapter(adapter);
         loadMoreListener = new BaseRecyclerViewOnScrollListener(
-                layoutManager, new BaseRecyclerViewOnScrollListener.LoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                presenter.loadData(false);
-            }
-        });
+                layoutManager, () -> presenter.loadData(false));
         binding.list.addOnScrollListener(loadMoreListener);
 
         new TeamListPresenter(this);

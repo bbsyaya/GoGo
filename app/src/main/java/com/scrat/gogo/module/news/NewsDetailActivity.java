@@ -80,26 +80,18 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
         headerBinding = HeaderNewsDetailBinding.inflate(getLayoutInflater(), binding.list, false);
         adapter.setHeader(headerBinding.getRoot());
         commentBinding = BottomNewsDetailCommentBinding.inflate(getLayoutInflater(), binding.list, false);
-        commentBinding.getRoot().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!Preferences.getInstance().isLogin()) {
-                    loginDialog.show(view);
-                    return;
-                }
-                requestFocus(binding.comment);
+        commentBinding.getRoot().setOnClickListener(view -> {
+            if (!Preferences.getInstance().isLogin()) {
+                loginDialog.show(view);
+                return;
             }
+            requestFocus(binding.comment);
         });
         adapter.setFooter(commentBinding.getRoot());
         binding.list.setAdapter(adapter);
 
         loadMoreListener = new BaseRecyclerViewOnScrollListener(
-                layoutManager, new BaseRecyclerViewOnScrollListener.LoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                presenter.loadComment(false);
-            }
-        });
+                layoutManager, () -> presenter.loadComment(false));
         binding.list.addOnScrollListener(loadMoreListener);
 
         News news = (News) getIntent().getSerializableExtra(NEWS);
@@ -220,17 +212,14 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
             glideRequests.load(detail.getCover()).into(headerBinding.cover);
             headerBinding.coverItem.setVisibility(View.VISIBLE);
             final Uri uri = Uri.parse(detail.getVideo());
-            headerBinding.coverItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //调用系统自带的播放器
-                    try {
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(uri, "video/mp4");
-                        startActivity(intent);
-                    } catch (Exception e) {
-                        L.e(e);
-                    }
+            headerBinding.coverItem.setOnClickListener(view -> {
+                //调用系统自带的播放器
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(uri, "video/mp4");
+                    startActivity(intent);
+                } catch (Exception e) {
+                    L.e(e);
                 }
             });
         } else {

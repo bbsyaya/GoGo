@@ -8,10 +8,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 
 import com.scrat.gogo.R;
 import com.scrat.gogo.databinding.ActivityNicknameBinding;
@@ -63,17 +61,14 @@ public class NicknameActivity extends BaseActivity implements NicknameContract.V
             }
         });
 
-        binding.content.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                switch (i) {
-                    case EditorInfo.IME_ACTION_DONE:
-                        hideSoftInput();
-                        presenter.updateNickname(binding.content.getText().toString());
-                        break;
-                }
-                return true;
+        binding.content.setOnEditorActionListener((textView, i, keyEvent) -> {
+            switch (i) {
+                case EditorInfo.IME_ACTION_DONE:
+                    hideSoftInput();
+                    presenter.updateNickname(binding.content.getText().toString());
+                    break;
             }
+            return true;
         });
 
         new NicknamePresenter(this);

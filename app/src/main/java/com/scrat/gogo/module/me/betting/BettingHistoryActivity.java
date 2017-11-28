@@ -58,12 +58,7 @@ public class BettingHistoryActivity extends BaseActivity implements BettingHisto
         adapter = new Adapter();
         binding.list.setAdapter(adapter);
         loadMoreListener = new BaseRecyclerViewOnScrollListener(
-                layoutManager, new BaseRecyclerViewOnScrollListener.LoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                presenter.loadData(false);
-            }
-        });
+                layoutManager, () -> presenter.loadData(false));
         binding.list.addOnScrollListener(loadMoreListener);
         new BettingHistoryPresenter(this);
         presenter.loadData(true);

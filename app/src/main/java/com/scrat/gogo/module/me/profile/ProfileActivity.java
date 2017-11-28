@@ -15,7 +15,6 @@ import com.scrat.gogo.R;
 import com.scrat.gogo.data.model.UserInfo;
 import com.scrat.gogo.databinding.ActivityProfileBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
-import com.scrat.gogo.framework.common.BaseOnItemClickListener;
 import com.scrat.gogo.framework.glide.GlideApp;
 import com.scrat.gogo.framework.glide.GlideCircleTransform;
 import com.scrat.gogo.framework.glide.GlideRequests;
@@ -69,24 +68,16 @@ public class ProfileActivity extends BaseActivity implements ProfileContract.Vie
                 .setTitle("退出提示")
                 .setContent("是否现在退出账号？")
                 .setNegative("取消")
-                .setPositive("退出", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        presenter.logout();
-                    }
-                });
+                .setPositive("退出", view -> presenter.logout());
 
-        sexDialog = new SelectorPopupWindow(this, new BaseOnItemClickListener<String>() {
-            @Override
-            public void onItemClick(String s) {
-                if ("男".equals(s)) {
-                    presenter.updateGenderToMale();
-                    return;
-                }
+        sexDialog = new SelectorPopupWindow(this, s -> {
+            if ("男".equals(s)) {
+                presenter.updateGenderToMale();
+                return;
+            }
 
-                if ("女".equals(s)) {
-                    presenter.updateGenderToFemale();
-                }
+            if ("女".equals(s)) {
+                presenter.updateGenderToFemale();
             }
         }, "男", "女");
     }

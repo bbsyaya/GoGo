@@ -3,7 +3,6 @@ package com.scrat.gogo.module.race.list;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -64,30 +63,15 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
             @Nullable Bundle savedInstanceState) {
         binding = FragmentRaceListBinding.inflate(inflater, container, false);
 
-        binding.srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.loadData(true);
-            }
-        });
+        binding.srl.setOnRefreshListener(() -> presenter.loadData(true));
         binding.list.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.list.setLayoutManager(layoutManager);
         loadMoreListener = new BaseRecyclerViewOnScrollListener(
-                layoutManager, new BaseRecyclerViewOnScrollListener.LoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                presenter.loadData(false);
-            }
-        });
+                layoutManager, () -> presenter.loadData(false));
         binding.list.addOnScrollListener(loadMoreListener);
         GlideRequests glideRequests = GlideApp.with(this);
-        adapter = new Adapter(glideRequests, new BaseOnItemClickListener<Race>() {
-            @Override
-            public void onItemClick(Race race) {
-                BettingActivity.show(getActivity(), race);
-            }
-        });
+        adapter = new Adapter(glideRequests, race -> BettingActivity.show(getActivity(), race));
         binding.list.setAdapter(adapter);
 
         new RaceListPresenter(this);
@@ -177,18 +161,8 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
                 request.load(race.getTeamA().getLogo()).apply(options).into(binding.logoA);
                 binding.date.setText(DateFormat.format("H:mm", race.getRaceTs()));
                 request.load(race.getTeamB().getLogo()).apply(options).into(binding.logoB);
-                binding.getRoot().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        onItemClickListener.onItemClick(race);
-                    }
-                });
-                binding.bettingBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        onItemClickListener.onItemClick(race);
-                    }
-                });
+                binding.getRoot().setOnClickListener(view -> onItemClickListener.onItemClick(race));
+                binding.bettingBtn.setOnClickListener(view -> onItemClickListener.onItemClick(race));
                 if (!"ready".equals(race.getStatus())) {
                     binding.bettingBtn.setText("结果");
                     binding.bettingBtn.setBackgroundResource(R.drawable.bg_c01_3dp);

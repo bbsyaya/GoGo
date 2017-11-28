@@ -55,12 +55,7 @@ public class ExchangeHistoryActivity extends BaseActivity implements ExchangeHis
         adapter = new Adapter();
         binding.list.setAdapter(adapter);
         loadMoreListener = new BaseRecyclerViewOnScrollListener(
-                layoutManager, new BaseRecyclerViewOnScrollListener.LoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                presenter.loadData(false);
-            }
-        });
+                layoutManager, () -> presenter.loadData(false));
         binding.list.addOnScrollListener(loadMoreListener);
 
         new ExchangeHistoryPresenter(this);

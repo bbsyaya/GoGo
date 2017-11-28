@@ -65,25 +65,19 @@ public class BettingListFragment extends BaseFragment implements BettingListCont
         binding.list.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.list.setLayoutManager(layoutManager);
-        adapter = new Adapter(new BaseOnItemClickListener<BettingItem>() {
-            @Override
-            public void onItemClick(BettingItem bettingItem) {
-                presenter.loadCoinInfo();
-                popupWindow.showBettingItem(binding.list, bettingItem);
-            }
+        adapter = new Adapter(bettingItem -> {
+            presenter.loadCoinInfo();
+            popupWindow.showBettingItem(binding.list, bettingItem);
         });
         binding.list.setAdapter(adapter);
         popupWindow = new BettingPopupWindow(
-                getContext(), new BettingPopupWindow.OnBettingClickListener() {
-            @Override
-            public void onBettingClick(BettingItem item, int coin) {
-                if (!Preferences.getInstance().isLogin()) {
-                    loginDialog.show(binding.list);
-                    return;
-                }
-                presenter.betting(item.getBettingItemId(), coin);
-            }
-        });
+                getContext(), (item, coin) -> {
+                    if (!Preferences.getInstance().isLogin()) {
+                        loginDialog.show(binding.list);
+                        return;
+                    }
+                    presenter.betting(item.getBettingItemId(), coin);
+                });
 
         new BettingListPresenter(this, getArguments().getString(ID), getArguments().getString(TP));
         presenter.loadBetting();
@@ -185,12 +179,7 @@ public class BettingListFragment extends BaseFragment implements BettingListCont
                 binding.odds.setText(odds);
                 binding.title.setText(item.getTitle());
                 if ("unknown".equals(item.getStatus())) {
-                    binding.getRoot().setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            onItemClickListener.onItemClick(item);
-                        }
-                    });
+                    binding.getRoot().setOnClickListener(view -> onItemClickListener.onItemClick(item));
                 } else if ("win".equals(item.getStatus())) {
                     binding.getRoot().setBackgroundResource(R.drawable.bg_c01_3dp);
                 }

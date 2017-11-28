@@ -10,7 +10,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 
 import com.scrat.gogo.GoGoApp;
 import com.scrat.gogo.MainActivity;
@@ -76,16 +75,13 @@ public class LoginActivity extends BaseActivity implements LoginContract.View {
         });
 
         new LoginPresenter(this);
-        binding.code.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                switch (i) {
-                    case EditorInfo.IME_ACTION_DONE:
-                        telLogin(binding.tel);
-                        break;
-                }
-                return true;
+        binding.code.setOnEditorActionListener((textView, i, keyEvent) -> {
+            switch (i) {
+                case EditorInfo.IME_ACTION_DONE:
+                    telLogin(binding.tel);
+                    break;
             }
+            return true;
         });
 
         tencent = Tencent.createInstance(GoGoApp.QQ_APP_ID, getApplicationContext());

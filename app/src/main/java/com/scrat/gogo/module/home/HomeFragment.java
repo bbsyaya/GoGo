@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,20 +99,12 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         binding.list.setAdapter(adapter);
 
         loadMoreListener = new BaseRecyclerViewOnScrollListener(
-                layoutManager, new BaseRecyclerViewOnScrollListener.LoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                presenter.loadData(false);
-//                presenter.loadBanner();
-            }
-        });
+                layoutManager, () -> {
+                    presenter.loadData(false);
+    //                presenter.loadBanner();
+                });
         binding.list.addOnScrollListener(loadMoreListener);
-        binding.srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.loadData(true);
-            }
-        });
+        binding.srl.setOnRefreshListener(() -> presenter.loadData(true));
 
         new HomePresenter(this);
         presenter.loadData(true);
@@ -194,18 +185,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
                         .setText(R.id.video_title, news.getTitle())
                         .setText(R.id.video_tp, news.getTp())
                         .setText(R.id.video_count, String.valueOf(news.getTotalComment()))
-                        .setOnClickListener(R.id.video_container, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                listener.onItemClick(news);
-                            }
-                        })
-                        .setOnClickListener(R.id.video_cover, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                listener.onVideoClick(news.getVideo());
-                            }
-                        });
+                        .setOnClickListener(R.id.video_container, view -> listener.onItemClick(news))
+                        .setOnClickListener(R.id.video_cover, view -> listener.onVideoClick(news.getVideo()));
 
                 requestBuilder.load(news.getCover())
                         .into(holder.getImageView(R.id.video_cover));
@@ -216,12 +197,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
                         .setText(R.id.tp, news.getTp())
                         .setText(R.id.count, String.valueOf(news.getTotalComment()))
                         .setVisibility(R.id.video_tip, news.isVideoNews())
-                        .setOnClickListener(R.id.news_container, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                listener.onItemClick(news);
-                            }
-                        });
+                        .setOnClickListener(R.id.news_container, view -> listener.onItemClick(news));
 
                 requestBuilder.load(news.getCover())
                         .into(holder.getImageView(R.id.img));
@@ -286,12 +262,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
                 view.findViewById(R.id.video_tip).setVisibility(View.GONE);
             }
 
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onItemClickListener.onItemClick(news);
-                }
-            });
+            view.setOnClickListener(view1 -> onItemClickListener.onItemClick(news));
 
             container.addView(view);
             return view;

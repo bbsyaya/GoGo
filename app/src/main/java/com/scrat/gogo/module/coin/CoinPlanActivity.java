@@ -103,12 +103,7 @@ public class CoinPlanActivity extends BaseActivity implements CoinPlanContract.V
             if (i >= list.size()) {
                 itemBinding.line.setVisibility(View.GONE);
             }
-            itemBinding.item.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    selectPlan(itemBinding.item, plan);
-                }
-            });
+            itemBinding.item.setOnClickListener(view -> selectPlan(itemBinding.item, plan));
             binding.planList.addView(itemBinding.getRoot());
         }
     }

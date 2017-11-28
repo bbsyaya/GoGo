@@ -60,20 +60,14 @@ public class MainActivity extends BaseActivity {
                     public void update(boolean force, final UpdateInfo info) {
                         updateDialog.setTitle(info.getTitle())
                                 .setContent(info.getContent())
-                                .setPositive("立即更新", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        Preferences.getInstance().setLastCheckVerCode(info.getVer());
-                                        UpdateHelper.downloadApk(MainActivity.this, info.getUrl());
-                                    }
+                                .setPositive("立即更新", view -> {
+                                    Preferences.getInstance().setLastCheckVerCode(info.getVer());
+                                    UpdateHelper.downloadApk(MainActivity.this, info.getUrl());
                                 });
                         if (!force) {
-                            updateDialog.setNegative("稍后再说", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    Preferences.getInstance().setLastCheckVerCode(info.getVer());
-                                }
-                            });
+                            updateDialog.setNegative(
+                                    "稍后再说",
+                                    view -> Preferences.getInstance().setLastCheckVerCode(info.getVer()));
                         }
                         updateDialog.show(binding.content);
                     }

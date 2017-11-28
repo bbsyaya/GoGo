@@ -28,9 +28,15 @@
             android:textColor="@color/c08_text"
             android:textSize="15sp" />
 
-        <FrameLayout
+        <RelativeLayout
+            android:id="@+id/video_panel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <!--<VideoView-->
+                <!--android:id="@+id/video"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
 
             <com.scrat.gogo.framework.view.NewsVideoImageView
                 android:id="@+id/video_cover"
@@ -41,13 +47,14 @@
                 android:foreground="?attr/selectableItemBackground" />
 
             <ImageView
+                android:id="@+id/play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_centerInParent="true"
                 android:contentDescription="@null"
                 android:src="@drawable/ic_play_circle_outline_white_80dp" />
 
-        </FrameLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

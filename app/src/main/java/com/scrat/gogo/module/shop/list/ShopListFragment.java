@@ -4,7 +4,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,27 +79,12 @@ public class ShopListFragment extends BaseFragment implements ShopListContract.V
         binding.list.addItemDecoration(new GridSpacingItemDecoration(2, spacing, true, spacing, spacing));
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         binding.list.setLayoutManager(layoutManager);
-        binding.srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                presenter.loadGoods(true);
-            }
-        });
+        binding.srl.setOnRefreshListener(() -> presenter.loadGoods(true));
         loadMoreListener = new BaseRecyclerViewOnScrollListener(
-                layoutManager, new BaseRecyclerViewOnScrollListener.LoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                presenter.loadGoods(false);
-            }
-        });
+                layoutManager, () -> presenter.loadGoods(false));
         binding.list.addOnScrollListener(loadMoreListener);
         GlideRequests requests = GlideApp.with(this);
-        adapter = new Adapter(requests, new BaseOnItemClickListener<Goods>() {
-            @Override
-            public void onItemClick(Goods goods) {
-                GoodsDetailActivity.show(getActivity(), goods);
-            }
-        });
+        adapter = new Adapter(requests, goods -> GoodsDetailActivity.show(getActivity(), goods));
         binding.list.setAdapter(adapter);
 
         new ShopListPresenter(this, getArguments().getString(TYPE));
@@ -168,12 +152,7 @@ public class ShopListFragment extends BaseFragment implements ShopListContract.V
             holder.setText(R.id.title, goods.getTitle());
             String coinStr = String.format("%s竞猜币", goods.getCoin());
             holder.setText(R.id.sub_title, coinStr);
-            holder.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onItemClickListener.onItemClick(goods);
-                }
-            });
+            holder.setOnClickListener(view -> onItemClickListener.onItemClick(goods));
         }
 
         @Override
