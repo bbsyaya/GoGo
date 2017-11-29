@@ -74,16 +74,6 @@
 }
 #-keep resourcexmlelements manifest/application/meta-data@value=GlideModule
 
-# QQ
--keep class * extends android.app.Dialog
--keep class com.tencent.open.TDialog$*
--keep class com.tencent.open.TDialog$* {*;}
--keep class com.tencent.open.PKDialog
--keep class com.tencent.open.PKDialog {*;}
--keep class com.tencent.open.PKDialog$*
--keep class com.tencent.open.PKDialog$* {*;}
-
-
 # Umeng
 -keepclassmembers class * {
    public <init> (org.json.JSONObject);

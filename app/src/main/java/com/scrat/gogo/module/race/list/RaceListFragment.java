@@ -22,7 +22,6 @@ import com.scrat.gogo.framework.common.BaseRecyclerViewOnScrollListener;
 import com.scrat.gogo.framework.glide.GlideApp;
 import com.scrat.gogo.framework.glide.GlideRequests;
 import com.scrat.gogo.framework.glide.GlideRoundTransform;
-import com.scrat.gogo.framework.util.L;
 import com.scrat.gogo.module.race.betting.BettingActivity;
 
 import java.text.ParseException;
