@@ -71,6 +71,7 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
         GlideRequests glideRequests = GlideApp.with(this);
         adapter = new Adapter(glideRequests, race -> BettingActivity.show(getActivity(), race));
         binding.list.setAdapter(adapter);
+        binding.topBar.setOnClickListener(view -> layoutManager.scrollToPosition(0));
 
         new RaceListPresenter(this);
         presenter.loadData(true);

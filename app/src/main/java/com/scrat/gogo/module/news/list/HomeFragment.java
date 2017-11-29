@@ -95,6 +95,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         loadMoreBinding = BottomNewsLoadMoreBinding.inflate(inflater, binding.list, false);
         adapter.setFooter(loadMoreBinding.getRoot());
         binding.list.setAdapter(adapter);
+        binding.topBar.setOnClickListener(view -> layoutManager.scrollToPosition(0));
 
         loadMoreListener = new BaseRecyclerViewOnScrollListener(
                 layoutManager, () -> {
