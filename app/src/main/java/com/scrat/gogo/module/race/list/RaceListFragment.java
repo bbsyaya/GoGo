@@ -8,14 +8,12 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.scrat.gogo.R;
 import com.scrat.gogo.data.model.Race;
 import com.scrat.gogo.data.model.RaceGroupItem;
 import com.scrat.gogo.databinding.FragmentRaceListBinding;
-import com.scrat.gogo.databinding.ListItemRaceBinding;
 import com.scrat.gogo.framework.common.BaseFragment;
 import com.scrat.gogo.framework.common.BaseOnItemClickListener;
 import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
@@ -24,6 +22,7 @@ import com.scrat.gogo.framework.common.BaseRecyclerViewOnScrollListener;
 import com.scrat.gogo.framework.glide.GlideApp;
 import com.scrat.gogo.framework.glide.GlideRequests;
 import com.scrat.gogo.framework.glide.GlideRoundTransform;
+import com.scrat.gogo.framework.util.L;
 import com.scrat.gogo.module.race.betting.BettingActivity;
 
 import java.text.ParseException;
@@ -93,7 +92,7 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
     @Override
     public void showListData(List<RaceGroupItem> list, boolean replace) {
         hideLoading();
-        adapter.setData(list, replace);
+        adapter.initData(list, replace);
     }
 
     @Override
@@ -121,11 +120,31 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
         loadMoreListener.setLoading(false);
     }
 
-    private static class Adapter extends BaseRecyclerViewAdapter<RaceGroupItem> {
+    private static class GroupItem<T> {
+        private int type;
+        private T t;
+
+        private GroupItem(int type, T t) {
+            this.type = type;
+            this.t = t;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public T getT() {
+            return t;
+        }
+    }
+
+    private static class Adapter extends BaseRecyclerViewAdapter<GroupItem> {
         private GlideRequests request;
         private SimpleDateFormat sdf;
         private BaseOnItemClickListener<Race> onItemClickListener;
         private RequestOptions options;
+        private static final int TYPE_TITLE = 11;
+        private static final int TYPE_ITEM = 22;
 
         private Adapter(GlideRequests requests, BaseOnItemClickListener<Race> onItemClickListener) {
             this.onItemClickListener = onItemClickListener;
@@ -145,40 +164,75 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
             }
         }
 
-        @Override
-        protected void onBindItemViewHolder(
-                BaseRecyclerViewHolder holder, int position, RaceGroupItem raceGroupItem) {
-            LinearLayout layout = holder.getView(R.id.group_list);
-            holder.setText(R.id.group_name, formatGroupTitle(raceGroupItem.getDt()));
-            layout.removeAllViews();
-
-            LayoutInflater inflater = LayoutInflater.from(layout.getContext());
-            for (final Race race : raceGroupItem.getItems()) {
-                ListItemRaceBinding binding = ListItemRaceBinding.inflate(inflater, layout, false);
-                binding.raceName.setText(race.getRaceName());
-                binding.teamAName.setText(race.getTeamA().getTeamName());
-                binding.teamBName.setText(race.getTeamB().getTeamName());
-                request.load(race.getTeamA().getLogo()).apply(options).into(binding.logoA);
-                binding.date.setText(DateFormat.format("H:mm", race.getRaceTs()));
-                request.load(race.getTeamB().getLogo()).apply(options).into(binding.logoB);
-                binding.getRoot().setOnClickListener(view -> onItemClickListener.onItemClick(race));
-                binding.bettingBtn.setOnClickListener(view -> onItemClickListener.onItemClick(race));
-                if (!"ready".equals(race.getStatus())) {
-                    binding.bettingBtn.setText("结果");
-                    binding.bettingBtn.setBackgroundResource(R.drawable.bg_c01_3dp);
-                } else {
-                    binding.bettingBtn.setText("竞猜");
-                    binding.bettingBtn.setBackgroundResource(R.drawable.bg_c02_3dp);
+        private synchronized void initData(List<RaceGroupItem> items, boolean replace) {
+            if (replace) {
+                list.clear();
+            }
+            for (RaceGroupItem item : items) {
+                list.add(new GroupItem<>(TYPE_TITLE, formatGroupTitle(item.getDt())));
+                for (Race race : item.getItems()) {
+                    list.add(new GroupItem<>(TYPE_ITEM, race));
                 }
-                layout.addView(binding.getRoot());
+            }
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getItemViewType(int position) {
+            int type = super.getItemViewType(position);
+            if (type != VIEW_TYPE_CONTENT) {
+                return type;
+            }
+            GroupItem<Race> item = getItem(getRealPosition(position));
+            if (item.getType() == TYPE_ITEM) {
+                return TYPE_ITEM;
             }
 
+            return TYPE_TITLE;
+        }
+
+        @Override
+        protected void onBindItemViewHolder(
+                BaseRecyclerViewHolder holder, int position, GroupItem groupItem) {
+
+            if (groupItem.getType() == TYPE_TITLE) {
+                holder.setText(R.id.group_name, (String) groupItem.getT());
+                return;
+            }
+
+            Race race = (Race) groupItem.getT();
+            holder.setText(R.id.race_name, race.getRaceName())
+                    .setText(R.id.team_a_name, race.getTeamA().getTeamName())
+                    .setText(R.id.team_b_name, race.getTeamB().getTeamName())
+                    .setText(R.id.date, DateFormat.format("H:mm", race.getRaceTs()))
+                    .setOnClickListener(view -> onItemClickListener.onItemClick(race))
+                    .setOnClickListener(R.id.betting_btn, view -> onItemClickListener.onItemClick(race));
+
+            request.load(race.getTeamA().getLogo()).apply(options)
+                    .into(holder.getImageView(R.id.logo_a));
+            request.load(race.getTeamB().getLogo()).apply(options)
+                    .into(holder.getImageView(R.id.logo_b));
+            if (!"ready".equals(race.getStatus())) {
+                holder.setText(R.id.betting_btn, "结果")
+                        .setBackground(R.id.betting_btn, R.drawable.bg_c01_3dp);
+            } else {
+                holder.setText(R.id.betting_btn, "竞猜")
+                        .setBackground(R.id.betting_btn, R.drawable.bg_c02_3dp);
+            }
         }
 
         @Override
         protected BaseRecyclerViewHolder onCreateRecycleItemView(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.list_group_item_race, parent, false);
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            View v;
+            switch (viewType) {
+                case TYPE_TITLE:
+                    v = inflater.inflate(R.layout.list_group_item_race, parent, false);
+                    break;
+                default:
+                    v = inflater.inflate(R.layout.list_item_race, parent, false);
+                    break;
+            }
             return new BaseRecyclerViewHolder(v);
         }
     }

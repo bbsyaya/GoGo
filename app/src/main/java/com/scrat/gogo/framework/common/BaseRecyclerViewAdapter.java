@@ -185,7 +185,7 @@ public abstract class BaseRecyclerViewAdapter<Item>
         notifyDataSetChanged();
     }
 
-    private Item getItem(int realPos) {
+    protected Item getItem(int realPos) {
         if (list == null) {
             return null;
         }
@@ -197,7 +197,7 @@ public abstract class BaseRecyclerViewAdapter<Item>
         return list.get(realPos);
     }
 
-    private int getRealPosition(int position) {
+    protected int getRealPosition(int position) {
         int realPos = position;
         if (hasHeader) {
             realPos--;
