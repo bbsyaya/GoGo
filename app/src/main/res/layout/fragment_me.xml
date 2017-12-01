@@ -10,11 +10,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/c06_background"
             android:orientation="vertical">
 
             <TextView
-                android:text="我的"
-                style="@style/TopBarTitle" />
+                style="@style/TopBarTitle"
+                android:text="我的" />
 
             <LinearLayout
                 android:id="@+id/user_info"
@@ -98,8 +99,8 @@
 
             <TextView
                 android:id="@+id/setting"
-                android:layout_marginTop="10dp"
                 style="@style/meFragmentItem"
+                android:layout_marginTop="10dp"
                 android:text="设置" />
 
         </LinearLayout>
