@@ -124,6 +124,12 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
 
         binding.topBar.rightBtn.setOnClickListener(view -> {
             presenter.likeNews();
+            hideSoftInput();
+        });
+
+        binding.topBar.subject.setOnClickListener(view -> {
+            layoutManager.scrollToPosition(0);
+            hideSoftInput();
         });
     }
 
