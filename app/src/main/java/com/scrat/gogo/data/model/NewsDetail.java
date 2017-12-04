@@ -15,6 +15,8 @@ public class NewsDetail extends News implements Serializable {
     private String url;
     @SerializedName("news_ts")
     private long newsTs;
+    @SerializedName("is_like")
+    private boolean isLike;
 
     public boolean isWebViewNews() {
         return !TextUtils.isEmpty(url);
@@ -30,5 +32,9 @@ public class NewsDetail extends News implements Serializable {
 
     public long getNewsTs() {
         return newsTs;
+    }
+
+    public boolean isLike() {
+        return isLike;
     }
 }

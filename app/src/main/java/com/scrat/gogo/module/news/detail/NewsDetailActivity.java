@@ -70,6 +70,7 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_news_detail);
+        binding.topBar.rightBtn.setVisibility(View.VISIBLE);
 
         glideRequests = GlideApp.with(this);
 
@@ -224,6 +225,12 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
             });
         } else {
             headerBinding.body.fromHtml(detail.getBody());
+        }
+
+        if (detail.isLike()) {
+            binding.topBar.rightBtn.setImageResource(R.drawable.ic_appreciate_fill_24dp);
+        } else {
+            binding.topBar.rightBtn.setImageResource(R.drawable.ic_appreciate_24dp);
         }
 
         showNews(detail);

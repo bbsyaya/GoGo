@@ -33,7 +33,6 @@
             android:layout_height="match_parent"
             android:background="@null"
             android:contentDescription="@null"
-            android:onClick="back"
             android:visibility="invisible" />
 
     </LinearLayout>
