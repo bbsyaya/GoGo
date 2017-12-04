@@ -250,6 +250,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
                         .setVisibility(R.id.video_cover_container, true)
                         .setOnClickListener(R.id.video_container, view -> listener.onItemClick(news))
                         .setOnClickListener(R.id.video_cover, view -> {
+                            stopVideo();
                             videoView.setVideoURI(Uri.parse(news.getVideo()));
                             videoView.start();
                             this.videoView = videoView;
