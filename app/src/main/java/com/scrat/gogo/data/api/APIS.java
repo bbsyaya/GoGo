@@ -37,6 +37,8 @@ public class APIS {
     static final String BETTING_HISTORY_URL = HOST + "/core/betting";
     static final String FEEDBACK_URL = HOST + "/feedback/feedback";
     static final String CHECK_UPDATE_URL = "https://gogo.scrats.cn/gogo/cfg/android/update.json";
+    static final String LIKE_NEWS_URL = HOST + "/core/news/like";
+    static final String UNLIKE_NEWS_URL = HOST + "/core/news/unlike";
 
     static final String PT = "pt";
     static final String APP_KEY = "app_key";
@@ -63,6 +65,7 @@ public class APIS {
     static final String VER_CODE = "ver_code";
     static final String VER_NAME = "ver_name";
     static final String IMGS = "imgs";
+    static final String NEWS_ID = "news_id";
 
     static final String DEFAULT_PT = "app";
     static final String DEFAULT_APP_KEY = "test_key";

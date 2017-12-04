@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.scrat.gogo.data.DataRepository;
+import com.scrat.gogo.data.api.Api;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
 import com.scrat.gogo.data.model.Comment;
@@ -21,6 +22,7 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
     private String newsId;
     private Call call;
     private String index;
+    private volatile boolean like;
 
     public NewsDetailPresenter(NewsDetailContract.View view, News news) {
         this.view = view;
@@ -35,6 +37,7 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
                 .getNewsDetail(newsId, new DefaultLoadObjCallback<NewsDetail, Res.NewsDetailRes>() {
                     @Override
                     protected void onSuccess(NewsDetail detail) {
+                        like = detail.isLike();
                         view.showNewsDetail(detail);
                     }
 
@@ -124,5 +127,49 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
                         return Res.CommentRes.class;
                     }
                 });
+    }
+
+    @Override
+    public void likeNews() {
+        Api api = DataRepository.getInstance().getApi();
+        if (like) {
+            api.unLikeNews(newsId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+                @Override
+                protected void onSuccess(String s) {
+                    like = !like;
+                    view.showNewsLike(like);
+                }
+
+                @Override
+                public void onError(Exception e) {
+
+                }
+
+                @NonNull
+                @Override
+                protected Class<Res.DefaultStrRes> getResClass() {
+                    return Res.DefaultStrRes.class;
+                }
+            });
+        } else {
+            api.likeNews(newsId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+                @Override
+                protected void onSuccess(String s) {
+                    like = !like;
+                    view.showNewsLike(like);
+                }
+
+                @Override
+                public void onError(Exception e) {
+
+                }
+
+                @NonNull
+                @Override
+                protected Class<Res.DefaultStrRes> getResClass() {
+                    return Res.DefaultStrRes.class;
+                }
+            });
+        }
     }
 }

@@ -452,4 +452,24 @@ public class Api {
             cb.onError(e);
         }
     }
+
+    public void likeNews(String newsId, DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put(APIS.NEWS_ID, newsId);
+            OkHttpHelper.getInstance().post(APIS.LIKE_NEWS_URL, getHeader(), obj.toString(), cb);
+        } catch (Exception e) {
+            cb.onError(e);
+        }
+    }
+
+    public void unLikeNews(String newsId, DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put(APIS.NEWS_ID, newsId);
+            OkHttpHelper.getInstance().post(APIS.UNLIKE_NEWS_URL, getHeader(), obj.toString(), cb);
+        } catch (Exception e) {
+            cb.onError(e);
+        }
+    }
 }

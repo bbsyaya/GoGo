@@ -70,7 +70,6 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_news_detail);
-        binding.topBar.rightBtn.setVisibility(View.VISIBLE);
 
         glideRequests = GlideApp.with(this);
 
@@ -122,6 +121,10 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
             }
         });
         loginDialog = LoginDialog.build(this);
+
+        binding.topBar.rightBtn.setOnClickListener(view -> {
+            presenter.likeNews();
+        });
     }
 
     @Override
@@ -185,6 +188,15 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
     }
 
     @Override
+    public void showNewsLike(boolean like) {
+        if (like) {
+            binding.topBar.rightBtn.setImageResource(R.drawable.ic_appreciate_fill_24dp);
+        } else {
+            binding.topBar.rightBtn.setImageResource(R.drawable.ic_appreciate_24dp);
+        }
+    }
+
+    @Override
     public void showLoadingNewsDetail() {
 
     }
@@ -227,11 +239,8 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
             headerBinding.body.fromHtml(detail.getBody());
         }
 
-        if (detail.isLike()) {
-            binding.topBar.rightBtn.setImageResource(R.drawable.ic_appreciate_fill_24dp);
-        } else {
-            binding.topBar.rightBtn.setImageResource(R.drawable.ic_appreciate_24dp);
-        }
+        binding.topBar.rightBtn.setVisibility(View.VISIBLE);
+        showNewsLike(detail.isLike());
 
         showNews(detail);
     }

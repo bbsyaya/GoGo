@@ -16,6 +16,8 @@ public interface NewsDetailContract {
         void loadComment(boolean refresh);
 
         void sendComment(String comment);
+
+        void likeNews();
     }
 
     interface View extends BaseContract.BaseListView<Presenter, Res.CommentItem> {
@@ -30,5 +32,7 @@ public interface NewsDetailContract {
         void showSendCommentError(String e);
 
         void showSendCommentSuccess(Comment comment);
+
+        void showNewsLike(boolean like);
     }
 }
