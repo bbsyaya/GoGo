@@ -48,8 +48,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground" />
+                    android:focusable="true" />
 
                 <ImageView
                     android:id="@+id/play"
@@ -86,6 +85,17 @@
                 android:layout_weight="1" />
 
             <TextView
+                android:id="@+id/video_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:drawableLeft="@drawable/ic_appreciate_12dp"
+                android:drawablePadding="4dp"
+                android:gravity="center_vertical"
+                android:text="0"
+                android:textColor="@color/c09_tips" />
+
+            <TextView
                 android:id="@+id/video_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -109,7 +119,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
+        android:foreground="?android:attr/selectableItemBackground"
         android:minHeight="86dp"
         android:orientation="vertical">
 
@@ -176,7 +186,20 @@
             android:drawableLeft="@drawable/ic_comment_12"
             android:drawablePadding="4dp"
             android:gravity="center_vertical"
-            android:text="284"
+            android:text="0"
+            android:textColor="@color/c09_tips" />
+
+        <TextView
+            android:id="@+id/like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:layout_marginRight="15dp"
+            android:layout_toLeftOf="@id/count"
+            android:drawableLeft="@drawable/ic_appreciate_12dp"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical"
+            android:text="0"
             android:textColor="@color/c09_tips" />
 
         <View

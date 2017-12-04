@@ -19,6 +19,8 @@ public class News implements Serializable {
 //    private long newsTs;
     @SerializedName("comment_count")
     private int totalComment;
+    @SerializedName("like_count")
+    private int totalLike;
     private String cover;
     private String video;
 
@@ -52,5 +54,9 @@ public class News implements Serializable {
 
     public String getVideo() {
         return video;
+    }
+
+    public int getTotalLike() {
+        return totalLike;
     }
 }

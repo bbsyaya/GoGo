@@ -243,7 +243,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
                 VideoView videoView = holder.getView(R.id.video);
                 View coverView = holder.getView(R.id.video_cover_container);
                 holder.setVisibility(R.id.news_container, false)
+                        .setVisibility(R.id.like, false)
                         .setVisibility(R.id.video_container, true)
+                        .setVisibility(R.id.video_like, true)
+                        .setText(R.id.video_like, String.valueOf(news.getTotalLike()))
                         .setText(R.id.video_title, news.getTitle())
                         .setText(R.id.video_tp, news.getTp())
                         .setText(R.id.video_count, String.valueOf(news.getTotalComment()))
@@ -268,7 +271,10 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
                         .into(holder.getImageView(R.id.video_cover));
             } else {
                 holder.setVisibility(R.id.news_container, true)
+                        .setVisibility(R.id.like, true)
                         .setVisibility(R.id.video_container, false)
+                        .setVisibility(R.id.video_like, false)
+                        .setText(R.id.like, String.valueOf(news.getTotalLike()))
                         .setText(R.id.title, news.getTitle())
                         .setText(R.id.tp, news.getTp())
                         .setText(R.id.count, String.valueOf(news.getTotalComment()))
