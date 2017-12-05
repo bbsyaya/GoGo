@@ -18,7 +18,7 @@
             android:background="@drawable/bg_c01_c02"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?attr/selectableItemBackground"
+            android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center"
             android:onClick="exchange"
             android:text="兑换"

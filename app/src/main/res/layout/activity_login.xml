@@ -81,7 +81,7 @@
                 android:background="@drawable/bg_button_50dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center"
                 android:onClick="telLogin"
                 android:text="登录"

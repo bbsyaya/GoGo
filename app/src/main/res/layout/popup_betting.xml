@@ -85,7 +85,7 @@
                 android:background="@drawable/bg_c01_c02_3dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center"
                 android:text="立即竞猜"
                 android:textColor="@color/c08_text"

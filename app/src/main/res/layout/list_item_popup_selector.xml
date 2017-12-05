@@ -3,7 +3,7 @@
     android:id="@+id/title"
     android:layout_width="match_parent"
     android:layout_height="55dp"
-    android:background="?attr/selectableItemBackground"
+    android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:gravity="center_vertical"
     android:paddingLeft="15dp"

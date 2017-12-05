@@ -97,7 +97,7 @@
                 android:background="@drawable/bg_c01_3dp"
                 android:clickable="true"
                 android:focusable="true"
-                android:foreground="?attr/selectableItemBackground"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="center"
                 android:text="竞猜"
                 android:textColor="@color/c08_text"

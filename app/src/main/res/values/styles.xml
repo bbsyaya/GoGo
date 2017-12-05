@@ -43,7 +43,7 @@
         <item name="android:layout_height">55dp</item>
         <item name="android:background">@color/c07_bar</item>
         <item name="android:clickable">true</item>
-        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
@@ -59,7 +59,7 @@
         <item name="android:clickable">true</item>
         <item name="android:drawablePadding">12dp</item>
         <item name="android:focusable">true</item>
-        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
@@ -91,7 +91,7 @@
         <item name="android:textSize">14sp</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
-        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="BettingHistoryItemTitleContainer">
@@ -176,7 +176,7 @@
         <item name="android:background">@color/c07_bar</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
-        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:minHeight">55dp</item>
         <item name="android:paddingRight">15dp</item>
@@ -192,7 +192,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:textColor">@color/c07_bar</item>
         <item name="android:clickable">true</item>
-        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="FeedbackImgItem">
@@ -202,7 +202,7 @@
         <item name="android:background">@color/c06_background</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
-        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
         <item name="android:src">@drawable/ic_add_c09_24dp</item>
     </style>
 
