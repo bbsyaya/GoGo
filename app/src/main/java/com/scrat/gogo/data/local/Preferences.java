@@ -73,4 +73,12 @@ public class Preferences extends BaseSharedPreferences {
     public void setLastCheckVerCode(int ver) {
         setInt(LAST_CHECK_VER_CODE, ver);
     }
+
+    private static final String LAST_REFRESH_TOKEN_TS = "last_refresh_token_ts";
+    public long getLastUpdateTokenTs() {
+        return getLong(LAST_REFRESH_TOKEN_TS, System.currentTimeMillis());
+    }
+    public void setLastUpdateRefreshTokenTs(long ts) {
+        setLong(LAST_REFRESH_TOKEN_TS, ts);
+    }
 }

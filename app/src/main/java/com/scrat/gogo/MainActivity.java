@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         initFragment();
         navigateToHome(null);
-        RefreshTokenHelper.refreshToken();
+        RefreshTokenHelper.refreshToken(true);
         UpdateHelper.checkUpdate(
                 this.getApplicationContext(), false, new UpdateHelper.UpdateListener() {
                     @Override
@@ -78,6 +78,12 @@ public class MainActivity extends BaseActivity {
                     }
                 });
         updateDialog = new IosDialog(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        RefreshTokenHelper.refreshToken(false);
     }
 
     @Override

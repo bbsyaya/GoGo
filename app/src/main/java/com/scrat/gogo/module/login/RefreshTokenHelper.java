@@ -14,9 +14,16 @@ import com.scrat.gogo.framework.util.L;
  */
 
 public class RefreshTokenHelper {
-    public static void refreshToken() {
+    public static void refreshToken(boolean refresh) {
         if (!Preferences.getInstance().isLogin()) {
             return;
+        }
+
+        if (!refresh) {
+            long ts = Preferences.getInstance().getLastUpdateTokenTs();
+            if (ts - System.currentTimeMillis() < 3600000 * 24) {
+                return;
+            }
         }
 
         String refreshToken = Preferences.getInstance().getRefreshToken();
@@ -24,6 +31,7 @@ public class RefreshTokenHelper {
                 .refreshToken(refreshToken, new DefaultLoadObjCallback<TokenInfo, Res.TokenRes>() {
                     @Override
                     protected void onSuccess(TokenInfo tokenInfo) {
+                        Preferences.getInstance().setLastUpdateRefreshTokenTs(System.currentTimeMillis());
                         Preferences.getInstance().setAccessToken(tokenInfo.getAccessToken());
                         Preferences.getInstance().setRefreshToken(tokenInfo.getRefreshToken());
                     }
