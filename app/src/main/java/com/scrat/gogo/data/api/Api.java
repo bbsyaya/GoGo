@@ -472,4 +472,24 @@ public class Api {
             cb.onError(e);
         }
     }
+
+    public void likeComment(String commentId, DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put(APIS.COMMENT_ID, commentId);
+            OkHttpHelper.getInstance().post(APIS.LIKE_COMMENT_URL, getHeader(), obj.toString(), cb);
+        } catch (Exception e) {
+            cb.onError(e);
+        }
+    }
+
+    public void unLikeComment(String commentId, DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put(APIS.COMMENT_ID, commentId);
+            OkHttpHelper.getInstance().post(APIS.UNLIKE_COMMENT_URL, getHeader(), obj.toString(), cb);
+        } catch (Exception e) {
+            cb.onError(e);
+        }
+    }
 }

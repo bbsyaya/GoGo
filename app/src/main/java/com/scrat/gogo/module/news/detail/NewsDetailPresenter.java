@@ -142,7 +142,7 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
 
                 @Override
                 public void onError(Exception e) {
-
+                    // ignore
                 }
 
                 @NonNull
@@ -161,7 +161,49 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
 
                 @Override
                 public void onError(Exception e) {
+                    // ignore
+                }
 
+                @NonNull
+                @Override
+                protected Class<Res.DefaultStrRes> getResClass() {
+                    return Res.DefaultStrRes.class;
+                }
+            });
+        }
+    }
+
+    @Override
+    public void likeComment(String commentId, boolean like) {
+        Api api = DataRepository.getInstance().getApi();
+        if (like) {
+            api.likeComment(commentId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+                @Override
+                protected void onSuccess(String s) {
+
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    // ignore
+                }
+
+                @NonNull
+                @Override
+                protected Class<Res.DefaultStrRes> getResClass() {
+                    return Res.DefaultStrRes.class;
+                }
+            });
+        } else {
+            api.unLikeComment(commentId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+                @Override
+                protected void onSuccess(String s) {
+
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    // ignore
                 }
 
                 @NonNull

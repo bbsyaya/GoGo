@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.bumptech.glide.request.RequestOptions;
 import com.scrat.gogo.R;
@@ -76,7 +77,17 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
         binding.list.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         binding.list.setLayoutManager(layoutManager);
-        adapter = new Adapter(glideRequests);
+        adapter = new Adapter(glideRequests, new OnItemClickListener() {
+            @Override
+            public void like(String commentId) {
+                presenter.likeComment(commentId, true);
+            }
+
+            @Override
+            public void unLike(String commentId) {
+                presenter.likeComment(commentId, false);
+            }
+        });
         headerBinding = HeaderNewsDetailBinding.inflate(getLayoutInflater(), binding.list, false);
         adapter.setHeader(headerBinding.getRoot());
         commentBinding = BottomNewsDetailCommentBinding.inflate(getLayoutInflater(), binding.list, false);
@@ -270,12 +281,20 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
         presenter.sendComment(binding.comment.getText().toString());
     }
 
+    private interface OnItemClickListener {
+        void like(String commentId);
+
+        void unLike(String commentId);
+    }
+
     private static class Adapter extends BaseRecyclerViewAdapter<Res.CommentItem> {
 
         private final GlideRequests GlideRequests;
+        private final OnItemClickListener listener;
         private RequestOptions options;
 
-        private Adapter(GlideRequests GlideRequests) {
+        private Adapter(GlideRequests GlideRequests, OnItemClickListener listener) {
+            this.listener = listener;
             this.GlideRequests = GlideRequests;
             options = new RequestOptions()
                     .centerCrop()
@@ -288,12 +307,36 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
                 BaseRecyclerViewHolder holder, int position, Res.CommentItem item) {
 
             holder.setText(R.id.nickname, item.getUser().getUsername())
+                    .setText(R.id.like, String.valueOf(item.getComment().getTotalLike()))
                     .setText(R.id.date, Utils.formatDate(item.getComment().getCreateTs()))
                     .setText(R.id.comment, item.getComment().getContent());
+
+            TextView like = holder.getView(R.id.like);
+            setLike(like, item.getComment().isLike());
+            like.setOnClickListener(view -> {
+                if (item.getComment().isLike()) {
+                    listener.unLike(item.getComment().getCommentId());
+                    setLike(like, false);
+                    item.getComment().setLike(false);
+                } else {
+                    listener.like(item.getComment().getCommentId());
+                    setLike(like, true);
+                    item.getComment().setLike(true);
+                }
+                holder.setText(R.id.like, String.valueOf(item.getComment().getTotalLike()));
+            });
 
             GlideRequests.load(item.getUser().getAvatar())
                     .apply(options)
                     .into(holder.getImageView(R.id.img));
+        }
+
+        private void setLike(TextView textView, boolean like) {
+            if (like) {
+                textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_appreciate_fill_12dp, 0, 0, 0);
+            } else {
+                textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_appreciate_12dp, 0, 0, 0);
+            }
         }
 
         @Override

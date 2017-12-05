@@ -18,6 +18,8 @@ public interface NewsDetailContract {
         void sendComment(String comment);
 
         void likeNews();
+
+        void likeComment(String commentId, boolean like);
     }
 
     interface View extends BaseContract.BaseListView<Presenter, Res.CommentItem> {

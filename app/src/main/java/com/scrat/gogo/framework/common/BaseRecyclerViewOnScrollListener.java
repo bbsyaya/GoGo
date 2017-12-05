@@ -5,8 +5,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.scrat.gogo.framework.util.L;
-
 /**
  * Created by scrat on 2017/7/4.
  */
@@ -61,7 +59,6 @@ public class BaseRecyclerViewOnScrollListener extends RecyclerView.OnScrollListe
         int pastVisibleItems = findFirstVisibleItemPosition();
 
         if ((visibleItemCount + pastVisibleItems) >= totalItemCount - 3) {
-            L.d("load more");
             loading = true;
             loadMoreListener.onLoadMore();
         }
