@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.widget.Toast;
 
 import com.scrat.gogo.data.DataRepository;
@@ -29,7 +28,7 @@ public class UpdateHelper {
     public static void checkUpdate(
             final Context context, final boolean forceChecked, final UpdateListener listener) {
         DataRepository.getInstance().getApi()
-                .checkUpdate(new DefaultLoadObjCallback<UpdateInfo, Res.UpdateInfoRes>() {
+                .checkUpdate(new DefaultLoadObjCallback<UpdateInfo, Res.UpdateInfoRes>(Res.UpdateInfoRes.class) {
                     @Override
                     protected void onSuccess(UpdateInfo updateInfo) {
                         int lastVerCode = Preferences.getInstance().getLastCheckVerCode();
@@ -58,12 +57,6 @@ public class UpdateHelper {
 
                     @Override
                     public void onError(Exception ignore) {
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.UpdateInfoRes> getResClass() {
-                        return Res.UpdateInfoRes.class;
                     }
                 });
     }

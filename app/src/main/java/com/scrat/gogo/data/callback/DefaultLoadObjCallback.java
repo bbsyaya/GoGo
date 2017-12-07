@@ -12,6 +12,10 @@ import com.scrat.gogo.framework.util.L;
 public abstract class DefaultLoadObjCallback<T, R extends BaseResponse<T>>
         extends BaseNetCallback<R> {
 
+    public DefaultLoadObjCallback(Class<R> resClass) {
+        super(resClass);
+    }
+
     protected abstract void onSuccess(T t);
 
     public abstract void onError(Exception e);

@@ -1,7 +1,5 @@
 package com.scrat.gogo.module.coin;
 
-import android.support.annotation.NonNull;
-
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
@@ -30,7 +28,7 @@ public class CoinPlanPresenter implements CoinPlanContract.Presenter {
     public void loadCoinPlan() {
         view.showLoadingCoinPlan();
         DataRepository.getInstance().getApi().getCoinPlan(
-                new DefaultLoadObjCallback<List<CoinPlan>, Res.CoinPlanListRes>() {
+                new DefaultLoadObjCallback<List<CoinPlan>, Res.CoinPlanListRes>(Res.CoinPlanListRes.class) {
                     @Override
                     protected void onSuccess(List<CoinPlan> coinPlans) {
                         view.showCoinPlan(coinPlans);
@@ -39,12 +37,6 @@ public class CoinPlanPresenter implements CoinPlanContract.Presenter {
                     @Override
                     public void onError(Exception e) {
                         view.showLoadCoinPlanError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.CoinPlanListRes> getResClass() {
-                        return Res.CoinPlanListRes.class;
                     }
                 });
     }
@@ -74,7 +66,7 @@ public class CoinPlanPresenter implements CoinPlanContract.Presenter {
         view.showCreatingOrder();
         if (state == STATE_WEIXIN) {
             DataRepository.getInstance().getApi().getWeixinCoinPlanOrder(
-                    plan.getCoinPlanId(), new DefaultLoadObjCallback<WxPayInfo, Res.WxPayInfoRes>() {
+                    plan.getCoinPlanId(), new DefaultLoadObjCallback<WxPayInfo, Res.WxPayInfoRes>(Res.WxPayInfoRes.class) {
                         @Override
                         protected void onSuccess(WxPayInfo wxPayInfo) {
                             view.showCreateWeixinOrderSuccess(wxPayInfo);
@@ -84,18 +76,12 @@ public class CoinPlanPresenter implements CoinPlanContract.Presenter {
                         public void onError(Exception e) {
                             view.showCreateOrderFail(e.getMessage());
                         }
-
-                        @NonNull
-                        @Override
-                        protected Class<Res.WxPayInfoRes> getResClass() {
-                            return Res.WxPayInfoRes.class;
-                        }
                     });
             return;
         }
 
         DataRepository.getInstance().getApi().getAlipayCoinPlanOrder(
-                plan.getCoinPlanId(), new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+                plan.getCoinPlanId(), new DefaultLoadObjCallback<String, Res.DefaultStrRes>(Res.DefaultStrRes.class) {
                     @Override
                     protected void onSuccess(String s) {
                         view.showCreateAlipayOrderSuccess(s);
@@ -104,12 +90,6 @@ public class CoinPlanPresenter implements CoinPlanContract.Presenter {
                     @Override
                     public void onError(Exception e) {
                         view.showCreateOrderFail(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.DefaultStrRes> getResClass() {
-                        return Res.DefaultStrRes.class;
                     }
                 });
     }

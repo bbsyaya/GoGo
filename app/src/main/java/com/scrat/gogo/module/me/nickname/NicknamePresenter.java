@@ -1,6 +1,5 @@
 package com.scrat.gogo.module.me.nickname;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.scrat.gogo.data.DataRepository;
@@ -28,14 +27,14 @@ public class NicknamePresenter implements NicknameContract.Presenter {
         }
         view.showNicknameUpdating();
         DataRepository.getInstance().getApi().getUserInfo(
-                new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>() {
+                new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>(Res.UserInfoRes.class) {
                     @Override
                     protected void onSuccess(UserInfo info) {
                         DataRepository.getInstance().getApi().updateUserInfo(
                                 nickname,
                                 info.getAvatar(),
                                 info.getGender(),
-                                new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+                                new DefaultLoadObjCallback<String, Res.DefaultStrRes>(Res.DefaultStrRes.class) {
                                     @Override
                                     protected void onSuccess(String s) {
                                         view.showNicknameUpdateSuccess();
@@ -45,12 +44,6 @@ public class NicknamePresenter implements NicknameContract.Presenter {
                                     public void onError(Exception e) {
                                         view.showNicknameUpdateFail(e.getMessage());
                                     }
-
-                                    @NonNull
-                                    @Override
-                                    protected Class<Res.DefaultStrRes> getResClass() {
-                                        return Res.DefaultStrRes.class;
-                                    }
                                 });
                     }
 
@@ -58,19 +51,13 @@ public class NicknamePresenter implements NicknameContract.Presenter {
                     public void onError(Exception e) {
                         view.showNicknameUpdateFail(e.getMessage());
                     }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.UserInfoRes> getResClass() {
-                        return Res.UserInfoRes.class;
-                    }
                 });
     }
 
     @Override
     public void loadNickname() {
         DataRepository.getInstance().getApi().getUserInfo(
-                new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>() {
+                new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>(Res.UserInfoRes.class) {
                     @Override
                     protected void onSuccess(UserInfo info) {
                         view.showNickname(info.getUsername());
@@ -79,12 +66,6 @@ public class NicknamePresenter implements NicknameContract.Presenter {
                     @Override
                     public void onError(Exception e) {
 
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.UserInfoRes> getResClass() {
-                        return Res.UserInfoRes.class;
                     }
                 });
     }

@@ -1,7 +1,5 @@
 package com.scrat.gogo.module.login;
 
-import android.support.annotation.NonNull;
-
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
@@ -28,7 +26,7 @@ public class RefreshTokenHelper {
 
         String refreshToken = Preferences.getInstance().getRefreshToken();
         DataRepository.getInstance().getApi()
-                .refreshToken(refreshToken, new DefaultLoadObjCallback<TokenInfo, Res.TokenRes>() {
+                .refreshToken(refreshToken, new DefaultLoadObjCallback<TokenInfo, Res.TokenRes>(Res.TokenRes.class) {
                     @Override
                     protected void onSuccess(TokenInfo tokenInfo) {
                         Preferences.getInstance().setLastUpdateRefreshTokenTs(System.currentTimeMillis());
@@ -39,12 +37,6 @@ public class RefreshTokenHelper {
                     @Override
                     public void onError(Exception e) {
                         L.e(e);
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.TokenRes> getResClass() {
-                        return Res.TokenRes.class;
                     }
                 });
     }

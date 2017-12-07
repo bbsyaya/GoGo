@@ -1,7 +1,5 @@
 package com.scrat.gogo.module.race.list;
 
-import android.support.annotation.NonNull;
-
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
@@ -41,7 +39,7 @@ public class RaceListPresenter implements RaceListContract.Presenter {
 
         view.showLoadingList();
         call = DataRepository.getInstance().getApi().getRaceList(
-                index, new DefaultLoadObjCallback<Res.ListRes<RaceGroupItem>, Res.RaceGroupItemRes>() {
+                index, new DefaultLoadObjCallback<Res.ListRes<RaceGroupItem>, Res.RaceGroupItemRes>(Res.RaceGroupItemRes.class) {
                     @Override
                     protected void onSuccess(Res.ListRes<RaceGroupItem> raceGroupItemListRes) {
                         index = raceGroupItemListRes.getIndex();
@@ -60,12 +58,6 @@ public class RaceListPresenter implements RaceListContract.Presenter {
                     @Override
                     public void onError(Exception e) {
                         view.showLoadingListError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.RaceGroupItemRes> getResClass() {
-                        return Res.RaceGroupItemRes.class;
                     }
                 });
     }

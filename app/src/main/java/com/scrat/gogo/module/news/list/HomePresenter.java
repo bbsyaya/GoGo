@@ -1,7 +1,5 @@
 package com.scrat.gogo.module.news.list;
 
-import android.support.annotation.NonNull;
-
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
@@ -29,7 +27,7 @@ public class HomePresenter implements HomeContract.HomePresenter {
     @Override
     public void loadBanner() {
         DataRepository.getInstance().getApi().getBanner(
-                new DefaultLoadObjCallback<List<News>, Res.BannerRes>() {
+                new DefaultLoadObjCallback<List<News>, Res.BannerRes>(Res.BannerRes.class) {
                     @Override
                     protected void onSuccess(List<News> list) {
                         view.showBanner(list);
@@ -38,12 +36,6 @@ public class HomePresenter implements HomeContract.HomePresenter {
                     @Override
                     public void onError(Exception e) {
                         L.e(e);
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.BannerRes> getResClass() {
-                        return Res.BannerRes.class;
                     }
                 });
     }
@@ -65,7 +57,7 @@ public class HomePresenter implements HomeContract.HomePresenter {
 
         view.showLoadingList();
         call = DataRepository.getInstance().getApi().getNews(
-                index, new DefaultLoadObjCallback<Res.ListRes<News>, Res.NewsListRes>() {
+                index, new DefaultLoadObjCallback<Res.ListRes<News>, Res.NewsListRes>(Res.NewsListRes.class) {
                     @Override
                     protected void onSuccess(Res.ListRes<News> newsListRes) {
                         index = newsListRes.getIndex();
@@ -84,12 +76,6 @@ public class HomePresenter implements HomeContract.HomePresenter {
                     @Override
                     public void onError(Exception e) {
                         view.showLoadingListError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.NewsListRes> getResClass() {
-                        return Res.NewsListRes.class;
                     }
                 });
     }

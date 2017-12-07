@@ -1,7 +1,5 @@
 package com.scrat.gogo.module.me.address;
 
-import android.support.annotation.NonNull;
-
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
@@ -23,7 +21,7 @@ public class AddressPresenter implements AddressContract.Presenter {
     public void loadAddress() {
         view.showLoadingAddress();
         DataRepository.getInstance().getApi().getAddress(
-                new DefaultLoadObjCallback<Address, Res.AddressRes>() {
+                new DefaultLoadObjCallback<Address, Res.AddressRes>(Res.AddressRes.class) {
                     @Override
                     protected void onSuccess(Address address) {
                         view.showAddress(address);
@@ -32,12 +30,6 @@ public class AddressPresenter implements AddressContract.Presenter {
                     @Override
                     public void onError(Exception e) {
                         view.showLoadingAddressError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.AddressRes> getResClass() {
-                        return Res.AddressRes.class;
                     }
                 });
     }
@@ -50,7 +42,7 @@ public class AddressPresenter implements AddressContract.Presenter {
                 tel,
                 location,
                 detail,
-                new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+                new DefaultLoadObjCallback<String, Res.DefaultStrRes>(Res.DefaultStrRes.class) {
                     @Override
                     protected void onSuccess(String s) {
                         view.showUpdateAddressSuccess();
@@ -59,12 +51,6 @@ public class AddressPresenter implements AddressContract.Presenter {
                     @Override
                     public void onError(Exception e) {
                         view.showUpdateAddressError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.DefaultStrRes> getResClass() {
-                        return Res.DefaultStrRes.class;
                     }
                 });
     }

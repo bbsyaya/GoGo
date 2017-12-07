@@ -1,7 +1,5 @@
 package com.scrat.gogo.module.me.exchange;
 
-import android.support.annotation.NonNull;
-
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
@@ -40,7 +38,7 @@ public class ExchangeHistoryPresenter implements ExchangeHistoryContract.Present
 
         call = DataRepository.getInstance().getApi().getExchangeHistory(
                 index,
-                new DefaultLoadObjCallback<Res.ListRes<ExchangeHistory>, Res.ExchangeHistoryListRes>() {
+                new DefaultLoadObjCallback<Res.ListRes<ExchangeHistory>, Res.ExchangeHistoryListRes>(Res.ExchangeHistoryListRes.class) {
                     @Override
                     protected void onSuccess(Res.ListRes<ExchangeHistory> exchangeHistoryListRes) {
                         index = exchangeHistoryListRes.getIndex();
@@ -59,12 +57,6 @@ public class ExchangeHistoryPresenter implements ExchangeHistoryContract.Present
                     @Override
                     public void onError(Exception e) {
                         view.showLoadingListError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.ExchangeHistoryListRes> getResClass() {
-                        return Res.ExchangeHistoryListRes.class;
                     }
                 });
     }

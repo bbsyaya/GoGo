@@ -1,7 +1,5 @@
 package com.scrat.gogo.module.race.betting;
 
-import android.support.annotation.NonNull;
-
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
@@ -26,7 +24,7 @@ public class BettingPresenter implements BettingContract.Presenter {
         view.showLoadingBetting();
         DataRepository.getInstance().getApi().getRaceDetail(
                 raceId,
-                new DefaultLoadObjCallback<RaceInfo, Res.RaceInfoRes>() {
+                new DefaultLoadObjCallback<RaceInfo, Res.RaceInfoRes>(Res.RaceInfoRes.class) {
                     @Override
                     protected void onSuccess(RaceInfo raceInfo) {
                         view.showBetting(raceInfo);
@@ -35,12 +33,6 @@ public class BettingPresenter implements BettingContract.Presenter {
                     @Override
                     public void onError(Exception e) {
                         view.showLoadBettingError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.RaceInfoRes> getResClass() {
-                        return Res.RaceInfoRes.class;
                     }
                 }
         );

@@ -1,7 +1,5 @@
 package com.scrat.gogo.module.race.betting.list;
 
-import android.support.annotation.NonNull;
-
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
@@ -30,7 +28,7 @@ public class BettingListPresenter implements BettingListContract.Presenter {
     public void loadBetting() {
         view.showBettingLoading();
         DataRepository.getInstance().getApi().getBettingItem(
-                raceId, tp, new DefaultLoadObjCallback<List<Betting>, Res.BettingListRes>() {
+                raceId, tp, new DefaultLoadObjCallback<List<Betting>, Res.BettingListRes>(Res.BettingListRes.class) {
                     @Override
                     protected void onSuccess(List<Betting> list) {
                         view.showBetting(list);
@@ -40,12 +38,6 @@ public class BettingListPresenter implements BettingListContract.Presenter {
                     public void onError(Exception e) {
                         view.showBettingLoadError(e.getMessage());
                     }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.BettingListRes> getResClass() {
-                        return Res.BettingListRes.class;
-                    }
                 });
     }
 
@@ -53,7 +45,7 @@ public class BettingListPresenter implements BettingListContract.Presenter {
     public void betting(String bettingItemId, int coin) {
         view.showBettingExecuting();
         DataRepository.getInstance().getApi().betting(
-                coin, bettingItemId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+                coin, bettingItemId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>(Res.DefaultStrRes.class) {
                     @Override
                     protected void onSuccess(String s) {
                         view.showBettingExecuteSuccess();
@@ -63,12 +55,6 @@ public class BettingListPresenter implements BettingListContract.Presenter {
                     public void onError(Exception e) {
                         view.showBettingExecuteError(e.getMessage());
                     }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.DefaultStrRes> getResClass() {
-                        return Res.DefaultStrRes.class;
-                    }
                 });
     }
 
@@ -76,7 +62,7 @@ public class BettingListPresenter implements BettingListContract.Presenter {
     public void loadCoinInfo() {
         view.showLoadingCoin();
         DataRepository.getInstance().getApi().getUserInfo(
-                new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>() {
+                new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>(Res.UserInfoRes.class) {
                     @Override
                     protected void onSuccess(UserInfo info) {
                         view.showUserCoin(info.getCoin());
@@ -85,12 +71,6 @@ public class BettingListPresenter implements BettingListContract.Presenter {
                     @Override
                     public void onError(Exception e) {
                         view.showLoadingCoinError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.UserInfoRes> getResClass() {
-                        return Res.UserInfoRes.class;
                     }
                 });
     }

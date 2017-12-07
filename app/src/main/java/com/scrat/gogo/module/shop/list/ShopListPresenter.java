@@ -1,7 +1,5 @@
 package com.scrat.gogo.module.shop.list;
 
-import android.support.annotation.NonNull;
-
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
@@ -42,7 +40,7 @@ public class ShopListPresenter implements ShopListContract.Presenter {
 
         view.showLoadingList();
         call = DataRepository.getInstance().getApi().getGoodsList(
-                type, index, new DefaultLoadObjCallback<Res.ListRes<Goods>, Res.GoodsListRes>() {
+                type, index, new DefaultLoadObjCallback<Res.ListRes<Goods>, Res.GoodsListRes>(Res.GoodsListRes.class) {
                     @Override
                     protected void onSuccess(Res.ListRes<Goods> goodsListRes) {
                         index = goodsListRes.getIndex();
@@ -61,12 +59,6 @@ public class ShopListPresenter implements ShopListContract.Presenter {
                     @Override
                     public void onError(Exception e) {
                         view.showLoadingListError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.GoodsListRes> getResClass() {
-                        return Res.GoodsListRes.class;
                     }
                 });
     }

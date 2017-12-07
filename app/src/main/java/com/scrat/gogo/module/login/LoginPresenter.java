@@ -1,6 +1,5 @@
 package com.scrat.gogo.module.login;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.scrat.gogo.data.DataRepository;
@@ -32,7 +31,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     public void wxLogin(String code) {
         view.showLogin();
         DataRepository.getInstance().getApi().wxLogin(
-                code, new DefaultLoadObjCallback<TokenInfo, Res.TokenRes>() {
+                code, new DefaultLoadObjCallback<TokenInfo, Res.TokenRes>(Res.TokenRes.class) {
                     @Override
                     protected void onSuccess(TokenInfo tokenInfo) {
                         Preferences.getInstance().setUid(tokenInfo.getUid());
@@ -47,11 +46,6 @@ public class LoginPresenter implements LoginContract.Presenter {
                         view.showLoginFail(e.getMessage());
                     }
 
-                    @NonNull
-                    @Override
-                    protected Class<Res.TokenRes> getResClass() {
-                        return Res.TokenRes.class;
-                    }
                 });
     }
 
@@ -72,7 +66,7 @@ public class LoginPresenter implements LoginContract.Presenter {
         lastSendSmsTs = nowTs;
         startInterval(true);
         DataRepository.getInstance().getApi().sendSms(
-                tel, new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+                tel, new DefaultLoadObjCallback<String, Res.DefaultStrRes>(Res.DefaultStrRes.class) {
                     @Override
                     protected void onSuccess(String s) {
                         view.showSendSmsSuccess();
@@ -83,12 +77,6 @@ public class LoginPresenter implements LoginContract.Presenter {
                         L.e(e);
                         stopInterval();
                         view.showTelError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.DefaultStrRes> getResClass() {
-                        return Res.DefaultStrRes.class;
                     }
                 });
     }
@@ -108,12 +96,9 @@ public class LoginPresenter implements LoginContract.Presenter {
             return;
         }
         view.showSendingSms(second);
-        MainHandlerUtil.getMainHandler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                second--;
-                startInterval(false);
-            }
+        MainHandlerUtil.getMainHandler().postDelayed(() -> {
+            second--;
+            startInterval(false);
         }, 1000L);
     }
 
@@ -136,7 +121,7 @@ public class LoginPresenter implements LoginContract.Presenter {
 
         view.showLogin();
         DataRepository.getInstance().getApi().smsLogin(
-                tel, code, new DefaultLoadObjCallback<TokenInfo, Res.TokenRes>() {
+                tel, code, new DefaultLoadObjCallback<TokenInfo, Res.TokenRes>(Res.TokenRes.class) {
                     @Override
                     protected void onSuccess(TokenInfo tokenInfo) {
                         Preferences.getInstance().setUid(tokenInfo.getUid());
@@ -149,12 +134,6 @@ public class LoginPresenter implements LoginContract.Presenter {
                     @Override
                     public void onError(Exception e) {
                         view.showLoginFail(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.TokenRes> getResClass() {
-                        return Res.TokenRes.class;
                     }
                 });
     }

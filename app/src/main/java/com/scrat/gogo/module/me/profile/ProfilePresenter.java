@@ -1,7 +1,5 @@
 package com.scrat.gogo.module.me.profile;
 
-import android.support.annotation.NonNull;
-
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Api;
 import com.scrat.gogo.data.api.Res;
@@ -29,7 +27,7 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     public void loadUserInfo() {
         view.showLoadingUserInfo();
         DataRepository.getInstance().getApi().getUserInfo(
-                new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>() {
+                new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>(Res.UserInfoRes.class) {
                     @Override
                     protected void onSuccess(UserInfo info) {
                         view.showUserInfo(info);
@@ -38,12 +36,6 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                     @Override
                     public void onError(Exception e) {
                         view.showLoadUserInfoError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.UserInfoRes> getResClass() {
-                        return Res.UserInfoRes.class;
                     }
                 });
     }
@@ -71,16 +63,16 @@ public class ProfilePresenter implements ProfileContract.Presenter {
     public void updateAvatar(final String imgPath) {
         view.showProfileUpdating();
         final Api api = DataRepository.getInstance().getApi();
-        api.getQiniuUptoken(new DefaultLoadObjCallback<Uptoken, Res.UptokenRes>() {
+        api.getQiniuUptoken(new DefaultLoadObjCallback<Uptoken, Res.UptokenRes>(Res.UptokenRes.class) {
             @Override
             protected void onSuccess(Uptoken uptoken) {
                 QiniuUploadManager.getInstance().uploadImg(uptoken.getDomain(), uptoken.getToken(), imgPath, new DefaultUploadListener() {
                     @Override
                     public void onSuccess(String path, final String url) {
-                        api.getUserInfo(new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>() {
+                        api.getUserInfo(new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>(Res.UserInfoRes.class) {
                             @Override
                             protected void onSuccess(final UserInfo info) {
-                                api.updateUserInfo(info.getUsername(), url, info.getGender(), new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+                                api.updateUserInfo(info.getUsername(), url, info.getGender(), new DefaultLoadObjCallback<String, Res.DefaultStrRes>(Res.DefaultStrRes.class) {
                                     @Override
                                     protected void onSuccess(String s) {
                                         info.setAvatar(url);
@@ -92,23 +84,12 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                                         view.showProfileUpdateError(e.getMessage());
                                     }
 
-                                    @NonNull
-                                    @Override
-                                    protected Class<Res.DefaultStrRes> getResClass() {
-                                        return Res.DefaultStrRes.class;
-                                    }
                                 });
                             }
 
                             @Override
                             public void onError(Exception e) {
                                 view.showProfileUpdateError(e.getMessage());
-                            }
-
-                            @NonNull
-                            @Override
-                            protected Class<Res.UserInfoRes> getResClass() {
-                                return Res.UserInfoRes.class;
                             }
                         });
                     }
@@ -124,26 +105,20 @@ public class ProfilePresenter implements ProfileContract.Presenter {
             public void onError(Exception e) {
                 view.showProfileUpdateError(e.getMessage());
             }
-
-            @NonNull
-            @Override
-            protected Class<Res.UptokenRes> getResClass() {
-                return Res.UptokenRes.class;
-            }
         });
     }
 
     private void updateUserInfo(final String gender) {
         view.showProfileUpdating();
         DataRepository.getInstance().getApi().getUserInfo(
-                new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>() {
+                new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>(Res.UserInfoRes.class) {
                     @Override
                     protected void onSuccess(final UserInfo info) {
                         DataRepository.getInstance().getApi()
                                 .updateUserInfo(info.getUsername(),
                                         info.getAvatar(),
                                         gender,
-                                        new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+                                        new DefaultLoadObjCallback<String, Res.DefaultStrRes>(Res.DefaultStrRes.class) {
                                             @Override
                                             protected void onSuccess(String s) {
                                                 info.setGender(gender);
@@ -154,24 +129,12 @@ public class ProfilePresenter implements ProfileContract.Presenter {
                                             public void onError(Exception e) {
                                                 view.showProfileUpdateError(e.getMessage());
                                             }
-
-                                            @NonNull
-                                            @Override
-                                            protected Class<Res.DefaultStrRes> getResClass() {
-                                                return Res.DefaultStrRes.class;
-                                            }
                                         });
                     }
 
                     @Override
                     public void onError(Exception e) {
                         view.showProfileUpdateError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.UserInfoRes> getResClass() {
-                        return Res.UserInfoRes.class;
                     }
                 });
     }

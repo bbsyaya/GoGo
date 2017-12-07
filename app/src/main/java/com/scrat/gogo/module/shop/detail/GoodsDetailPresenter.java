@@ -1,7 +1,5 @@
 package com.scrat.gogo.module.shop.detail;
 
-import android.support.annotation.NonNull;
-
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
@@ -26,7 +24,7 @@ public class GoodsDetailPresenter implements GoodsDetailContract.Presenter {
     public void loadData() {
         view.showLoadingGoodsDetail();
         DataRepository.getInstance().getApi().getGoodsDetail(
-                goodsId, new DefaultLoadObjCallback<GoodsDetail, Res.GoodsDetailRes>() {
+                goodsId, new DefaultLoadObjCallback<GoodsDetail, Res.GoodsDetailRes>(Res.GoodsDetailRes.class) {
                     @Override
                     protected void onSuccess(GoodsDetail goodsDetail) {
                         view.showGoodsDetail(goodsDetail);
@@ -35,12 +33,6 @@ public class GoodsDetailPresenter implements GoodsDetailContract.Presenter {
                     @Override
                     public void onError(Exception e) {
                         view.showLoadGoodsDetailError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.GoodsDetailRes> getResClass() {
-                        return Res.GoodsDetailRes.class;
                     }
                 });
     }
@@ -52,7 +44,7 @@ public class GoodsDetailPresenter implements GoodsDetailContract.Presenter {
         }
         exchanging = true;
         DataRepository.getInstance().getApi().exchange(
-                goodsId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+                goodsId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>(Res.DefaultStrRes.class) {
                     @Override
                     protected void onSuccess(String s) {
                         exchanging = false;
@@ -63,12 +55,6 @@ public class GoodsDetailPresenter implements GoodsDetailContract.Presenter {
                     public void onError(Exception e) {
                         exchanging = false;
                         view.showExchangeError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.DefaultStrRes> getResClass() {
-                        return Res.DefaultStrRes.class;
                     }
                 });
     }

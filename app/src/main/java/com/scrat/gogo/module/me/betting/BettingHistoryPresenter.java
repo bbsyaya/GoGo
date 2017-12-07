@@ -1,7 +1,5 @@
 package com.scrat.gogo.module.me.betting;
 
-import android.support.annotation.NonNull;
-
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
@@ -42,7 +40,7 @@ public class BettingHistoryPresenter implements BettingHistoryContract.Presenter
         view.showLoadingList();
         call = DataRepository.getInstance().getApi().getBettingHistory(
                 index,
-                new DefaultLoadObjCallback<Res.ListRes<BettingInfo>, Res.BettingInfoListRes>() {
+                new DefaultLoadObjCallback<Res.ListRes<BettingInfo>, Res.BettingInfoListRes>(Res.BettingInfoListRes.class) {
                     @Override
                     protected void onSuccess(Res.ListRes<BettingInfo> info) {
                         index = info.getIndex();
@@ -61,12 +59,6 @@ public class BettingHistoryPresenter implements BettingHistoryContract.Presenter
                     @Override
                     public void onError(Exception e) {
                         view.showLoadingListError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.BettingInfoListRes> getResClass() {
-                        return Res.BettingInfoListRes.class;
                     }
                 });
     }

@@ -1,6 +1,5 @@
 package com.scrat.gogo.module.news.detail;
 
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.scrat.gogo.data.DataRepository;
@@ -34,7 +33,7 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
     public void loadNewsDetail() {
         view.showLoadingNewsDetail();
         DataRepository.getInstance().getApi()
-                .getNewsDetail(newsId, new DefaultLoadObjCallback<NewsDetail, Res.NewsDetailRes>() {
+                .getNewsDetail(newsId, new DefaultLoadObjCallback<NewsDetail, Res.NewsDetailRes>(Res.NewsDetailRes.class) {
                     @Override
                     protected void onSuccess(NewsDetail detail) {
                         like = detail.isLike();
@@ -44,12 +43,6 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
                     @Override
                     public void onError(Exception e) {
                         view.showLoadNewsDetailError(e.getMessage());
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.NewsDetailRes> getResClass() {
-                        return Res.NewsDetailRes.class;
                     }
                 });
     }
@@ -73,7 +66,7 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
         call = DataRepository.getInstance().getApi().getNewsComments(
                 newsId,
                 index,
-                new DefaultLoadObjCallback<Res.ListRes<Res.CommentItem>, Res.CommentItemListRes>() {
+                new DefaultLoadObjCallback<Res.ListRes<Res.CommentItem>, Res.CommentItemListRes>(Res.CommentItemListRes.class) {
                     @Override
                     protected void onSuccess(Res.ListRes<Res.CommentItem> commentItemListRes) {
                         index = commentItemListRes.getIndex();
@@ -93,12 +86,6 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
                     public void onError(Exception e) {
                         view.showLoadingListError(e.getMessage());
                     }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.CommentItemListRes> getResClass() {
-                        return Res.CommentItemListRes.class;
-                    }
                 });
     }
 
@@ -110,7 +97,7 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
 
         view.showSendingComment();
         DataRepository.getInstance().getApi().addNewsComment(
-                newsId, comment, new DefaultLoadObjCallback<Comment, Res.CommentRes>() {
+                newsId, comment, new DefaultLoadObjCallback<Comment, Res.CommentRes>(Res.CommentRes.class) {
                     @Override
                     protected void onSuccess(Comment comment) {
                         view.showSendCommentSuccess(comment);
@@ -120,12 +107,6 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
                     public void onError(Exception e) {
                         view.showSendCommentError(e.getMessage());
                     }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.CommentRes> getResClass() {
-                        return Res.CommentRes.class;
-                    }
                 });
     }
 
@@ -133,7 +114,7 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
     public void likeNews() {
         Api api = DataRepository.getInstance().getApi();
         if (like) {
-            api.unLikeNews(newsId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+            api.unLikeNews(newsId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>(Res.DefaultStrRes.class) {
                 @Override
                 protected void onSuccess(String s) {
                     like = !like;
@@ -143,16 +124,10 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
                 @Override
                 public void onError(Exception e) {
                     // ignore
-                }
-
-                @NonNull
-                @Override
-                protected Class<Res.DefaultStrRes> getResClass() {
-                    return Res.DefaultStrRes.class;
                 }
             });
         } else {
-            api.likeNews(newsId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+            api.likeNews(newsId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>(Res.DefaultStrRes.class) {
                 @Override
                 protected void onSuccess(String s) {
                     like = !like;
@@ -162,12 +137,6 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
                 @Override
                 public void onError(Exception e) {
                     // ignore
-                }
-
-                @NonNull
-                @Override
-                protected Class<Res.DefaultStrRes> getResClass() {
-                    return Res.DefaultStrRes.class;
                 }
             });
         }
@@ -177,7 +146,7 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
     public void likeComment(String commentId, boolean like) {
         Api api = DataRepository.getInstance().getApi();
         if (like) {
-            api.likeComment(commentId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+            api.likeComment(commentId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>(Res.DefaultStrRes.class) {
                 @Override
                 protected void onSuccess(String s) {
 
@@ -186,16 +155,10 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
                 @Override
                 public void onError(Exception e) {
                     // ignore
-                }
-
-                @NonNull
-                @Override
-                protected Class<Res.DefaultStrRes> getResClass() {
-                    return Res.DefaultStrRes.class;
                 }
             });
         } else {
-            api.unLikeComment(commentId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
+            api.unLikeComment(commentId, new DefaultLoadObjCallback<String, Res.DefaultStrRes>(Res.DefaultStrRes.class) {
                 @Override
                 protected void onSuccess(String s) {
 
@@ -204,12 +167,6 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
                 @Override
                 public void onError(Exception e) {
                     // ignore
-                }
-
-                @NonNull
-                @Override
-                protected Class<Res.DefaultStrRes> getResClass() {
-                    return Res.DefaultStrRes.class;
                 }
             });
         }

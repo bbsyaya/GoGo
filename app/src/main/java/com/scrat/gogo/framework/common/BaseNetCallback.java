@@ -1,6 +1,5 @@
 package com.scrat.gogo.framework.common;
 
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.scrat.gogo.BuildConfig;
@@ -20,16 +19,19 @@ import okhttp3.Response;
  */
 
 public abstract class BaseNetCallback<T extends BaseResponse> implements Callback {
-    @NonNull
-    protected abstract Class<T> getResClass();
+    private Class<T> resClass;
+
+    public BaseNetCallback(Class<T> resClass) {
+        this.resClass = resClass;
+    }
 
     protected abstract void onRequestSuccess(T res);
 
     protected abstract void onRequestFailure(Exception e);
 
-    protected T parseResponse(Response response) {
+    private T parseResponse(Response response) {
         return OkHttpHelper.getInstance().getGson()
-                .fromJson(response.body().charStream(), getResClass());
+                .fromJson(response.body().charStream(), resClass);
     }
 
     @Override
@@ -70,20 +72,10 @@ public abstract class BaseNetCallback<T extends BaseResponse> implements Callbac
     }
 
     private void notifyFailure(final Exception e) {
-        MainHandlerUtil.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                onRequestFailure(e);
-            }
-        });
+        MainHandlerUtil.runOnUiThread(() -> onRequestFailure(e));
     }
 
     private void notifyResponseSuccess(final T t) {
-        MainHandlerUtil.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                onRequestSuccess(t);
-            }
-        });
+        MainHandlerUtil.runOnUiThread(() -> onRequestSuccess(t));
     }
 }

@@ -1,7 +1,5 @@
 package com.scrat.gogo.module.me;
 
-import android.support.annotation.NonNull;
-
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
@@ -28,7 +26,7 @@ public class MePresenter implements MeContract.Presenter {
         }
 
         DataRepository.getInstance().getApi().getUserInfo
-                (new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>() {
+                (new DefaultLoadObjCallback<UserInfo, Res.UserInfoRes>(Res.UserInfoRes.class) {
                     @Override
                     protected void onSuccess(UserInfo userInfo) {
                         view.showUserInfo(userInfo);
@@ -37,12 +35,6 @@ public class MePresenter implements MeContract.Presenter {
                     @Override
                     public void onError(Exception e) {
                         // ignore
-                    }
-
-                    @NonNull
-                    @Override
-                    protected Class<Res.UserInfoRes> getResClass() {
-                        return Res.UserInfoRes.class;
                     }
                 });
     }

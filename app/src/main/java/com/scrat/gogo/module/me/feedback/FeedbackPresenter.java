@@ -36,13 +36,7 @@ public class FeedbackPresenter implements FeedbackContract.Presenter {
                 verCode,
                 verName,
                 imgs,
-                new DefaultLoadObjCallback<String, Res.DefaultStrRes>() {
-                    @NonNull
-                    @Override
-                    protected Class<Res.DefaultStrRes> getResClass() {
-                        return Res.DefaultStrRes.class;
-                    }
-
+                new DefaultLoadObjCallback<String, Res.DefaultStrRes>(Res.DefaultStrRes.class) {
                     @Override
                     protected void onSuccess(String s) {
                         view.showFeedbackSuccess();
@@ -58,7 +52,7 @@ public class FeedbackPresenter implements FeedbackContract.Presenter {
     @Override
     public void uploadImg(final String imgPath) {
         Api api = DataRepository.getInstance().getApi();
-        api.getQiniuUptoken(new DefaultLoadObjCallback<Uptoken, Res.UptokenRes>() {
+        api.getQiniuUptoken(new DefaultLoadObjCallback<Uptoken, Res.UptokenRes>(Res.UptokenRes.class) {
             @Override
             protected void onSuccess(Uptoken uptoken) {
                 QiniuUploadManager.getInstance().uploadImg(
@@ -79,12 +73,6 @@ public class FeedbackPresenter implements FeedbackContract.Presenter {
             @Override
             public void onError(Exception e) {
                 view.selectImgFail(e.getMessage());
-            }
-
-            @NonNull
-            @Override
-            protected Class<Res.UptokenRes> getResClass() {
-                return Res.UptokenRes.class;
             }
         });
     }
