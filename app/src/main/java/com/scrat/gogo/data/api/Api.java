@@ -47,37 +47,34 @@ public class Api {
         return header;
     }
 
-    public Call wxLogin(String code, DefaultLoadObjCallback<TokenInfo, Res.TokenRes> cb) {
+    public void wxLogin(String code, DefaultLoadObjCallback<TokenInfo, Res.TokenRes> cb) {
         JSONObject obj = new JSONObject();
         try {
             obj.put(APIS.CODE, code);
-            return OkHttpHelper.getInstance()
+            OkHttpHelper.getInstance()
                     .post(APIS.WX_LOGIN, getHeader(), obj.toString(), cb);
         } catch (Exception e) {
             cb.onError(e);
-            return null;
         }
     }
 
-    public Call getAlipayCoinPlanOrder(
+    public void getAlipayCoinPlanOrder(
             String coinPlanId, DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
         String url = String.format(APIS.ALIPAY_COIN_PLAN_ORDER, coinPlanId);
         try {
-            return OkHttpHelper.getInstance().post(url, getHeader(), null, cb);
+            OkHttpHelper.getInstance().post(url, getHeader(), null, cb);
         } catch (Exception e) {
             cb.onError(e);
-            return null;
         }
     }
 
-    public Call getWeixinCoinPlanOrder(
+    public void getWeixinCoinPlanOrder(
             String coinPlanId, DefaultLoadObjCallback<WxPayInfo, Res.WxPayInfoRes> cb) {
         String url = String.format(APIS.COIN_PLAN_WEIXIN_ORDER_URL, coinPlanId);
         try {
-            return OkHttpHelper.getInstance().post(url, getHeader(), null, cb);
+            OkHttpHelper.getInstance().post(url, getHeader(), null, cb);
         } catch (Exception e) {
             cb.onError(e);
-            return null;
         }
     }
 
@@ -93,14 +90,13 @@ public class Api {
         }
     }
 
-    public Call getNewsDetail(
+    public void getNewsDetail(
             String newsId, DefaultLoadObjCallback<NewsDetail, Res.NewsDetailRes> cb) {
         String url = String.format(APIS.NEWS_DETAIL_URL, newsId);
         try {
-            return OkHttpHelper.getInstance().get(url, getHeader(), null, cb);
+            OkHttpHelper.getInstance().get(url, getHeader(), null, cb);
         } catch (Exception e) {
             cb.onError(e);
-            return null;
         }
     }
 
@@ -142,39 +138,35 @@ public class Api {
         }
     }
 
-    public Call getQiniuUptoken(DefaultLoadObjCallback<Uptoken, Res.UptokenRes> cb) {
+    public void getQiniuUptoken(DefaultLoadObjCallback<Uptoken, Res.UptokenRes> cb) {
         try {
-            return OkHttpHelper.getInstance()
+            OkHttpHelper.getInstance()
                     .get(APIS.QINUIU_UPTOKEN_URL, getHeader(), null, cb);
         } catch (Exception e) {
             cb.onError(e);
-            return null;
         }
     }
 
-    public Call sendSms(String tel, DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
+    public void sendSms(String tel, DefaultLoadObjCallback<String, Res.DefaultStrRes> cb) {
         JSONObject obj = new JSONObject();
         try {
             obj.put(APIS.TEL, tel);
-            return OkHttpHelper.getInstance()
-                    .post(APIS.SEND_SMS_URL, getHeader(), obj.toString(), cb);
+            OkHttpHelper.getInstance().post(APIS.SEND_SMS_URL, getHeader(), obj.toString(), cb);
         } catch (Exception e) {
             cb.onError(e);
-            return null;
         }
     }
 
-    public Call smsLogin(
+    public void smsLogin(
             String tel, String code, DefaultLoadObjCallback<TokenInfo, Res.TokenRes> cb) {
         JSONObject obj = new JSONObject();
         try {
             obj.put(APIS.TEL, tel);
             obj.put(APIS.CODE, code);
-            return OkHttpHelper.getInstance()
+            OkHttpHelper.getInstance()
                     .post(APIS.SMS_LOGIN_URL, getHeader(), obj.toString(), cb);
         } catch (Exception e) {
             cb.onError(e);
-            return null;
         }
     }
 
@@ -188,25 +180,23 @@ public class Api {
         }
     }
 
-    public Call getUserInfo(DefaultLoadObjCallback<UserInfo, Res.UserInfoRes> cb) {
+    public void getUserInfo(DefaultLoadObjCallback<UserInfo, Res.UserInfoRes> cb) {
         try {
-            return OkHttpHelper.getInstance().get(APIS.USER_INFO_URL, getHeader(), null, cb);
+            OkHttpHelper.getInstance().get(APIS.USER_INFO_URL, getHeader(), null, cb);
         } catch (Exception e) {
             cb.onError(e);
-            return null;
         }
     }
 
-    public Call getCoinPlan(DefaultLoadObjCallback<List<CoinPlan>, Res.CoinPlanListRes> cb) {
+    public void getCoinPlan(DefaultLoadObjCallback<List<CoinPlan>, Res.CoinPlanListRes> cb) {
         try {
-            return OkHttpHelper.getInstance().get(APIS.COIN_PLAN_URL, getHeader(), null, cb);
+            OkHttpHelper.getInstance().get(APIS.COIN_PLAN_URL, getHeader(), null, cb);
         } catch (Exception e) {
             cb.onError(e);
-            return null;
         }
     }
 
-    private Call addComment(
+    private void addComment(
             String tp,
             String tpId,
             String content,
@@ -216,17 +206,16 @@ public class Api {
             obj.put(APIS.TP, tp);
             obj.put(APIS.TARGET_ID, tpId);
             obj.put(APIS.CONTENT, content);
-            return OkHttpHelper.getInstance()
+            OkHttpHelper.getInstance()
                     .post(APIS.ADD_COMMENT_URL, getHeader(), obj.toString(), cb);
         } catch (Exception e) {
             cb.onError(e);
-            return null;
         }
     }
 
-    public Call addNewsComment(
+    public void addNewsComment(
             String newsId, String content, DefaultLoadObjCallback<Comment, Res.CommentRes> cb) {
-        return addComment(APIS.NEWS, newsId, content, cb);
+        addComment(APIS.NEWS, newsId, content, cb);
     }
 
     public Call getRaceList(
@@ -242,16 +231,15 @@ public class Api {
         }
     }
 
-    public Call refreshToken(
+    public void refreshToken(
             String refreshToken, DefaultLoadObjCallback<TokenInfo, Res.TokenRes> cb) {
         JSONObject obj = new JSONObject();
         try {
             obj.put(APIS.REFRESH_TOKEN, refreshToken);
-            return OkHttpHelper.getInstance()
+            OkHttpHelper.getInstance()
                     .post(APIS.REFRESH_TOKEN_URL, getHeader(), obj.toString(), cb);
         } catch (Exception e) {
             cb.onError(e);
-            return null;
         }
     }
 
@@ -267,12 +255,11 @@ public class Api {
         }
     }
 
-    public Call getBanner(DefaultLoadObjCallback<List<News>, Res.BannerRes> cb) {
+    public void getBanner(DefaultLoadObjCallback<List<News>, Res.BannerRes> cb) {
         try {
-            return OkHttpHelper.getInstance().get(APIS.BANNER_URL, getHeader(), null, cb);
+            OkHttpHelper.getInstance().get(APIS.BANNER_URL, getHeader(), null, cb);
         } catch (Exception e) {
             cb.onError(e);
-            return null;
         }
     }
 
@@ -309,15 +296,14 @@ public class Api {
         }
     }
 
-    public Call getGoodsDetail(
+    public void getGoodsDetail(
             String goodsId, DefaultLoadObjCallback<GoodsDetail, Res.GoodsDetailRes> cb) {
 
         String url = String.format(APIS.GOODS_DETAIL_URL, goodsId);
         try {
-            return OkHttpHelper.getInstance().get(url, getHeader(), null, cb);
+            OkHttpHelper.getInstance().get(url, getHeader(), null, cb);
         } catch (Exception e) {
             cb.onError(e);
-            return null;
         }
     }
 
@@ -345,7 +331,7 @@ public class Api {
         }
     }
 
-    public Call updateAddress(String receiver,
+    public void updateAddress(String receiver,
                               String tel,
                               String location,
                               String detail,
@@ -356,20 +342,18 @@ public class Api {
             obj.put(APIS.TEL, tel);
             obj.put(APIS.LOCATION, location);
             obj.put(APIS.ADDRESS_DETAIL, detail);
-            return OkHttpHelper.getInstance()
+            OkHttpHelper.getInstance()
                     .post(APIS.UPDATE_ADDRESS_URL, getHeader(), obj.toString(), cb);
         } catch (Exception e) {
             cb.onError(e);
-            return null;
         }
     }
 
-    public Call getAddress(DefaultLoadObjCallback<Address, Res.AddressRes> cb) {
+    public void getAddress(DefaultLoadObjCallback<Address, Res.AddressRes> cb) {
         try {
-            return OkHttpHelper.getInstance().get(APIS.GET_ADDRESS_URL, getHeader(), null, cb);
+            OkHttpHelper.getInstance().get(APIS.GET_ADDRESS_URL, getHeader(), null, cb);
         } catch (Exception e) {
             cb.onError(e);
-            return null;
         }
     }
 
