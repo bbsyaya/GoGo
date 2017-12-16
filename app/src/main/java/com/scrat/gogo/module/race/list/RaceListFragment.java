@@ -214,11 +214,19 @@ public class RaceListFragment extends BaseFragment implements RaceListContract.V
                     .into(holder.getImageView(R.id.logo_b));
             if (!"ready".equals(race.getStatus())) {
                 holder.setText(R.id.betting_btn, "结果")
+                        .setText(R.id.result, getScore(race))
+                        .setVisibility(R.id.ready_tip, false)
                         .setBackground(R.id.betting_btn, R.drawable.bg_c01_3dp);
             } else {
                 holder.setText(R.id.betting_btn, "竞猜")
+                        .setText(R.id.result, "未开始")
+                        .setVisibility(R.id.ready_tip, true)
                         .setBackground(R.id.betting_btn, R.drawable.bg_c02_3dp);
             }
+        }
+
+        private String getScore(Race race) {
+            return String.format("%s : %s", race.getScoreA(), race.getScoreB());
         }
 
         @Override
