@@ -36,5 +36,7 @@ public interface BettingListContract {
         void showBetting(List<Betting> list);
 
         void showBettingLoadError(String message);
+
+        void showInsufficientCoinError();
     }
 }

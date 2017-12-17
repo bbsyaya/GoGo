@@ -2,6 +2,7 @@ package com.scrat.gogo.module.race.betting.list;
 
 import com.scrat.gogo.data.DataRepository;
 import com.scrat.gogo.data.api.Res;
+import com.scrat.gogo.data.api.ServerException;
 import com.scrat.gogo.data.callback.DefaultLoadObjCallback;
 import com.scrat.gogo.data.model.Betting;
 import com.scrat.gogo.data.model.UserInfo;
@@ -53,7 +54,11 @@ public class BettingListPresenter implements BettingListContract.Presenter {
 
                     @Override
                     public void onError(Exception e) {
-                        view.showBettingExecuteError(e.getMessage());
+                        if (e instanceof ServerException && ((ServerException) e).isInsufficientCoin()) {
+                            view.showInsufficientCoinError();
+                        } else {
+                            view.showBettingExecuteError(e.getMessage());
+                        }
                     }
                 });
     }

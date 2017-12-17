@@ -20,6 +20,7 @@ import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
 import com.scrat.gogo.framework.common.BaseRecyclerViewHolder;
 import com.scrat.gogo.framework.view.IosDialog;
 import com.scrat.gogo.framework.view.LoginDialog;
+import com.scrat.gogo.module.coin.CoinPlanActivity;
 import com.scrat.gogo.module.me.betting.BettingHistoryActivity;
 
 import org.apmem.tools.layouts.FlowLayout;
@@ -37,6 +38,7 @@ public class BettingListFragment extends BaseFragment implements BettingListCont
     private Adapter adapter;
     private BettingListContract.Presenter presenter;
     private IosDialog loginDialog;
+    private IosDialog coinDialog;
     private static final String TP = "tp";
     private static final String ID = "id";
 
@@ -82,11 +84,24 @@ public class BettingListFragment extends BaseFragment implements BettingListCont
         new BettingListPresenter(this, getArguments().getString(ID), getArguments().getString(TP));
         presenter.loadBetting();
         loginDialog = LoginDialog.build(getContext());
+        coinDialog = new IosDialog(getContext())
+                .setTitle("竞猜币不足")
+                .setContent("抱歉！您当前的竞猜币不足，请立即充值！")
+                .setNegative("不买，没钱")
+                .setPositive("立即充值", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        CoinPlanActivity.show(getActivity());
+                    }
+                });
         return binding.getRoot();
     }
 
     @Override
     public void onDestroy() {
+        if (coinDialog.isShowing()) {
+            coinDialog.dismiss();
+        }
         if (loginDialog.isShowing()) {
             loginDialog.dismiss();
         }
@@ -104,6 +119,12 @@ public class BettingListFragment extends BaseFragment implements BettingListCont
     @Override
     public void showBettingLoadError(String message) {
 
+    }
+
+    @Override
+    public void showInsufficientCoinError() {
+        popupWindow.dismiss();
+        coinDialog.show(binding.list);
     }
 
     @Override
