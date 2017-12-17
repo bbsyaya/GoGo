@@ -228,9 +228,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
             if (videoView == null) {
                 return;
             }
-            if (videoView.isPlaying()) {
-                videoView.pause();
-            }
+            videoView.pause();
             if (coverView != null) {
                 coverView.setVisibility(View.VISIBLE);
             }
@@ -261,9 +259,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
                             coverView.setVisibility(View.GONE);
                         })
                         .setOnClickListener(R.id.video, view -> {
-                            if (videoView.isPlaying()) {
-                                videoView.pause();
-                            }
+                            videoView.pause();
                             coverView.setVisibility(View.VISIBLE);
                         });
 
