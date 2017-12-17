@@ -476,4 +476,20 @@ public class Api {
             cb.onError(e);
         }
     }
+
+    public void getSigInState(DefaultLoadObjCallback<Res.SignInInfo, Res.SignInRes> cb) {
+        try {
+            OkHttpHelper.getInstance().get(APIS.GET_SIGN_IN_STATE_URL, getHeader(), null, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+        }
+    }
+
+    public void signIn(DefaultLoadObjCallback<Res.SignInInfo, Res.SignInRes> cb) {
+        try {
+            OkHttpHelper.getInstance().get(APIS.SIGN_IN_STATE_URL, getHeader(), null, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+        }
+    }
 }

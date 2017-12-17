@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.scrat.gogo.R;
+import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.databinding.BottomNewsLoadMoreBinding;
 import com.scrat.gogo.databinding.FragmentHomeBinding;
@@ -29,6 +30,7 @@ import com.scrat.gogo.framework.glide.GlideRequest;
 import com.scrat.gogo.framework.glide.GlideRequests;
 import com.scrat.gogo.framework.util.L;
 import com.scrat.gogo.framework.util.MainHandlerUtil;
+import com.scrat.gogo.framework.view.SignInPopupWindow;
 import com.scrat.gogo.module.news.detail.NewsDetailActivity;
 
 import java.util.ArrayList;
@@ -50,6 +52,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     private BottomNewsLoadMoreBinding loadMoreBinding;
     private LinearLayoutManager layoutManager;
     private volatile boolean videoRunningCheck;
+    private SignInPopupWindow signInPopupWindow;
 
     public static HomeFragment newInstance() {
         Bundle args = new Bundle();
@@ -95,7 +98,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         loadMoreBinding = BottomNewsLoadMoreBinding.inflate(inflater, binding.list, false);
         adapter.setFooter(loadMoreBinding.getRoot());
         binding.list.setAdapter(adapter);
-        binding.topBar.setOnClickListener(view -> layoutManager.scrollToPosition(0));
+        binding.title.setOnClickListener(view -> layoutManager.scrollToPosition(0));
 
         loadMoreListener = new BaseRecyclerViewOnScrollListener(
                 layoutManager, () -> {
@@ -108,6 +111,14 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         new HomePresenter(this);
         presenter.loadData(true);
 //        presenter.loadBanner();
+        signInPopupWindow = new SignInPopupWindow(getContext(), () -> {
+            presenter.signIn();
+        });
+        presenter.loadSignInInfo();
+        binding.signBtn.setOnClickListener(view -> {
+            presenter.loadSignInInfo();
+            signInPopupWindow.show(view);
+        });
         return binding.getRoot();
     }
 
@@ -122,6 +133,14 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         adapter.stopVideo();
         videoRunningCheck = false;
         super.onPause();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (signInPopupWindow.isShowing()) {
+            signInPopupWindow.dismiss();
+        }
+        super.onDestroyView();
     }
 
     @Override
@@ -171,6 +190,31 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     public void showBanner(List<News> list) {
 //        bannerAdapter.setData(list);
 //        headerBinding.pager.setCurrentItem(300);
+    }
+
+    @Override
+    public void showSignInInfo(Res.SignInInfo signInInfo) {
+        if (signInInfo.getSignIn().isHasSign()) {
+            binding.signBtn.setImageResource(R.drawable.ic_redpacket_fill_c08_24dp);
+        } else {
+            binding.signBtn.setImageResource(R.drawable.ic_redpacket_fill_c02_24dp);
+        }
+        binding.signBtn.setVisibility(View.VISIBLE);
+        signInPopupWindow.refresh(signInInfo);
+    }
+
+    @Override
+    public void showSignInSuccess(Res.SignInInfo signInInfo) {
+        showSignInInfo(signInInfo);
+        List<String> arr = signInInfo.getSignIn().getGiftCoinList();
+        if (arr != null && arr.size() > 0) {
+            int day = signInInfo.getSignIn().getDay();
+            if (arr.size() < day) {
+                day = arr.size();
+            }
+            String coin = "+ " + arr.get(day - 1);
+            signInPopupWindow.showSignInSuccess(coin);
+        }
     }
 
     private void checkVideo(boolean ignore) {

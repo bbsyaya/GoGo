@@ -1,5 +1,6 @@
 package com.scrat.gogo.data.api;
 
+import com.google.gson.annotations.SerializedName;
 import com.scrat.gogo.data.model.Address;
 import com.scrat.gogo.data.model.Betting;
 import com.scrat.gogo.data.model.BettingInfo;
@@ -12,6 +13,7 @@ import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.data.model.RaceGroupItem;
 import com.scrat.gogo.data.model.RaceInfo;
+import com.scrat.gogo.data.model.SignIn;
 import com.scrat.gogo.data.model.Team;
 import com.scrat.gogo.data.model.TokenInfo;
 import com.scrat.gogo.data.model.UpdateInfo;
@@ -113,4 +115,20 @@ public class Res {
     public class RaceInfoRes extends BaseResponse<RaceInfo> {}
 
     public class BettingListRes extends BaseResponse<List<Betting>> {}
+
+    public class SignInInfo {
+        private long coin;
+        @SerializedName("sign_in")
+        private SignIn signIn;
+
+        public long getCoin() {
+            return coin;
+        }
+
+        public SignIn getSignIn() {
+            return signIn;
+        }
+    }
+
+    public class SignInRes extends BaseResponse<SignInInfo> {}
 }

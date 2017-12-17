@@ -78,5 +78,38 @@ public class HomePresenter implements HomeContract.HomePresenter {
                         view.showLoadingListError(e.getMessage());
                     }
                 });
+
+    }
+
+    @Override
+    public void loadSignInInfo() {
+        DataRepository.getInstance().getApi().getSigInState(
+                new DefaultLoadObjCallback<Res.SignInInfo, Res.SignInRes>(Res.SignInRes.class) {
+                    @Override
+                    protected void onSuccess(Res.SignInInfo signInInfo) {
+                        view.showSignInInfo(signInInfo);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+//                        ignore
+                    }
+                });
+    }
+
+    @Override
+    public void signIn() {
+        DataRepository.getInstance().getApi().signIn(
+                new DefaultLoadObjCallback<Res.SignInInfo, Res.SignInRes>(Res.SignInRes.class) {
+                    @Override
+                    protected void onSuccess(Res.SignInInfo signInInfo) {
+                        view.showSignInSuccess(signInInfo);
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+//                        ignore
+                    }
+                });
     }
 }

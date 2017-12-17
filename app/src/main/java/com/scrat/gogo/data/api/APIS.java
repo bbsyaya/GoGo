@@ -41,6 +41,8 @@ public class APIS {
     static final String LIKE_COMMENT_URL = HOST + "/core/comment/like";
     static final String UNLIKE_NEWS_URL = HOST + "/core/news/unlike";
     static final String UNLIKE_COMMENT_URL = HOST + "/core/comment/unlike";
+    static final String GET_SIGN_IN_STATE_URL = HOST + "/core/coin";
+    static final String SIGN_IN_STATE_URL = HOST + "/core/sign_in";
 
     static final String PT = "pt";
     static final String APP_KEY = "app_key";
