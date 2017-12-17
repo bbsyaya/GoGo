@@ -200,8 +200,10 @@ public class BettingListFragment extends BaseFragment implements BettingListCont
                 binding.odds.setText(odds);
                 binding.title.setText(item.getTitle());
                 if ("unknown".equals(item.getStatus())) {
+                    binding.title.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
                     binding.getRoot().setOnClickListener(view -> onItemClickListener.onItemClick(item));
                 } else if ("win".equals(item.getStatus())) {
+                    binding.title.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_selection_fill_white_12dp, 0, 0, 0);
                     binding.getRoot().setBackgroundResource(R.drawable.bg_c01_3dp);
                 }
                 layout.addView(binding.getRoot());

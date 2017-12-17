@@ -16,6 +16,8 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawablePadding="3dp"
+            android:gravity="center_vertical"
             android:textColor="@color/c08_text"
             android:textSize="14sp" />
 
