@@ -105,11 +105,11 @@ public class BettingPopupWindow extends PopupWindow implements View.OnClickListe
     }
 
     public void showUserCoinLoading() {
-        binding.userCoin.setText("剩余：计算中");
+        binding.userCoin.setText("当前可用竞猜币：计算中");
     }
 
     public void showUserCoin(long coin) {
-        String coinStr = String.format("剩余：%s", coin);
+        String coinStr = String.format("当前可用竞猜币：%s", coin);
         binding.userCoin.setText(coinStr);
     }
 
@@ -125,7 +125,7 @@ public class BettingPopupWindow extends PopupWindow implements View.OnClickListe
         if (item != null) {
             odds = item.getOdds();
         }
-        String tip = String.format(Locale.getDefault(), "猜中可得%.0f竞猜币", odds * coin);
+        String tip = String.format(Locale.getDefault(), "猜中预计可得 %.0f 竞猜币", odds * coin);
         binding.tip.setText(tip);
     }
 }
