@@ -164,7 +164,7 @@ public class CoinPlanActivity extends BaseActivity implements CoinPlanContract.V
             selectedPlan.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
         selectedPlan = textView;
-        selectedPlan.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_select_16, 0);
+        selectedPlan.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_coin_c03_24dp, 0, R.drawable.ic_select_16, 0);
     }
 
     private String getCoinItemStr(CoinPlan plan) {
@@ -173,14 +173,14 @@ public class CoinPlanActivity extends BaseActivity implements CoinPlanContract.V
 
     public void selectWeixinPay(View view) {
         presenter.selectWeixinPay();
-        binding.weixinPay.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_select_16, 0);
-        binding.alipay.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        binding.weixinPay.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_wxpay_29, 0, R.drawable.ic_select_16, 0);
+        binding.alipay.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_alipay_29, 0, 0, 0);
     }
 
     public void selectAlipay(View view) {
         presenter.selectAlipay();
-        binding.weixinPay.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-        binding.alipay.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_select_16, 0);
+        binding.weixinPay.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_wxpay_29, 0, 0, 0);
+        binding.alipay.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_alipay_29, 0, R.drawable.ic_select_16, 0);
     }
 
     public void pay(View view) {

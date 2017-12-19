@@ -12,6 +12,7 @@
             android:layout_height="55dp"
             android:background="@color/c07_bar"
             android:clickable="true"
+            android:drawablePadding="4dp"
             android:focusable="true"
             android:foreground="?android:attr/selectableItemBackground"
             android:gravity="center_vertical"
