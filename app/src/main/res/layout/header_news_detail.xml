@@ -30,7 +30,6 @@
             android:id="@+id/body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lineSpacingMultiplier="1.2"
             android:padding="10dp"
             android:textColor="@color/c08_text"
             android:textSize="17sp" />
