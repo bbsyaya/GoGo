@@ -114,7 +114,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
         signInPopupWindow = new SignInPopupWindow(getContext(), () -> {
             presenter.signIn();
         });
-        presenter.loadSignInInfo();
         binding.signBtn.setOnClickListener(view -> {
             presenter.loadSignInInfo();
             signInPopupWindow.show(view);
@@ -158,18 +157,21 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
 
     @Override
     public void showListData(List<News> list, boolean replace) {
+        presenter.loadSignInInfo();
         hideLoading();
         adapter.setData(list, replace);
     }
 
     @Override
     public void showNoMoreListData() {
+        presenter.loadSignInInfo();
         hideLoading();
         loadMoreBinding.noMore.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showEmptyList() {
+        presenter.loadSignInInfo();
         hideLoading();
     }
 
@@ -206,15 +208,15 @@ public class HomeFragment extends BaseFragment implements HomeContract.HomeView 
     @Override
     public void showSignInSuccess(Res.SignInInfo signInInfo) {
         showSignInInfo(signInInfo);
-        List<String> arr = signInInfo.getSignIn().getGiftCoinList();
-        if (arr != null && arr.size() > 0) {
-            int day = signInInfo.getSignIn().getDay();
-            if (arr.size() < day) {
-                day = arr.size();
-            }
-            String coin = "+ " + arr.get(day - 1);
-            signInPopupWindow.showSignInSuccess(coin);
-        }
+//        List<String> arr = signInInfo.getSignIn().getGiftCoinList();
+//        if (arr != null && arr.size() > 0) {
+//            int day = signInInfo.getSignIn().getDay();
+//            if (arr.size() < day) {
+//                day = arr.size();
+//            }
+//            String coin = "+ " + arr.get(day - 1);
+//            signInPopupWindow.showSignInSuccess(coin);
+//        }
     }
 
     private void checkVideo(boolean ignore) {
