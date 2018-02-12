@@ -10,6 +10,8 @@ import com.scrat.gogo.data.model.Comment;
 import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 
+import java.util.List;
+
 import okhttp3.Call;
 
 /**
@@ -38,11 +40,28 @@ public class NewsDetailPresenter implements NewsDetailContract.Presenter {
                     protected void onSuccess(NewsDetail detail) {
                         like = detail.isLike();
                         view.showNewsDetail(detail);
+                        loadHotNews(detail.getGame(), detail.getNewsId());
                     }
 
                     @Override
                     public void onError(Exception e) {
                         view.showLoadNewsDetailError(e.getMessage());
+                    }
+                });
+    }
+
+    private void loadHotNews(String game, String newsId) {
+        DataRepository.getInstance().getApi().getHotNews(
+                game, newsId,
+                new DefaultLoadObjCallback<Res.ListRes<News>, Res.NewsListRes>(Res.NewsListRes.class) {
+                    @Override
+                    protected void onSuccess(Res.ListRes<News> list) {
+                        view.showHotNews(list.getItems());
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+                        // ignore
                     }
                 });
     }

@@ -25,6 +25,7 @@ import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.databinding.ActivityNewsDetailBinding;
 import com.scrat.gogo.databinding.BottomNewsDetailCommentBinding;
 import com.scrat.gogo.databinding.HeaderNewsDetailBinding;
+import com.scrat.gogo.databinding.ListItemHomeBinding;
 import com.scrat.gogo.framework.common.BaseActivity;
 import com.scrat.gogo.framework.common.BaseRecyclerViewAdapter;
 import com.scrat.gogo.framework.common.BaseRecyclerViewHolder;
@@ -210,6 +211,30 @@ public class NewsDetailActivity extends BaseActivity implements NewsDetailContra
             binding.topBar.rightBtn.setImageResource(R.drawable.ic_appreciate_fill_24dp);
         } else {
             binding.topBar.rightBtn.setImageResource(R.drawable.ic_appreciate_24dp);
+        }
+    }
+
+    @Override
+    public void showHotNews(List<News> list) {
+        if (list == null || list.isEmpty()) {
+            return;
+        }
+        headerBinding.moreNewsPanel.setVisibility(View.VISIBLE);
+        headerBinding.moreNewsList.removeAllViews();
+        LayoutInflater inflater = LayoutInflater.from(this);
+        for (News news : list) {
+            ListItemHomeBinding itemBinding = ListItemHomeBinding
+                    .inflate(inflater, headerBinding.moreNewsList, false);
+            itemBinding.videoContainer.setVisibility(View.GONE);
+            itemBinding.title.setText(news.getTitle());
+            glideRequests.load(news.getCover()).centerCrop().into(itemBinding.img);
+            itemBinding.tp.setText(news.getTp());
+            itemBinding.like.setText(String.valueOf(news.getTotalLike()));
+            itemBinding.count.setText(String.valueOf(news.getTotalComment()));
+            itemBinding.newsContainer.setOnClickListener(v -> {
+                NewsDetailActivity.show(this, 99, news);
+            });
+            headerBinding.moreNewsList.addView(itemBinding.getRoot());
         }
     }
 

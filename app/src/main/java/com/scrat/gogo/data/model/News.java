@@ -23,6 +23,7 @@ public class News implements Serializable {
     private int totalLike;
     private String cover;
     private String video;
+    private String game;
 
     public boolean isVideoNews() {
         return !TextUtils.isEmpty(video);
@@ -58,5 +59,9 @@ public class News implements Serializable {
 
     public int getTotalLike() {
         return totalLike;
+    }
+
+    public String getGame() {
+        return game;
     }
 }

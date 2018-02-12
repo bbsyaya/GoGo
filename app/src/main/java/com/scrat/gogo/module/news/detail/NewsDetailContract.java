@@ -2,8 +2,11 @@ package com.scrat.gogo.module.news.detail;
 
 import com.scrat.gogo.data.api.Res;
 import com.scrat.gogo.data.model.Comment;
+import com.scrat.gogo.data.model.News;
 import com.scrat.gogo.data.model.NewsDetail;
 import com.scrat.gogo.framework.common.BaseContract;
+
+import java.util.List;
 
 /**
  * Created by scrat on 2017/11/12.
@@ -36,5 +39,7 @@ public interface NewsDetailContract {
         void showSendCommentSuccess(Comment comment);
 
         void showNewsLike(boolean like);
+
+        void showHotNews(List<News> list);
     }
 }

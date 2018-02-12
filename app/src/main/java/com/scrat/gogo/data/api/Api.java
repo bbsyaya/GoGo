@@ -492,4 +492,16 @@ public class Api {
             cb.onError(e);
         }
     }
+
+    public void getHotNews(
+            String game,
+            String newsId,
+            DefaultLoadObjCallback<Res.ListRes<News>, Res.NewsListRes> cb) {
+        String url = String.format(APIS.HOT_NEWS_URL, game, newsId);
+        try {
+            OkHttpHelper.getInstance().get(url, getHeader(), null, cb);
+        } catch (Exception e) {
+            cb.onError(e);
+        }
+    }
 }
